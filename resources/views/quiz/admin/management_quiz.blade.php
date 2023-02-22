@@ -103,10 +103,10 @@
                                                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                                         <form method="POST" action="{{ route('del.quiz') }}">
                                                             @csrf
-                                                            <input type="hidden" name="level" value="management">
                                                             <span class="relative inline-block px-3 py-1 font-semibold text-red-900 leading-tight">
                                                                 <span aria-hidden class="absolute inset-0 bg-red-200 opacity-50 rounded-full"></span>
                                                                 <input type="hidden" name="quiz_id" value="{{ $quiz->id }}">
+                                                                <input type="hidden" name="level" value="management">
                                                                 <button type="submit" class="relative">削除</button>
                                                             </span>
                                                         </form>

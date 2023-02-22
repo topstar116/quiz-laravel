@@ -50,17 +50,50 @@ Route::middleware('auth')->group(function () {
     Route::post('excel/uploadEx1', [ExcelController::class, 'uploadEx1'])->name('uploadEx1_post');
 
 
+    
+
 
 
 
     Route::get('request', function () { return view('quiz/request'); })->name('request');
+    
+    Route::get('request1', function () { return view('quiz/request1'); })->name('request1');
+    Route::get('request2', function () { return view('quiz/request2'); })->name('request2');
+    Route::get('request3', function () { return view('quiz/request3'); })->name('request3');
+    Route::get('request3_1_1', function () { return view('quiz/request3_1'); })->name('request3_1');
+
     Route::get('explain', function () { return view('quiz/explain'); })->name('explain');
 
+    Route::get('explain1', function () { return view('quiz/explain1'); })->name('explain1');
+    Route::get('explain2', function () { return view('quiz/explain2'); })->name('explain2');
+    Route::get('explain3', function () { return view('quiz/explain3'); })->name('explain3');
+    Route::get('explain3_1', function () { return view('quiz/explain3_1'); })->name('explain3_1');
+
     Route::get('quiz', [UserController::class, 'viewQuiz'])->name('quiz');
-    Route::post('quiz2', [UserController::class, 'viewQuiz2'])->name('quiz2');
-    Route::post('quiz3', [UserController::class, 'viewQuiz3'])->name('quiz3');
+    
+    Route::get('quiz1', [UserController::class, 'viewQuiz1'])->name('quiz1');
+    Route::get('quiz2', [UserController::class, 'viewQuiz2'])->name('quiz2');
+    Route::get('quiz3', [UserController::class, 'viewQuiz3'])->name('quiz3');
+    
+    Route::get('quiz3_1', [UserController::class, 'viewQuiz3_1'])->name('quiz3_1');
+    Route::post('quiz3_2', [UserController::class, 'viewQuiz3_2'])->name('quiz3_2');
+    Route::post('quiz3_3', [UserController::class, 'viewQuiz3_3'])->name('quiz3_3');
+    
+
+
+
+
+
+
     Route::post('express', [UserController::class, 'viewExpress'])->name('express');
+    
     Route::post('result', [UserController::class, 'viewResult'])->name('result');
+
+    Route::post('result1', [UserController::class, 'viewResult1'])->name('result1');
+    Route::post('result2', [UserController::class, 'viewResult2'])->name('result2');
+    Route::post('result3', [UserController::class, 'viewResult3'])->name('result3');
+    Route::post('result3_1', [UserController::class, 'viewResult3_1'])->name('result3_1');
+
     
     Route::get('data', function () { return view('quiz/data'); })->name('data');
     
@@ -85,17 +118,12 @@ Route::middleware('auth')->group(function () {
     Route::get('admin/quiz/sales', [UserController::class, 'salesQuiz'])->name('admin.quiz.sales');
     Route::get('admin/quiz/management', [UserController::class, 'managementQuiz'])->name('admin.quiz.management');
 
+
+
+
+
     Route::post('add/quiz', [UserController::class, 'addRecruimentQuiz'])->name('add.quiz');
     Route::post('del/quiz', [UserController::class, 'delRecruimentQuiz'])->name('del.quiz');
-
-
-
-
-
-
-
-
-
 
 
 

@@ -57,6 +57,7 @@
                                                             <span class="relative inline-block px-3 py-1 font-semibold text-red-900 leading-tight">
                                                                 <span aria-hidden class="absolute inset-0 bg-red-200 opacity-50 rounded-full"></span>
                                                                 <input type="hidden" name="user_id" value="{{ $user->id }}">
+                                                                <input type="hidden" name="level" value="recruiment">
                                                                 <button type="submit" class="relative">削除</button>
                                                             </span>
                                                         </form>

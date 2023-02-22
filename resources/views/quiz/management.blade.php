@@ -8,7 +8,7 @@
 
                 <div class="small-12 column examination-contents p-10">
 
-                    <form class="js-api-form js-loading-form" data-form-name="answer_finish" id="edit_answer_finish_940649" action="https://app.mikiwame.com/api/v1/answers/940649/japanese" accept-charset="UTF-8" data-remote="true" method="post" data-gtm-form-interact-id="0">
+                    <form class="js-api-form js-loading-form" data-form-name="answer_finish" id="edit_answer_finish_940649" action="" accept-charset="UTF-8" data-remote="true" method="post" data-gtm-form-interact-id="0">
                         <input name="utf8" type="hidden" value="✓">
                         <input type="hidden" name="_method" value="patch">
 

@@ -10,16 +10,13 @@
 
 
                     <div class="text-center complete-information items-center">
-                        <img src="{{ asset('send.png') }}" class="m-auto">
-                        <h1 class="text-3xl">回答を受け付けました</h1>
-                        <p class="text-2xl">
-                            お疲れさまでした。
-                            <br>
-                            エントリー企業に結果を送信しました。
-                        </p>
-                        <p>
-                            <br>
-                            <a href="{{ route('home') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-5 px-20 rounded-full cursor-pointer">トップページへ</a>
+                        <img src="{{ asset('send.png') }}" class="m-auto mb-20">
+
+                        <!-- <h1 class="text-3xl my-20">あなたの適性は{{ $result['type'] }}（提案No.{{ $result['sub_type'] }} {{ $result['sub_title'] }}）です。</h1> -->
+                        <h1 class="text-3xl my-20">あなたの適性は「{{ $result['type'] }}」（{{ $result['sub_title'] }}）です。</h1>
+                        
+                        <p class="my-20">
+                            <a href="{{ $result['url'] }}" target="_blank" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-5 px-20 rounded-full cursor-pointer">ページから確認してみましょう</a>
                         </p>
                     </div>
 

@@ -13,7 +13,7 @@
 
                 <div class="small-12 column examination-contents p-10">
 
-                    <form method="post" class="js-api-form js-loading-form" action="{{ route('quiz2') }}">
+                    <form method="post" class="js-api-form js-loading-form" action="{{ route('result1') }}">
                         @csrf
                         <div class="question-group"></div>
                         <div class="question-group__description mt-10">
@@ -28,11 +28,11 @@
                                 <div class="question__choices">
                                     <ol>
                                         <li class="my-10">
-                                            <input type="radio" value="{{ $quiz->id }}-1" name="{{ $quiz->id }}" id="{{ $quiz->id }}-1" data-gtm-form-interact-field-id="0" onclick="return window.scrollBy(0,300);">
+                                            <input type="radio" value="{{ $quiz->項目 }}-{{ $quiz->提案NO }}-1" name="{{ $quiz->id }}" id="{{ $quiz->id }}-1" data-gtm-form-interact-field-id="0" onclick="return window.scrollBy(0,300);">
                                             <label class="question__choices--label" for="{{ $quiz->id }}-1">{{ explode(",",$quiz->回答項目)[0] }}</label>
                                         </li>
                                         <li class="my-10">
-                                            <input type="radio" value="{{ $quiz->id }}-2" name="{{ $quiz->id }}" id="{{ $quiz->id }}-2" data-gtm-form-interact-field-id="1" onclick="return window.scrollBy(0,300);">
+                                            <input type="radio" value="{{ $quiz->項目 }}-{{ $quiz->提案NO }}-2" name="{{ $quiz->id }}" id="{{ $quiz->id }}-2" data-gtm-form-interact-field-id="1" onclick="return window.scrollBy(0,300);">
                                             <label class="question__choices--label" for="{{ $quiz->id }}-2">{{ explode(",",$quiz->回答項目)[1] }}</label>
                                         </li>
                                     </ol>
