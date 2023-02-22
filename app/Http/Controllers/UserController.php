@@ -196,7 +196,7 @@ class UserController extends Controller
 
         $result = $this->checkResult($quiz_result);
 
-        return view('quiz.result', compact('result'));
+        return view('quiz.result3', compact('result'));
     }
 
 
@@ -407,6 +407,7 @@ class UserController extends Controller
                 $type = '';
                 $sub_type = 1;               
                 $sub_title = 'PMO';
+                $url = 'https://result.engineermatch.net/status/';
                 
             }
 
@@ -416,6 +417,7 @@ class UserController extends Controller
                 $type = '';
                 $sub_type = 2;
                 $sub_title = '開発・テスト';
+                $url = 'https://result.engineermatch.net/status/';
             }
 
             //全部左あれば3、一つでも右あれば4
@@ -424,12 +426,14 @@ class UserController extends Controller
                 $type = '';
                 $sub_type = 3;
                 $sub_title = 'インフラ';
+                $url = 'https://result.engineermatch.net/status/';
 
             }else if(str_contains($str, '現状確認')){
                 
                 $type = '';
                 $sub_type = 4;
                 $sub_title = 'IT研修受講';
+                $url = 'https://result.engineermatch.net/status/';
             }
 
             
