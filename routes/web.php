@@ -122,8 +122,9 @@ Route::middleware('auth')->group(function () {
 
 
 
-    Route::post('add/quiz', [UserController::class, 'addRecruimentQuiz'])->name('add.quiz');
-    Route::post('del/quiz', [UserController::class, 'delRecruimentQuiz'])->name('del.quiz');
+    Route::post('add/quiz', [UserController::class, 'addQuiz'])->name('add.quiz');
+    Route::post('update/quiz', [UserController::class, 'updateQuiz'])->name('update.quiz');
+    Route::post('del/quiz', [UserController::class, 'delQuiz'])->name('del.quiz');
 
 
 

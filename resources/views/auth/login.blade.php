@@ -57,6 +57,18 @@
                     </a> -->
                 @endif
 
+                <x-button class="ml-4">
+                    {{ __('ログイン') }}
+                </x-button>
+            </div>
+
+            <div class="flex items-center justify-end mt-4">
+                @if (Route::has('password.request'))
+                    <!-- <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('password.request') }}">
+                        {{ __('パスワード設定はこちら') }}
+                    </a> -->
+                @endif
+
                 <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('register') }}">
                     {{ __('採用、管理') }}
                 </a>
@@ -69,9 +81,6 @@
                     {{ __('企業登録') }}
                 </a>はこちら
 
-                <x-button class="ml-4">
-                    {{ __('ログイン') }}
-                </x-button>
             </div>
         </form>
     </x-auth-card>

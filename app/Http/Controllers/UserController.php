@@ -602,7 +602,7 @@ class UserController extends Controller
     }
 
 
-    public function addRecruimentQuiz(Request $request)
+    public function addQuiz(Request $request)
     {
 
         if ($request->input('level') == "recruiment") {
@@ -635,22 +635,55 @@ class UserController extends Controller
         }
     }
 
+    public function updateQuiz(Request $request)
+    {
 
-    public function delRecruimentQuiz(Request $request)
+        if ($request->input('level') == "recruiment") {
+            $data = array(
+                '項目' => $request->input('項目'),
+                '提案NO' => $request->input('no'),
+                '回答項目' => $request->input('回答項目1') . "," . $request->input('回答項目2')
+            );
+
+            $res = DB::table('recruiment_quiz_table')->where('id', $request->input('id'))->update($data);
+            return $this->recruimentQuiz();
+        } else if ($request->input('level') == "sales") {
+            $data = array(
+                '項目' => $request->input('項目'),
+                '提案NO' => $request->input('no'),
+                '回答項目' => $request->input('回答項目1') . "," . $request->input('回答項目2')
+            );
+
+            $res = DB::table('sales_quiz_table')->where('id', $request->input('id'))->update($data);
+            return $this->salesQuiz();
+        } else {
+            $data = array(
+                '項目' => $request->input('項目'),
+                '提案NO' => $request->input('no'),
+                '回答項目' => $request->input('回答項目1') . "," . $request->input('回答項目2')
+            );
+
+            $res = DB::table('management_quiz_table')->where('id', $request->input('id'))->update($data);
+            return $this->managementQuiz();
+        }
+    }
+
+
+    public function delQuiz(Request $request)
     {
         if ($request->input('level') == "recruiment") {
 
-            $quiz_id = $request->quiz_id;
-            $res = DB::table('recruiment_quiz_table')->where('user_id', $quiz_id)->delete();
+            $id = $request->id;
+            $res = DB::table('recruiment_quiz_table')->where('id', $id)->delete();
             return $this->recruimentQuiz();
         } else if ($request->input('level') == "sales") {
 
-            $quiz_id = $request->quiz_id;
-            $res = DB::table('sales_quiz_table')->where('user_id', $quiz_id)->delete();
+            $id = $request->id;
+            $res = DB::table('sales_quiz_table')->where('id', $id)->delete();
             return $this->salesQuiz();
         } else {
-            $quiz_id = $request->quiz_id;
-            $res = DB::table('management_quiz_table')->where('user_id', $quiz_id)->delete();
+            $id = $request->id;
+            $res = DB::table('management_quiz_table')->where('id', $id)->delete();
             return $this->managementQuiz();
         }
     }
@@ -684,7 +717,7 @@ class UserController extends Controller
     public function delUser(Request $request)
     {
         $user_id = $request->user_id;
-        User::where('user_id', $user_id)->delete();
+        User::where('id', $user_id)->delete();
 
         if ($request->input('level') == "recruiment") {
             return $this->recruimentUser();
