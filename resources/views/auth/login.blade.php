@@ -77,7 +77,7 @@
                     {{ __('営業') }}
                 </a>
 
-                <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('company_register') }}">
+                <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('management_register') }}">
                     {{ __('企業登録') }}
                 </a>はこちら
 

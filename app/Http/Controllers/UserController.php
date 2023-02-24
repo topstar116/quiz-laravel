@@ -196,7 +196,7 @@ class UserController extends Controller
 
         $result = $this->checkResult($quiz_result);
 
-        return view('quiz.result3', compact('result'));
+        return view('quiz.result3_1', compact('result'));
     }
 
 
@@ -264,6 +264,8 @@ class UserController extends Controller
         $sub_type = '';
         $sub_title = '';
         $url = '';
+
+        $count = 0;
 
         if (auth()->user()->role == "recruiment") {
          
@@ -441,9 +443,107 @@ class UserController extends Controller
 
 
 
-        } else if (auth()->user()->role == "sales") {
-         
+        } elseif(auth()->user()->role == "sales") {
+
+            
+            if(str_contains($str, 'PJ適性-1-1')) $count++;
+            if(str_contains($str, 'PJ適性-2-1')) $count++;
+            if(str_contains($str, 'PJ適性-3-1')) $count++;
+            if(str_contains($str, 'PJ適性-4-1')) $count++;
+            if(str_contains($str, 'PJ適性-5-1')) $count++;
+            if(str_contains($str, 'PJ適性-6-1')) $count++;
+            if(str_contains($str, 'PJ適性-7-1')) $count++;
+            if(str_contains($str, 'PJ適性-8-1')) $count++;
+            if(str_contains($str, 'PJ適性-9-1')) $count++;
+            if(str_contains($str, 'PJ適性-10-1')) $count++;
+
+            if(str_contains($str, 'コミュニケーション-1-1')) $count++;
+            if(str_contains($str, 'コミュニケーション-2-1')) $count++;
+            if(str_contains($str, 'コミュニケーション-3-1')) $count++;
+            if(str_contains($str, 'コミュニケーション-4-1')) $count++;
+            if(str_contains($str, 'コミュニケーション-5-1')) $count++;
+            if(str_contains($str, 'コミュニケーション-6-1')) $count++;
+            if(str_contains($str, 'コミュニケーション-7-1')) $count++;
+            if(str_contains($str, 'コミュニケーション-8-1')) $count++;
+            if(str_contains($str, 'コミュニケーション-9-1')) $count++;
+            if(str_contains($str, 'コミュニケーション-10-1')) $count++;
+
+            if(str_contains($str, 'リーダー適性-1-1')) $count++;
+            if(str_contains($str, 'リーダー適性-2-1')) $count++;
+            if(str_contains($str, 'リーダー適性-3-1')) $count++;
+            if(str_contains($str, 'リーダー適性-4-1')) $count++;
+            if(str_contains($str, 'リーダー適性-5-1')) $count++;
+            if(str_contains($str, 'リーダー適性-6-1')) $count++;
+            if(str_contains($str, 'リーダー適性-7-1')) $count++;
+            if(str_contains($str, 'リーダー適性-8-1')) $count++;
+            if(str_contains($str, 'リーダー適性-9-1')) $count++;
+            if(str_contains($str, 'リーダー適性-10-1')) $count++;
+            
+            if($count >= 8){
+                $type = 'A';
+                $sub_title = 'どんな現場でも活躍してもらえそうです！適性が非常にあります';
+            }elseif($count >= 6 and $count < 8){
+                $type = 'B';
+                $sub_title = '現場によって合う合わないが分かれそうです！回答項目を見てご判断ください';
+            }else{
+                $type = 'C';
+                $sub_title = '現場によっては少し不安な面があります！回答項目を見てご判断ください';
+            }
+
         } else {
+
+            if(str_contains($str, '仕事内容-1-1')) $count++;
+            if(str_contains($str, '仕事内容-2-1')) $count++;
+            if(str_contains($str, '仕事内容-3-1')) $count++;
+            if(str_contains($str, '仕事内容-4-1')) $count++;
+            if(str_contains($str, '仕事内容-5-1')) $count++;
+            if(str_contains($str, '仕事内容-6-1')) $count++;
+            if(str_contains($str, '仕事内容-7-1')) $count++;
+            if(str_contains($str, '仕事内容-8-1')) $count++;
+            if(str_contains($str, '仕事内容-9-1')) $count++;
+            if(str_contains($str, '仕事内容-10-1')) $count++;
+
+            if(str_contains($str, '人間関係-1-1')) $count++;
+            if(str_contains($str, '人間関係-2-1')) $count++;
+            if(str_contains($str, '人間関係-3-1')) $count++;
+            if(str_contains($str, '人間関係-4-1')) $count++;
+            if(str_contains($str, '人間関係-5-1')) $count++;
+            if(str_contains($str, '人間関係-6-1')) $count++;
+            if(str_contains($str, '人間関係-7-1')) $count++;
+            if(str_contains($str, '人間関係-8-1')) $count++;
+            if(str_contains($str, '人間関係-9-1')) $count++;
+            if(str_contains($str, '人間関係-10-1')) $count++;
+
+            if(str_contains($str, '業務負担-1-1')) $count++;
+            if(str_contains($str, '業務負担-2-1')) $count++;
+            if(str_contains($str, '業務負担-3-1')) $count++;
+            if(str_contains($str, '業務負担-4-1')) $count++;
+            if(str_contains($str, '業務負担-5-1')) $count++;
+            if(str_contains($str, '業務負担-6-1')) $count++;
+            if(str_contains($str, '業務負担-7-1')) $count++;
+            if(str_contains($str, '業務負担-8-1')) $count++;
+            if(str_contains($str, '業務負担-9-1')) $count++;
+            if(str_contains($str, '業務負担-10-1')) $count++;
+            
+            if($count >= 8){
+                
+                $type = '◎';
+                $sub_title = '順調です！引き続き活躍していきしょう！';
+                $sub_type = '特になし';
+
+            }else if($count >= 6 and $count < 8){
+                
+                $type = '〇';
+                $sub_title = '少し気になることがあれば営業担当に相談しましょう！';
+                $sub_type = '営業担当にメールor電話相談';
+
+            }else{
+                
+                $type = '△';
+                $sub_title = '営業担当にいち早く電話して相談しましょう！';
+                $sub_type = '営業担当に電話相談';
+
+            }
          
         }
 
@@ -453,6 +553,7 @@ class UserController extends Controller
             'sub_type' => $sub_type,
             'sub_title' => $sub_title,
             'url' => $url,
+            
         );
 
     }

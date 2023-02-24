@@ -22,9 +22,9 @@ Route::post('/register', [RegisteredUserController::class, 'store'])
                 ->middleware('guest')
                 ->name('sales_register');
 
-                Route::get('/company_register', [RegisteredUserController::class, 'company_register'])
+                Route::get('/management_register', [RegisteredUserController::class, 'management_register'])
                 ->middleware('guest')
-                ->name('company_register');
+                ->name('management_register');
                 
 
 

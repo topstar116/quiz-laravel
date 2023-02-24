@@ -122,7 +122,7 @@
                                                         <p class="text-gray-900 whitespace-no-wrap">{{
                                                             explode(",",$quiz->回答項目)[1] }}</p>
                                                     </td>
-                                                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                                    <td class="py-5 border-b border-gray-200 bg-white text-sm">
                                                         <span
                                                             class="relative inline-block px-3 py-1 font-semibold text-red-900 leading-tight" style="float:left">
                                                             <span aria-hidden

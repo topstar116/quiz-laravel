@@ -28,7 +28,7 @@ class RegisteredUserController extends Controller
         return view('auth.sales');
     }
 
-    public function company_register()
+    public function management_register()
     {
         return view('auth.company');
     }

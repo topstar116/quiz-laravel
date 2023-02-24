@@ -121,7 +121,7 @@
                     {{ __('同意して登録する') }}
                 </x-button>
             </div>
-            <input type="hidden" name="role" value="company">
+            <input type="hidden" name="role" value="management">
         </form>
     </x-auth-card>
 </x-guest-layout>

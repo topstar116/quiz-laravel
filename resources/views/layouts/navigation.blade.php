@@ -39,6 +39,7 @@
                         </x-slot>
 
                         <x-slot name="content">
+                            
                             @if(Auth::user()->role == 'recruiment')
                             <x-dropdown-link :href="route('request1')" active="request()->routeIs('request1')">
                                 {{ __('職種適正') }}
@@ -57,7 +58,7 @@
                             <x-dropdown-link :href="route('request2')" active="request()->routeIs('request2')">
                                 {{ __('コミュニケーション') }}
                             </x-dropdown-link>
-                            <x-dropdown-link :href="route('request3_1')" active="request()->routeIs('request3_1')">
+                            <x-dropdown-link :href="route('request3')" active="request()->routeIs('request3')">
                                 {{ __('リーダー適性') }}
                             </x-dropdown-link>
 
@@ -68,7 +69,7 @@
                             <x-dropdown-link :href="route('request2')" active="request()->routeIs('request2')">
                                 {{ __('人間関係') }}
                             </x-dropdown-link>
-                            <x-dropdown-link :href="route('request3_1')" active="request()->routeIs('request3_1')">
+                            <x-dropdown-link :href="route('request3')" active="request()->routeIs('request3')">
                                 {{ __('業務負担') }}
                             </x-dropdown-link>
                             @endif
@@ -166,7 +167,7 @@
                 <x-responsive-nav-link>
                     {{ __('受検依頼一覧') }}
                 </x-responsive-nav-link>
-
+                @if(Auth::user()->role == 'recruiment')
                 <x-dropdown-link class="pl-8" :href="route('request1')" active="request()->routeIs('request1')">
                     {{ __('職種適正') }}
                 </x-dropdown-link>
@@ -176,6 +177,29 @@
                 <x-dropdown-link class="pl-8" :href="route('request3_1')" active="request()->routeIs('request3_1')">
                     {{ __('現状確認') }}
                 </x-dropdown-link>
+
+                @elseif(Auth::user()->role == 'sales')
+                <x-dropdown-link class="pl-8" :href="route('request1')" active="request()->routeIs('request1')">
+                    {{ __('PJ適性') }}
+                </x-dropdown-link>
+                <x-dropdown-link class="pl-8" :href="route('request2')" active="request()->routeIs('request2')">
+                    {{ __('コミュニケーション') }}
+                </x-dropdown-link>
+                <x-dropdown-link class="pl-8" :href="route('request3')" active="request()->routeIs('request3_1')">
+                    {{ __('リーダー適性') }}
+                </x-dropdown-link>
+
+                @elseif(Auth::user()->role == 'management')
+                <x-dropdown-link class="pl-8" :href="route('request1')" active="request()->routeIs('request1')">
+                    {{ __('仕事内容') }}
+                </x-dropdown-link>
+                <x-dropdown-link class="pl-8" :href="route('request2')" active="request()->routeIs('request2')">
+                    {{ __('人間関係') }}
+                </x-dropdown-link>
+                <x-dropdown-link class="pl-8" :href="route('request3')" active="request()->routeIs('request3_1')">
+                    {{ __('業務負担') }}
+                </x-dropdown-link>
+                @endif
 
                 @if(Auth::user()->role == 'recruiment')
                 <x-responsive-nav-link :href="route('admin')">

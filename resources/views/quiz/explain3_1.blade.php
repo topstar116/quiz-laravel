@@ -11,11 +11,16 @@
 
                     <ul class="list-decimal p-6 my-5 ml-5">
                         @if(Auth::user()->role == 'recruiment')
-                        <li class="my-2">本適性検査は職種、企業、おすすめ進路の 3つから成ります。</li>
+                        <!-- <li class="my-2">本適性検査は職種、企業、おすすめ進路の 3つから成ります。</li> -->
+                        <li class="my-2">適性検査については標準回答時間が10分。各質問項目について、二択で自分自身を評定します。</li>
+                        @elseif(Auth::user()->role == 'sales')
+                        <!-- <li class="my-2">本適性検査はPJ適性、コミュニケーション、リーダー適性の 3つから成ります。</li> -->
+                        <li class="my-2">適性検査については標準回答時間が10分。各質問項目について、二択で自分自身を評定します。</li>
+                        @elseif(Auth::user()->role == 'management')
+                        <!-- <li class="my-2">本適性検査は仕事内容、人間関係、業務負担の 3つから成ります。</li> -->
                         <li class="my-2">適性検査については標準回答時間が10分。各質問項目について、二択で自分自身を評定します。</li>
                         @endif
                     </ul>
-
 
                     <div class="border border-l-8 border-blue-800 shadow rounded-lg mt-8 mb-8">
                         <h5 class="text-2xl font-bold m-5 text-pink-500">注意点</h5>
