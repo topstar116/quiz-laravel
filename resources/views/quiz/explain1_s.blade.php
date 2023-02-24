@@ -7,7 +7,8 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
 
-                    <h5 class="text-3xl font-bold m-5">適性検査の構成と注意点</h5>
+                    <h5 class="text-2xl font-bold m-5">適性検査の構成と注意点</h5>
+
 
                     <div class="border border-l-8 border-blue-800 shadow rounded-lg mt-8 mb-8">
                         
@@ -20,7 +21,7 @@
                     </div>
 
                     <div style="text-align: center;">
-                        <a href="{{ route('quiz3') }}">
+                        <a href="{{ route('quiz1_s') }}">
                             <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-5 px-10 rounded-full">実施環境アンケートを始める</button>
                         </a>
                     </div>

@@ -7,14 +7,14 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
 
                 <div class="small-12 column examination-contents p-10">
-                    <form method="post" class="js-api-form js-loading-form" action="{{ route('result') }}">
+                    <form method="post" class="js-api-form js-loading-form" action="{{ route('result3_m') }}">
                         @csrf
                         <div class="question-group__questions">
 
                             <div class="question">
 
                                 <p class="my-10">【感想】今回の回答についての感想や、会社や上司に伝えておきたいこと等をご記載ください。</p>
-                                <textarea name="message" rows="4" class=" mb-20 block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"></textarea>
+                                <textarea name="express" rows="4" class=" mb-20 block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"></textarea>
 
                             </div>
 

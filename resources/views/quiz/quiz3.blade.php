@@ -3,6 +3,13 @@
     html{
         scroll-behavior: smooth;
     }
+    .question-group__description:before {
+        content: "{{ $項目 }}";
+    }
+
+    .question__description:before {
+        content: "Q" counter(question-counter);
+    }
 </style>
 <x-app-layout>
 
@@ -24,7 +31,6 @@
                         <!-- <div class="question-group__description opacity-0"></div> -->
 
                         <div class="question-group__description">
-                            <p>{{ $項目 }}</p>
                         </div>
 
                         <div class="question-group__questions">

@@ -3,6 +3,13 @@
     html{
         scroll-behavior: smooth;
     }
+    .question-group__description:before {
+        content: "{{ $項目 }}";
+    }
+
+    .question__description:before {
+        content: "Q" counter(question-counter);
+    }
 </style>
 
 <x-app-layout>
@@ -16,8 +23,8 @@
                     <form method="post" class="js-api-form js-loading-form" action="{{ route('result1') }}">
                         @csrf
                         <div class="question-group"></div>
-                        <div class="question-group__description mt-10">
-                            <p>{{ $項目 }}</p>
+                        <div class="question-group__description">
+                            <p></p>
                         </div>
                         <div class="question-group__questions">
 

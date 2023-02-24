@@ -4,7 +4,11 @@
         scroll-behavior: smooth;
     }
     .question-group__description:before {
-        content: "{{ $項目 }} - Q"counter(question-group-counter);
+        content: "{{ $項目 }}";
+    }
+
+    .question__description:before {
+        content: "Q" counter(question-counter);
     }
 </style>
 <x-app-layout>
@@ -15,23 +19,21 @@
 
                 <div class="small-12 column examination-contents p-10">
 
-                    <form method="post" class="js-api-form js-loading-form" action="{{ route('result3_1') }}">
-
+                    <form method="post" class="js-api-form js-loading-form" action="{{ route('result2_s') }}">
                         @csrf
 
                         <div class="question-group"></div>
-                        <div class="question-group__description opacity-0"></div>
-                        <div class="question-group__description opacity-0"></div>
+                        <!-- <div class="question-group__description opacity-0"></div> -->
 
                         <div class="question-group__description">
+                            
                         </div>
-
+                        
                         <div class="question-group__questions">
 
                             <div class="question">
 
                                 @foreach($quizs as $quiz)
-                                @if(str_contains($quiz->提案NO, '3-'))
                                 <div class="question__description mt-20"></div>
                                 <div class="question__choices">
                                     <ol>
@@ -45,7 +47,6 @@
                                         </li>
                                     </ol>
                                 </div>
-                                @endif
                                 @endforeach
                             </div>
 

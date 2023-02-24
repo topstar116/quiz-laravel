@@ -20,7 +20,7 @@
                     </div>
 
                     <div style="text-align: center;">
-                        <a href="{{ route('quiz3') }}">
+                        <a href="{{ route('quiz3_s') }}">
                             <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-5 px-10 rounded-full">実施環境アンケートを始める</button>
                         </a>
                     </div>
