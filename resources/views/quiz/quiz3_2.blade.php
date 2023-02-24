@@ -19,7 +19,7 @@
                         @csrf
 
                         <div class="question-group"></div>
-                        <div class="question-group__description opacity-0"></div>
+                        <div class="question-group__description opacity-0" style="height: 0;"></div>
 
                         <div class="question-group__description">
                         </div>
