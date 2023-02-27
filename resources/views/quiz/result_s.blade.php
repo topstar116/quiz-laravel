@@ -12,7 +12,7 @@
                     <div class="text-center complete-information items-center">
                         <img src="{{ asset('send.png') }}" class="m-auto mb-20">
                         
-                        <h1 class="text-3xl my-20">あなたのランクは「{{ $result['type'] }}」です。</h1>                        
+                        <h1 class="text-3xl my-20">あなたのランクは「{{ $result['sub_type'] }}」です。</h1>                        
                         <h1 class="text-1xl my-10">{{ $result['sub_title'] }}</h1>                        
 
                         <p class="my-20">

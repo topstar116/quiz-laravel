@@ -5,7 +5,11 @@
     }
 
     .question-group__description:before {
-        content: "{{ $項目 }} - Q"counter(question-group-counter);
+        content: "{{ $項目 }}";
+    }
+
+    .question__description:before {
+        content: "Q" counter(question-counter);
     }
 </style>
 
@@ -17,7 +21,7 @@
 
                 <div class="small-12 column examination-contents p-10">
 
-                    <form method="post" class="js-api-form js-loading-form" action="{{ route('quiz2_m') }}">
+                    <form method="post" class="js-api-form js-loading-form" action="{{ route('result1_m') }}">
                         @csrf
                         <div class="question-group"></div>
                         <div class="question-group__description mt-10">

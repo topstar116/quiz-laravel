@@ -5,9 +5,13 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-
+                @if(isset($result))
+                    <h1 class="p-5 bg-blue-400 max-w-7xl mx-auto sm:px-6 lg:px-8 text-white">
+                        送信されました。
+                    </h1>
+                @endif
                 <div class="small-12 column examination-contents p-10">
-                    <form method="post" class="js-api-form js-loading-form" action="{{ route('result3_m') }}">
+                    <form method="post" class="js-api-form js-loading-form" action="{{ route('result_express') }}">
                         @csrf
                         <div class="question-group__questions">
 
