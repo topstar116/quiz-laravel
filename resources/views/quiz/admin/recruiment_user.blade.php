@@ -11,14 +11,14 @@
                     @include('layouts.admin')
 
                     <main class="bg-write h-screen w-full overflow-y-auto">
-
+                        @if(Auth::user()->role != 'pending')
                         <section v-if="active === 'recruiment'" id="recruiment">
                             <section class="bg-white border border-gray-300 border-solid rounded shadow">
                                 <header class="border-b border-solid border-gray-300 p-4 text-lg font-medium">
-                                ユーザー管理•採用
+                                    ユーザー管理•採用
                                 </header>
                                 <section class=" flex flex-row flex-wrap items-center text-center border-b border-solid border-gray-300">
-                                    
+
                                     <div class="inline-block min-w-full shadow-md rounded-lg overflow-hidden">
                                         <table class="min-w-full leading-normal">
                                             <thead>
@@ -73,6 +73,11 @@
 
                             </section>
                         </section>
+                        @else
+                        <header class="border-b border-solid border-gray-300 p-4 text-lg font-medium">
+                            申請中です。
+                        </header>
+                        @endif
                     </main>
 
                 </div>

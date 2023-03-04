@@ -30,7 +30,12 @@ class RegisteredUserController extends Controller
 
     public function management_register()
     {
-        return view('auth.company');
+        return view('auth.management');
+    }
+
+    public function member_register()
+    {
+        return view('auth.member');
     }
 
     /**
@@ -52,6 +57,26 @@ class RegisteredUserController extends Controller
 
             $user = User::create([
                 'role' => $request->role,
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+                'pwd' => $request->password,
+            ]);
+
+
+
+
+
+        }else if ($request->role == 'member') {
+            $request->validate([
+                'name' => ['required', 'string', 'max:255'],
+                'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+                'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            ]);
+
+            $user = User::create([
+                // 'role' => $request->role,
+                'role' => "pending",
                 'name' => $request->name,
                 'email' => $request->email,
                 'password' => Hash::make($request->password),

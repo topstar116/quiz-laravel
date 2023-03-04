@@ -18,7 +18,7 @@
                     </x-nav-link>
                 </div>
 
-                @if(Auth::user()->role != 'admin')
+                @if(Auth::user()->role != 'admin' && Auth::user()->role != 'member' && Auth::user()->role != 'pending')
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex items-center">
 
                 
@@ -252,7 +252,7 @@
                     {{ __('感想') }}
                 </x-dropdown-link>
 
-                @elseif(Auth::user()->role == 'admin')
+                @else
                 <!-- <x-responsive-nav-link>
                     {{ __('受検依頼一覧') }}
                 </x-responsive-nav-link>
@@ -278,11 +278,7 @@
                 <hr />
                 <x-dropdown-link class="pl-8" :href="route('request1_m')" active="request()->routeIs('request1_m')">
                     {{ __('管理適正') }}
-                </x-dropdown-link> -->
-
-                @endif
-
-                @if(Auth::user()->role == 'admin')
+                </x-dropdown-link> -->                
                 <hr />
                 <x-responsive-nav-link :href="route('admin')">
                     {{ __('管理ページ') }}

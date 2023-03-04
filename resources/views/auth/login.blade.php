@@ -70,16 +70,20 @@
                 @endif
 
                 <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('register') }}">
-                    {{ __('採用、管理') }}
+                    {{ __('採用') }}
                 </a>
 
                 <a class="underline text-sm text-gray-600 hover:text-gray-900 mx-4" href="{{ route('sales_register') }}">
                     {{ __('営業') }}
                 </a>
 
-                <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('management_register') }}">
+                <!-- <a class="underline text-sm text-gray-600 hover:text-gray-900 mr-4" href="{{ route('management_register') }}">
                     {{ __('企業登録') }}
-                </a>はこちら
+                </a> -->
+                
+                <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('member_register') }}">
+                    {{ __('管理') }}
+                </a>登録はこちら
 
             </div>
         </form>

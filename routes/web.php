@@ -143,6 +143,7 @@ Route::middleware('auth')->group(function () {
     Route::get('admin', [UserController::class, 'recruimentUser'])->name('admin');
     Route::get('admin/sales', [UserController::class, 'salesUser'])->name('admin.sales');
     Route::get('admin/management', [UserController::class, 'managementUser'])->name('admin.management');
+    Route::get('admin/member', [UserController::class, 'memberUser'])->name('admin.member');
 
     Route::get('admin/quiz', [UserController::class, 'recruimentQuiz'])->name('admin.quiz');
     Route::get('admin/quiz/sales', [UserController::class, 'salesQuiz'])->name('admin.quiz.sales');
@@ -158,7 +159,7 @@ Route::middleware('auth')->group(function () {
     Route::get('admin/result/sales', [UserController::class, 'salesResult'])->name('admin.result.sales');
     Route::get('admin/result/management', [UserController::class, 'managementResult'])->name('admin.result.management');
 
-
+    Route::post('admin/update', [UserController::class, 'Update'])->name('admin.update');
     Route::post('admin/pdf', [UserController::class, 'Pdf'])->name('admin.pdf');
     Route::post('admin/csv', [UserController::class, 'Csv'])->name('admin.csv');
 

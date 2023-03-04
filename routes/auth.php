@@ -25,6 +25,10 @@ Route::post('/register', [RegisteredUserController::class, 'store'])
                 Route::get('/management_register', [RegisteredUserController::class, 'management_register'])
                 ->middleware('guest')
                 ->name('management_register');
+
+                Route::get('/member_register', [RegisteredUserController::class, 'member_register'])
+                ->middleware('guest')
+                ->name('member_register');
                 
 
 

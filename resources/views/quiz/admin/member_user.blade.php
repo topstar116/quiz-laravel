@@ -10,8 +10,8 @@
                 <div id="app" class="md:flex antialiased">
                     @include('layouts.admin')
 
-                    <main class="bg-white-100 h-screen w-full overflow-y-auto">
-                        @if(Auth::user()->role != 'pending')
+                    <main class="bg-write h-screen w-full overflow-y-auto">
+
                         <section v-if="active === 'recruiment'" id="recruiment">
                             <section class="bg-white border border-gray-300 border-solid rounded shadow">
                                 <header class="border-b border-solid border-gray-300 p-4 text-lg font-medium">
@@ -19,39 +19,21 @@
                                 </header>
                                 <section class=" flex flex-row flex-wrap items-center text-center border-b border-solid border-gray-300">
                                     
-                                    <div class="inline-block min-w-full shadow-md rounded-lg overflow-x-auto">
-                                        <table class="min-w-full leading-normal" style="width: 2048px;">
+                                    <div class="inline-block min-w-full shadow-md rounded-lg overflow-hidden">
+                                        <table class="min-w-full leading-normal">
                                             <thead>
                                                 <tr>
                                                     <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-700 uppercase tracking-wider">
                                                         #
                                                     </th>
                                                     <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                                                        企業名
-                                                    </th>
-                                                    <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                                                        役職
-                                                    </th>
-                                                    <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                                                        氏名
+                                                        名前
                                                     </th>
                                                     <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-700 uppercase tracking-wider">
                                                         メールアドレス
                                                     </th>
                                                     <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                                                        電話番号
-                                                    </th>
-                                                    <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                                                        興味のある課題・サービス
-                                                    </th>
-                                                    <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                                                        希望内容
-                                                    </th>
-                                                    <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                                                        弊社を知ったきっかけ
-                                                    </th>
-                                                    <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                                                        その他の方は記入ください
+                                                        スターテス
                                                     </th>
                                                     <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-700 uppercase tracking-wider">
                                                         Action
@@ -61,37 +43,23 @@
                                             <tbody>
                                                 <?php $cnt = 1; ?>
                                                 @foreach($users as $user)
-                                                @if($user->role == "management")
+                                                @if($user->role == "pending" || $user->role == "member" || $user->role == "admin")
                                                 <tr>
                                                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                                         <p class="text-gray-600 whitespace-no-wrap">{{ $cnt++ }}</p>
                                                     </td>
                                                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                                        <p class="text-gray-600 whitespace-no-wrap">{{ $user->company }}</p>
-                                                    </td>
-                                                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                                        <p class="text-gray-600 whitespace-no-wrap">{{ $user->pos }}</p>
-                                                    </td>
-                                                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                                         <p class="text-gray-600 whitespace-no-wrap">{{ $user->name }}</p>
                                                     </td>
                                                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                                        <p class="text-gray-600 whitespace-no-wrap">{{ $user->email }}</p>
+                                                        <p class="text-gray-900 whitespace-no-wrap">{{ $user->email }}</p>
                                                     </td>
                                                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                                        <p class="text-gray-600 whitespace-no-wrap">{{ $user->phone }}</p>
-                                                    </td>
-                                                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                                        <p class="text-gray-600 whitespace-no-wrap">{{ $user->fav_task }}</p>
-                                                    </td>
-                                                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                                        <p class="text-gray-600 whitespace-no-wrap">{{ $user->hop_content }}</p>
-                                                    </td>
-                                                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                                        <p class="text-gray-900 whitespace-no-wrap">{{ $user->knw_case }}</p>
-                                                    </td>
-                                                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                                        <p class="text-gray-900 whitespace-no-wrap">{{ $user->others }}</p>
+                                                        <select class="text-gray-900 whitespace-no-wrap" onchange="updateStatus(this, '{{ $user->id }}');">
+                                                            <option value="pending" {{ $user->role == 'pending' ? 'selected' : ''}}>申請中</option>
+                                                            <option value="member" {{ $user->role == 'member' ? 'selected' : ''}}>ユーザー管理者</option>
+                                                            <option value="admin" {{ $user->role == 'admin' ? 'selected' : ''}}>システム管理者</option>
+                                                        </select>
                                                     </td>
                                                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                                         <form method="GET" action="{{ route('del.user') }}">
@@ -99,7 +67,7 @@
                                                             <span class="relative inline-block px-3 py-1 font-semibold text-red-900 leading-tight">
                                                                 <span aria-hidden class="absolute inset-0 bg-red-200 opacity-50 rounded-full"></span>
                                                                 <input type="hidden" name="user_id" value="{{ $user->id }}">
-                                                                <input type="hidden" name="level" value="management">
+                                                                <input type="hidden" name="level" value="recruiment">
                                                                 <button type="submit" class="relative" onclick="return confirm('削除しますか？');">削除</button>
                                                             </span>
                                                         </form>
@@ -115,12 +83,24 @@
 
                             </section>
                         </section>
-                        @else
-                        <header class="border-b border-solid border-gray-300 p-4 text-lg font-medium">
-                            申請中です。
-                        </header>
-                        @endif
                     </main>
+
+                    <script>
+
+                                function updateStatus(ele, id){
+                                    
+                                    if(!confirm("変更しますか？")) return;
+                                    
+                                    var role = $(ele).val();
+                                    
+                                    $.post("{{ route('admin.update') }}", {id:id, role:role, "_token": "{{ csrf_token() }}"}, function(res){
+
+                                        alert("変更されました。");
+                                    });
+
+                                }
+
+                    </script>
 
                 </div>
 

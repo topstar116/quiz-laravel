@@ -727,6 +727,21 @@ class UserController extends Controller
         return view('quiz.admin.management_user', compact('users', 'page'));
     }
 
+    public function memberUser()
+    {
+        $users = User::paginate();
+        $page = "memberUser";
+        return view('quiz.admin.member_user', compact('users', 'page'));
+    }
+
+    public function Update(Request $request)
+    {
+        $id = $request->id;
+        $role = $request->role;
+
+        return DB::table('users')->where('id', $id)->update(['role'=>$role]);
+    }
+
 
 
 
