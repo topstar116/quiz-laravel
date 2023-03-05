@@ -81,7 +81,11 @@
                     {{ __('企業登録') }}
                 </a> -->
                 
-                <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('member_register') }}">
+                <!-- <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('member_register') }}">
+                    {{ __('管理') }}
+                </a>登録はこちら -->
+
+                <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('management_register') }}">
                     {{ __('管理') }}
                 </a>登録はこちら
 
