@@ -14,5 +14,6 @@ class Quiz1 extends Model
         '回答項目',
         '提案№',
         'お勧め進路',
+        '回答日'
     ];
 }

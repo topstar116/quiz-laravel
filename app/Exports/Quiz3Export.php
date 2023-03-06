@@ -15,7 +15,8 @@ class Quiz3Export implements FromQuery, WithHeadings
             '項目',
             '回答項目',
             '状況',
-            '説明概要'
+            '説明概要',
+            '回答日'
         );
     }
 
@@ -26,7 +27,8 @@ class Quiz3Export implements FromQuery, WithHeadings
             '項目',
             '回答項目',
             '状況',
-            '説明概要'
+            '説明概要',
+            '回答日'
         ];
     }
 }

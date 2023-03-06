@@ -14,5 +14,6 @@ class Quiz2 extends Model
         '回答項目',
         'ランク',
         '説明概要',
+        '回答日'
     ];
 }

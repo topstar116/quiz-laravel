@@ -15,7 +15,8 @@ class Quiz1Export implements FromQuery, WithHeadings
             '項目',
             '回答項目',
             '提案№',
-            'お勧め進路'
+            'お勧め進路',
+            '回答日'
         );
     }
 
@@ -26,7 +27,8 @@ class Quiz1Export implements FromQuery, WithHeadings
             '項目',
             '回答項目',
             '提案№',
-            'お勧め進路'
+            'お勧め進路',
+            '回答日'
         ];
     }
 }

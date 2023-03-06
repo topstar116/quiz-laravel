@@ -940,13 +940,15 @@ class UserController extends Controller
             'quiz3' => $data['quiz3'],
             'no3' => $data['no3'],
             'res3' => $data['res3'],
+            'created_at' => $data['created_at'],
         ];
 
         $pdf = PDF::loadView('pdf', $content);
 
         $pdf_str = $type == 'recruiment' ? '_採用候補者データ.pdf' : ($type == 'sales' ? '_営業適性データ.pdf' : '_就業状況データ.pdf');
 
-        return $pdf->download($data['name'] . $pdf_str);
+        // return $pdf->download($data['name'] . $pdf_str);
+        return $pdf->stream($data['name'] . $pdf_str);
     }
 
 
@@ -982,7 +984,7 @@ class UserController extends Controller
             $res = DB::table('quiz_result')->where('id', $item)->first();
             $user = DB::table('users')->where('id', $res->user_id)->first();
 
-            // dd($user->name);
+            // dd($user->initName_f);
 
             $quiz1 = $res->quiz1;
             if ($quiz1 != '') {
@@ -1002,26 +1004,29 @@ class UserController extends Controller
                         '項目' => explode('-', $quiz1)[0],
                         '回答項目' => $answer_str,
                         '提案№' => $no1,
-                        'お勧め進路' => $res1
+                        'お勧め進路' => $res1,
+                        '回答日' => $res->created_at
                     ));
                 }
                 
-                if($type = 'sales'){
+                if($type == 'sales'){
                     DB::table('quiz2s')->insert(array(
                         '氏名' => $user->initName_f,
                         '項目' => explode('-', $quiz1)[0],
                         '回答項目' => $answer_str,
                         'ランク' => $no1,
-                        '説明概要' => $res1
+                        '説明概要' => $res1,
+                        '回答日' => $res->created_at
                     ));
                 }
-                if($type = 'management'){
+                if($type == 'management'){
                     DB::table('quiz3s')->insert(array(
                         '氏名' => $user->name,
                         '項目' => explode('-', $quiz1)[0],
                         '回答項目' => $answer_str,
                         '状況' => $no1,
-                        '説明概要' => $res1
+                        '説明概要' => $res1,
+                        '回答日' => $res->created_at
                     ));
                 }
             }
@@ -1047,25 +1052,28 @@ class UserController extends Controller
                         '項目' => explode('-', $quiz2)[0],
                         '回答項目' => $answer_str,
                         '提案№' => $no2,
-                        'お勧め進路' => $res2
+                        'お勧め進路' => $res2,
+                        '回答日' => $res->created_at
                     ));
                 }
-                if($type = 'sales'){
+                if($type == 'sales'){
                     DB::table('quiz2s')->insert(array(
                         '氏名' => $user->initName_f,
                         '項目' => explode('-', $quiz2)[0],
                         '回答項目' => $answer_str,
                         'ランク' => $no2,
-                        '説明概要' => $res2
+                        '説明概要' => $res2,
+                        '回答日' => $res->created_at
                     ));
                 }
-                if($type = 'management'){
+                if($type == 'management'){
                     DB::table('quiz3s')->insert(array(
                         '氏名' => $user->name,
                         '項目' => explode('-', $quiz2)[0],
                         '回答項目' => $answer_str,
                         '状況' => $no2,
-                        '説明概要' => $res2
+                        '説明概要' => $res2,
+                        '回答日' => $res->created_at
                     ));
                 }
             }
@@ -1091,34 +1099,35 @@ class UserController extends Controller
                         '項目' => explode('-', $quiz3)[0],
                         '回答項目' => $answer_str,
                         '提案№' => $no3,
-                        'お勧め進路' => $res3
+                        'お勧め進路' => $res3,
+                        '回答日' => $res->created_at
                     ));
                 }
                 
-                if($type = 'sales'){
+                if($type == 'sales'){
                     DB::table('quiz2s')->insert(array(
                         '氏名' => $user->initName_f,
                         '項目' => explode('-', $quiz3)[0],
                         '回答項目' => $answer_str,
                         'ランク' => $no3,
-                        '説明概要' => $res3
+                        '説明概要' => $res3,
+                        '回答日' => $res->created_at
                     ));
                 }
-                if($type = 'management'){
+                if($type == 'management'){
                     DB::table('quiz3s')->insert(array(
                         '氏名' => $user->name,
                         '項目' => explode('-', $quiz3)[0],
                         '回答項目' => $answer_str,
                         '状況' => $no3,
-                        '説明概要' => $res3
+                        '説明概要' => $res3,
+                        '回答日' => $res->created_at
                     ));
                 }
             }
         }
 
-
-
-        $csv_str = $pdf_str = $type == 'recruiment' ? '採用候補者データ.xlsx' : ($type == 'sales' ? '営業適性データ.xlsx' : '就業状況データ.xlsx');
+        $csv_str = $type == 'recruiment' ? '採用候補者データ.xlsx' : ($type == 'sales' ? '営業適性データ.xlsx' : '就業状況データ.xlsx');
         if($type == 'recruiment') return Excel::download(new Quiz1Export, $csv_str);
         if($type == 'sales') return Excel::download(new Quiz2Export, $csv_str);
         if($type == 'management') return Excel::download(new Quiz3Export, $csv_str);

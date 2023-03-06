@@ -14,5 +14,6 @@ class Quiz3 extends Model
         '回答項目',
         '状況',
         '説明概要',
+        '回答日'
     ];
 }
