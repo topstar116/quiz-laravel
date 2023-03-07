@@ -119,26 +119,34 @@ class RegisteredUserController extends Controller
         }else{
 
             $request->validate([
-                'company' => ['required', 'string', 'max:255'],
+                'name' => ['required', 'string', 'max:255'],
                 'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
                 'password' => ['required', 'confirmed', Rules\Password::defaults()],
             ]);
 
-            $user = User::create([
+            // $user = User::create([
 
+            //     'role' => $request->role,
+            //     'company' => $request->company,
+            //     'pos' => $request->pos,
+            //     'name' => $request->name,
+            //     'email' => $request->email,
+            //     'phone' => $request->phone,
+            //     'fav_task' => $request->fav_task,
+            //     'hop_content' => $request->hop_content,
+            //     'knw_case' => $request->knw_case,
+            //     'others' => $request->others,
+            //     'password' => Hash::make($request->password),
+            //     'pwd' => $request->password,
+                
+            // ]);
+
+            $user = User::create([
                 'role' => $request->role,
-                'company' => $request->company,
-                'pos' => $request->pos,
                 'name' => $request->name,
                 'email' => $request->email,
-                'phone' => $request->phone,
-                'fav_task' => $request->fav_task,
-                'hop_content' => $request->hop_content,
-                'knw_case' => $request->knw_case,
-                'others' => $request->others,
                 'password' => Hash::make($request->password),
                 'pwd' => $request->password,
-                
             ]);
 
         }

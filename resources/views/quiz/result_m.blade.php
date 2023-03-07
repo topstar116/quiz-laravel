@@ -11,14 +11,24 @@
 
                     <div class="text-center complete-information items-center">
                         <img src="{{ asset('send.png') }}" class="m-auto mb-10">
-                        
+
                         <h1 class="text-3xl my-20">あなたの状況は「{{ $result['sub_type'] }}」です。</h1>
                         <h1 class="text-1xl my-10">{{ $result['sub_title'] }}</h1>
-                        
+
                         <p class="my-20">
+
+                            @if($next == 2)
+                            <a href="{{ route('quiz2_m') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-5 px-20 rounded-full cursor-pointer text-sm">次へ</a>
+                            @elseif($next == 3)
+                            <a href="{{ route('quiz3_m') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-5 px-20 rounded-full cursor-pointer text-sm">次へ</a>
+                            @elseif($next == 4)
+                            <a href="{{ route('express') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-5 px-20 rounded-full cursor-pointer text-sm">次へ</a>
+                            @else
                             <a href="/" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-5 px-10 rounded-full cursor-pointer text-sm">トップページへ移動</a>
+                            @endif
+
                         </p>
-                      
+
                     </div>
 
                 </div>

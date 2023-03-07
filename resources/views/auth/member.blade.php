@@ -1,7 +1,7 @@
 <x-guest-layout>
     <x-auth-card>
         <x-slot name="logo">
-            <div style="font-size: 40px;font-weight: bolder;">管理登録</div>
+            <div style="font-size: 40px;font-weight: bolder;">システム管理登録</div>
         </x-slot>
 
         <!-- Validation Errors -->

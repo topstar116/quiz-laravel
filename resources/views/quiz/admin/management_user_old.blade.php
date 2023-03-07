@@ -20,20 +20,39 @@
                                 <section class=" flex flex-row flex-wrap items-center text-center border-b border-solid border-gray-300">
                                     
                                     <div class="inline-block min-w-full shadow-md rounded-lg overflow-x-auto">
-                                        <table class="min-w-full leading-normal">
+                                        <table class="min-w-full leading-normal" style="width: 2048px;">
                                             <thead>
                                                 <tr>
                                                     <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-700 uppercase tracking-wider">
                                                         #
                                                     </th>
-                                                    
+                                                    <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                                                        企業名
+                                                    </th>
+                                                    <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                                                        役職
+                                                    </th>
                                                     <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-700 uppercase tracking-wider">
                                                         氏名
                                                     </th>
                                                     <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-700 uppercase tracking-wider">
                                                         メールアドレス
                                                     </th>
-                                                    
+                                                    <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                                                        電話番号
+                                                    </th>
+                                                    <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                                                        興味のある課題・サービス
+                                                    </th>
+                                                    <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                                                        希望内容
+                                                    </th>
+                                                    <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                                                        弊社を知ったきっかけ
+                                                    </th>
+                                                    <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                                                        その他の方は記入ください
+                                                    </th>
                                                     <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-700 uppercase tracking-wider">
                                                         Action
                                                     </th>
@@ -47,14 +66,33 @@
                                                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                                         <p class="text-gray-600 whitespace-no-wrap">{{ $cnt++ }}</p>
                                                     </td>
-                                                    
+                                                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                                        <p class="text-gray-600 whitespace-no-wrap">{{ $user->company }}</p>
+                                                    </td>
+                                                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                                        <p class="text-gray-600 whitespace-no-wrap">{{ $user->pos }}</p>
+                                                    </td>
                                                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                                         <p class="text-gray-600 whitespace-no-wrap">{{ $user->name }}</p>
                                                     </td>
                                                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                                         <p class="text-gray-600 whitespace-no-wrap">{{ $user->email }}</p>
                                                     </td>
-                                                    
+                                                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                                        <p class="text-gray-600 whitespace-no-wrap">{{ $user->phone }}</p>
+                                                    </td>
+                                                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                                        <p class="text-gray-600 whitespace-no-wrap">{{ $user->fav_task }}</p>
+                                                    </td>
+                                                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                                        <p class="text-gray-600 whitespace-no-wrap">{{ $user->hop_content }}</p>
+                                                    </td>
+                                                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                                        <p class="text-gray-900 whitespace-no-wrap">{{ $user->knw_case }}</p>
+                                                    </td>
+                                                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                                        <p class="text-gray-900 whitespace-no-wrap">{{ $user->others }}</p>
+                                                    </td>
                                                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                                         <form method="GET" action="{{ route('del.user') }}">
                                                             @csrf

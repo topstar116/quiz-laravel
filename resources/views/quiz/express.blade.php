@@ -26,7 +26,11 @@
 
                         <div class="text-center">
                             <div id="answer_finish_base"></div>
+                            @if(!isset($result))
                             <input type="submit" value="回答を送信する" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-5 px-20 rounded-full cursor-pointer">
+                            @else
+                            <a href="/" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-5 px-10 rounded-full cursor-pointer text-sm">トップページへ移動</a>
+                            @endif
                         </div>
                     </form>
                 </div>

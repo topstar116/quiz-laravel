@@ -77,17 +77,15 @@
                     {{ __('営業') }}
                 </a>
 
-                <!-- <a class="underline text-sm text-gray-600 hover:text-gray-900 mr-4" href="{{ route('management_register') }}">
-                    {{ __('企業登録') }}
-                </a> -->
-                
-                <!-- <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('member_register') }}">
-                    {{ __('管理') }}
-                </a>登録はこちら -->
-
                 <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('management_register') }}">
                     {{ __('管理') }}
-                </a>登録はこちら
+                </a>
+
+                <!-- <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('member_register') }}">
+                    {{ __('ADMIN') }}
+                </a> -->
+                
+                登録はこちら
 
             </div>
         </form>

@@ -37,7 +37,10 @@
                                                         <input type="checkbox" name="checkAll" class="checkAll" />
                                                     </th>
                                                     <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                                                        氏名
+                                                        イニシャル名字 
+                                                    </th>
+                                                    <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                                                        イニシャル名前
                                                     </th>
                                                     <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-700 uppercase tracking-wider">
                                                         項目
@@ -64,6 +67,9 @@
                                                         <p class="text-gray-600 whitespace-no-wrap">{{ $result->initName_f }}</p>
                                                     </td>
                                                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                                        <p class="text-gray-600 whitespace-no-wrap">{{ $result->initName_l }}</p>
+                                                    </td>
+                                                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                                         <p class="text-gray-600 whitespace-no-wrap">営業</p>
                                                     </td>
                                                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
@@ -76,7 +82,7 @@
                                                             @csrf
                                                             <span class="relative inline-block px-3 py-1 font-semibold text-white-900 leading-tight">
                                                                 <span aria-hidden class="absolute inset-0 bg-blue-200 opacity-50 rounded-full"></span>
-                                                                <input type="hidden" name="name" value="{{ $result->initName_f }}">
+                                                                <input type="hidden" name="name" value="{{ $result->initName_f.' '.$result->initName_l }}">
                                                                 <input type="hidden" name="id" value="{{ $result->id }}">
                                                                 <input type="hidden" name="type" value="{{ $result->type }}">
                                                                 <input type="hidden" name="quiz1" value="{{ $result->quiz1 }}">

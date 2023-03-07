@@ -204,75 +204,6 @@ class UserController extends Controller
 
 
 
-    public function viewResult1_m(Request $request)
-    {
-        $id = Auth::user()->id;
-        $quiz_result = $request->all();
-        unset($quiz_result['_token']);
-        $quiz_result = implode(",", $quiz_result);
-        $rows = DB::table('quiz_result')->where(array('user_id' => $id))->count();
-
-        if ($rows < 1) {
-            DB::table('quiz_result')->insert(['created_at' => date('Y-m-d h:i:s'), 'user_id' => $id, 'quiz1' => $quiz_result, 'type' => 'management']);
-        } else {
-            DB::table('quiz_result')->where(array('user_id' => $id))->update(['quiz1' => $quiz_result]);
-        }
-
-        // DB::table('users')->where('user_id', auth()->user()->id)->update(['status' => 1]);
-
-        $result = $this->checkResult($quiz_result, 'management');
-
-        DB::table('quiz_result')->where(array('user_id' => $id))->update(['no1' => $result['sub_type'], 'res1' => $result['sub_title']]);
-
-        return view('quiz.result_m', compact('result'));
-    }
-
-    public function viewResult2_m(Request $request)
-    {
-        $id = Auth::user()->id;
-        $quiz_result = $request->all();
-        unset($quiz_result['_token']);
-        $quiz_result = implode(",", $quiz_result);
-
-        $rows = DB::table('quiz_result')->where(array('user_id' => $id))->count();
-        if ($rows < 1) {
-            DB::table('quiz_result')->insert(['created_at' => date('Y-m-d h:i:s'), 'user_id' => $id, 'quiz2' => $quiz_result, 'type' => 'management']);
-        } else {
-            DB::table('quiz_result')->where(array('user_id' => $id))->update(['quiz2' => $quiz_result]);
-        }
-
-        // DB::table('users')->where('user_id', auth()->user()->id)->update(['status' => 1]);
-
-        $result = $this->checkResult($quiz_result, 'management');
-
-        DB::table('quiz_result')->where(array('user_id' => $id))->update(['no2' => $result['sub_type'], 'res2' => $result['sub_title']]);
-
-        return view('quiz.result_m', compact('result'));
-    }
-    public function viewResult3_m(Request $request)
-    {
-        $id = Auth::user()->id;
-        $quiz_result = $request->all();
-        unset($quiz_result['_token']);
-        $quiz_result = implode(",", $quiz_result);
-
-        $rows = DB::table('quiz_result')->where(array('user_id' => $id))->count();
-        if ($rows < 1) {
-            DB::table('quiz_result')->insert(['created_at' => date('Y-m-d h:i:s'), 'user_id' => $id, 'quiz3' => $quiz_result, 'type' => 'management']);
-        } else {
-            DB::table('quiz_result')->where(array('user_id' => $id))->update(['quiz3' => $quiz_result]);
-        }
-        // DB::table('users')->where('user_id', auth()->user()->id)->update(['status' => 1]);
-
-        $result = $this->checkResult($quiz_result, 'management');
-
-        DB::table('quiz_result')->where(array('user_id' => $id))->update(['no3' => $result['sub_type'], 'res3' => $result['sub_title']]);
-
-        return view('quiz.result_m', compact('result'));
-    }
-
-
-
     public function viewExpress(Request $request)
     {
         return view('quiz.express');
@@ -639,7 +570,9 @@ class UserController extends Controller
 
         DB::table('quiz_result')->where(array('user_id' => $id))->update(['no1' => $result['sub_type'], 'res1' => $result['sub_title']]);
 
-        return view('quiz.result_s', compact('result'));
+        $next = 2;
+
+        return view('quiz.result_s', compact('result','next'));
     }
 
     public function viewResult2_s(Request $request)
@@ -662,7 +595,9 @@ class UserController extends Controller
 
         DB::table('quiz_result')->where(array('user_id' => $id))->update(['no2' => $result['sub_type'], 'res2' => $result['sub_title']]);
 
-        return view('quiz.result_s', compact('result'));
+        $next = 3;
+
+        return view('quiz.result_s', compact('result', 'next'));
     }
 
     public function viewResult3_s(Request $request)
@@ -685,9 +620,84 @@ class UserController extends Controller
 
         DB::table('quiz_result')->where(array('user_id' => $id))->update(['no3' => $result['sub_type'], 'res3' => $result['sub_title']]);
 
-        return view('quiz.result_s', compact('result'));
+        $next = 1;
+
+        return view('quiz.result_s', compact('result', 'next'));
     }
 
+
+
+    public function viewResult1_m(Request $request)
+    {
+        $id = Auth::user()->id;
+        $quiz_result = $request->all();
+        unset($quiz_result['_token']);
+        $quiz_result = implode(",", $quiz_result);
+        $rows = DB::table('quiz_result')->where(array('user_id' => $id))->count();
+
+        if ($rows < 1) {
+            DB::table('quiz_result')->insert(['created_at' => date('Y-m-d h:i:s'), 'user_id' => $id, 'quiz1' => $quiz_result, 'type' => 'management']);
+        } else {
+            DB::table('quiz_result')->where(array('user_id' => $id))->update(['quiz1' => $quiz_result]);
+        }
+
+        // DB::table('users')->where('user_id', auth()->user()->id)->update(['status' => 1]);
+
+        $result = $this->checkResult($quiz_result, 'management');
+
+        DB::table('quiz_result')->where(array('user_id' => $id))->update(['no1' => $result['sub_type'], 'res1' => $result['sub_title']]);
+
+        $next = 2;
+
+        return view('quiz.result_m', compact('result', 'next'));
+    }
+
+    public function viewResult2_m(Request $request)
+    {
+        $id = Auth::user()->id;
+        $quiz_result = $request->all();
+        unset($quiz_result['_token']);
+        $quiz_result = implode(",", $quiz_result);
+
+        $rows = DB::table('quiz_result')->where(array('user_id' => $id))->count();
+        if ($rows < 1) {
+            DB::table('quiz_result')->insert(['created_at' => date('Y-m-d h:i:s'), 'user_id' => $id, 'quiz2' => $quiz_result, 'type' => 'management']);
+        } else {
+            DB::table('quiz_result')->where(array('user_id' => $id))->update(['quiz2' => $quiz_result]);
+        }
+
+        // DB::table('users')->where('user_id', auth()->user()->id)->update(['status' => 1]);
+
+        $result = $this->checkResult($quiz_result, 'management');
+
+        DB::table('quiz_result')->where(array('user_id' => $id))->update(['no2' => $result['sub_type'], 'res2' => $result['sub_title']]);
+
+        $next = 3;
+
+        return view('quiz.result_m', compact('result', 'next'));
+    }
+    public function viewResult3_m(Request $request)
+    {
+        $id = Auth::user()->id;
+        $quiz_result = $request->all();
+        unset($quiz_result['_token']);
+        $quiz_result = implode(",", $quiz_result);
+
+        $rows = DB::table('quiz_result')->where(array('user_id' => $id))->count();
+        if ($rows < 1) {
+            DB::table('quiz_result')->insert(['created_at' => date('Y-m-d h:i:s'), 'user_id' => $id, 'quiz3' => $quiz_result, 'type' => 'management']);
+        } else {
+            DB::table('quiz_result')->where(array('user_id' => $id))->update(['quiz3' => $quiz_result]);
+        }
+        // DB::table('users')->where('user_id', auth()->user()->id)->update(['status' => 1]);
+
+        $result = $this->checkResult($quiz_result, 'management');
+
+        DB::table('quiz_result')->where(array('user_id' => $id))->update(['no3' => $result['sub_type'], 'res3' => $result['sub_title']]);
+
+        $next = 4;
+        return view('quiz.result_m', compact('result', 'next'));
+    }    
     ////////////////////////////////////////////////////////////////
 
 
@@ -876,7 +886,7 @@ class UserController extends Controller
     {
         $results = DB::table('quiz_result')->where('type', 'sales')
             ->join('users', 'quiz_result.user_id', '=', 'users.id')
-            ->select('quiz_result.*', 'users.initName_f')
+            ->select('quiz_result.*', 'users.initName_f','users.initName_l')
             ->get();
 
         $page = "salesResult";
@@ -1011,7 +1021,7 @@ class UserController extends Controller
                 
                 if($type == 'sales'){
                     DB::table('quiz2s')->insert(array(
-                        '氏名' => $user->initName_f,
+                        '氏名' => $user->initName_f.' '.$user->initName_l,
                         '項目' => explode('-', $quiz1)[0],
                         '回答項目' => $answer_str,
                         'ランク' => $no1,
@@ -1058,7 +1068,7 @@ class UserController extends Controller
                 }
                 if($type == 'sales'){
                     DB::table('quiz2s')->insert(array(
-                        '氏名' => $user->initName_f,
+                        '氏名' => $user->initName_f.' '.$user->initName_l,
                         '項目' => explode('-', $quiz2)[0],
                         '回答項目' => $answer_str,
                         'ランク' => $no2,
@@ -1106,7 +1116,7 @@ class UserController extends Controller
                 
                 if($type == 'sales'){
                     DB::table('quiz2s')->insert(array(
-                        '氏名' => $user->initName_f,
+                        '氏名' => $user->initName_f.' '.$user->initName_l,
                         '項目' => explode('-', $quiz3)[0],
                         '回答項目' => $answer_str,
                         'ランク' => $no3,
