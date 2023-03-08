@@ -133,7 +133,7 @@ class UserController extends Controller
         $result = $this->checkResult($quiz_result, 'recruiment');
 
         DB::table('quiz_result')->where(array('user_id' => $id))->update(['no3' => $result['sub_type'], 'res3' => $result['sub_title']]);
-
+        
         return view('quiz.result3_1', compact('result'));
     }
 
@@ -523,7 +523,9 @@ class UserController extends Controller
 
         DB::table('quiz_result')->where(array('user_id' => $id))->update(['no1' => $result['sub_type'], 'res1' => $result['sub_title']]);
 
-        return view('quiz.result', compact('result'));
+        $next = 2;
+
+        return view('quiz.result', compact('result', 'next'));
     }
 
     public function viewResult2(Request $request)
@@ -546,7 +548,9 @@ class UserController extends Controller
 
         DB::table('quiz_result')->where(array('user_id' => $id))->update(['no2' => $result['sub_type'], 'res2' => $result['sub_title']]);
 
-        return view('quiz.result', compact('result'));
+        $next = 3;
+
+        return view('quiz.result', compact('result', 'next'));
     }
 
 

@@ -33,7 +33,7 @@
 
                 <tr>
                     <td style="text-align: center;">{{ $cnt = $cnt+1 }}</td>
-                    <td style="padding-left: 50vw; padding-top:5px; ">{{ $quiz_array[$quiz] }}</td>
+                    <td style="padding-left: 50vw; padding-top:5px; ">{{ $quiz_array[trim($quiz)] }}</td>
                 </tr>
 
                 @endforeach
@@ -56,11 +56,11 @@
 
             <tbody>
                 {{ $cnt = 0 }}
-                @foreach(explode(',', $quiz1) as $quiz)
+                @foreach(explode(',', $quiz2) as $quiz)
 
                 <tr>
                     <td style="text-align: center;">{{ $cnt = $cnt+1 }}</td>
-                    <td style="padding-left: 50vw; padding-top:5px; ">{{ $quiz_array[$quiz] }}</td>
+                    <td style="padding-left: 50vw; padding-top:5px; ">{{ $quiz_array[trim($quiz)] }}</td>
                 </tr>
 
                 @endforeach
@@ -83,11 +83,11 @@
 
             <tbody>
                 {{ $cnt = 0 }}
-                @foreach(explode(',', $quiz1) as $quiz)
+                @foreach(explode(',', $quiz3) as $quiz)
 
                 <tr>
                     <td style="text-align: center;">{{ $cnt = $cnt+1 }}</td>
-                    <td style="padding-left: 50vw; padding-top:5px; ">{{ $quiz_array[$quiz] }}</td>
+                    <td style="padding-left: 50vw; padding-top:5px; ">{{ $quiz_array[trim($quiz)] }}</td>
                 </tr>
 
                 @endforeach
@@ -120,7 +120,7 @@
 
                 <tr>
                     <td style="text-align: center;">{{ $cnt = $cnt+1 }}</td>
-                    <td style="padding-left: 50vw; padding-top:2px; ">{{ $quiz_array[$quiz] }}</td>
+                    <td style="padding-left: 50vw; padding-top:2px; ">{{ $quiz_array[trim($quiz)] }}</td>
                 </tr>
 
                 @endforeach
@@ -143,11 +143,11 @@
 
             <tbody>
                 {{ $cnt = 0 }}
-                @foreach(explode(',', $quiz1) as $quiz)
+                @foreach(explode(',', $quiz2) as $quiz)
 
                 <tr>
                     <td style="text-align: center;">{{ $cnt = $cnt+1 }}</td>
-                    <td style="padding-left: 50vw; padding-top:2px; ">{{ $quiz_array[$quiz] }}</td>
+                    <td style="padding-left: 50vw; padding-top:2px; ">{{ $quiz_array[trim($quiz)] }}</td>
                 </tr>
 
                 @endforeach
@@ -170,11 +170,11 @@
 
             <tbody>
                 {{ $cnt = 0 }}
-                @foreach(explode(',', $quiz1) as $quiz)
+                @foreach(explode(',', $quiz3) as $quiz)
 
                 <tr>
                     <td style="text-align: center;">{{ $cnt = $cnt+1 }}</td>
-                    <td style="padding-left: 50vw; padding-top:2px; ">{{ $quiz_array[$quiz] }}</td>
+                    <td style="padding-left: 50vw; padding-top:2px; ">{{ $quiz_array[trim($quiz)] }}</td>
                 </tr>
 
                 @endforeach

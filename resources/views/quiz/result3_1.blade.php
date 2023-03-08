@@ -12,9 +12,9 @@
                     <div class="text-center complete-information items-center">
                         <img src="{{ asset('send.png') }}" class="m-auto mb-20">
                         <h1 class="text-2xl my-20">あなたのおすすめ進路は「{{ $result['sub_title'] }}」です。</h1>
-                        
-                        <p class="my-20">
-                            <a href="{{ $result['url'] }}" target="_blank" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-5 px-10 rounded-full cursor-pointer text-sm">ページから確認してみましょう</a>
+                        <a  href="{{ $result['url'] }}" target="_blank"><h1 class="text-1xl underline">ページから確認してみましょう</h1></a>
+                        <p class="my-20">                            
+                            <a href="/" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-5 px-10 rounded-full cursor-pointer text-sm">トップページへ移動</a>
                         </p>
                        
                     </div>
