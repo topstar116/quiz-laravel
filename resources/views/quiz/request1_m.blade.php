@@ -12,11 +12,9 @@
                         <span class="m-10" style="font-size: 12pt;">受検項目: 仕事内容</span><br/>
                         <span class="m-10" style="font-size: 12pt;">応募期間: 2022/02/09 - 2030/10/18</span><br/>
                     </p>
-                    @if(auth()->user()->status == 0)
+                    
                     <a href="{{ route('explain1_m') }}"><button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full m-10" >応募申請</button></a>
-                    @else
-                    <button class="bg-gray-500 text-white font-bold py-2 px-4 rounded-full m-10 cursor-not-allowed">応募完了</button>
-                    @endif
+                    
 
             
 

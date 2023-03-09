@@ -11,7 +11,7 @@
                     @include('layouts.admin')
 
                     <main class="bg-write h-screen w-full overflow-y-auto">
-
+                        @if(Auth::user()->status != '0')
                         <section v-if="active === 'recruiment'" id="recruiment">
                             <section class="bg-white border border-gray-300 border-solid rounded shadow">
                                 <header class="border-b border-solid border-gray-300 p-4 text-lg font-medium">
@@ -56,9 +56,9 @@
                                                     </td>
                                                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                                         <select class="text-gray-900 whitespace-no-wrap" onchange="updateStatus(this, '{{ $user->id }}');">
-                                                            <option value="pending" {{ $user->role == 'pending' ? 'selected' : ''}}>申請中</option>
-                                                            <option value="member" {{ $user->role == 'member' ? 'selected' : ''}}>ユーザー管理者</option>
-                                                            <option value="admin" {{ $user->role == 'admin' ? 'selected' : ''}}>システム管理者</option>
+                                                            <option value="0" {{ $user->status == '0' ? 'selected' : ''}}>申請中</option>
+                                                            <option value="1" {{ $user->status == '1' ? 'selected' : ''}}>ユーザー管理者</option>
+                                                            <option value="9" {{ $user->status == '9' ? 'selected' : ''}}>システム管理者</option>
                                                         </select>
                                                     </td>
                                                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
@@ -83,6 +83,11 @@
 
                             </section>
                         </section>
+                        @else
+                        <header class="border-b border-solid border-gray-300 p-4 text-lg font-medium">
+                            申請中です。
+                        </header>
+                        @endif
                     </main>
 
                     <script>
@@ -91,9 +96,9 @@
                                     
                                     if(!confirm("変更しますか？")) return;
                                     
-                                    var role = $(ele).val();
+                                    var status = $(ele).val();
                                     
-                                    $.post("{{ route('admin.update') }}", {id:id, role:role, "_token": "{{ csrf_token() }}"}, function(res){
+                                    $.post("{{ route('admin.update') }}", {id:id, status:status, "_token": "{{ csrf_token() }}"}, function(res){
 
                                         alert("変更されました。");
                                     });

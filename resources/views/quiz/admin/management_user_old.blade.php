@@ -11,7 +11,7 @@
                     @include('layouts.admin')
 
                     <main class="bg-white-100 h-screen w-full overflow-y-auto">
-                        @if(Auth::user()->role != 'pending')
+                        @if(Auth::user()->status != '0')
                         <section v-if="active === 'recruiment'" id="recruiment">
                             <section class="bg-white border border-gray-300 border-solid rounded shadow">
                                 <header class="border-b border-solid border-gray-300 p-4 text-lg font-medium">

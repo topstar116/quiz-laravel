@@ -86,7 +86,7 @@ class UserController extends Controller
         if ($rows < 1) {
             DB::table('quiz_result')->insert(['created_at' => date('Y-m-d h:i:s'), 'user_id' => $id, 'quiz3' => $quiz_result, 'type' => 'recruiment']);
         } else {
-            DB::table('quiz_result')->where(array('user_id' => $id))->update(['quiz3' => $quiz_result]);
+            DB::table('quiz_result')->where(array('user_id' => $id))->orderBy('id','desc')->take(1)->update(['quiz3' => $quiz_result]);
         }
 
         $quizs = DB::table('recruiment_quiz_table')->where('項目', '現状確認')->get();
@@ -104,7 +104,7 @@ class UserController extends Controller
         $quiz_result = implode(",", $quiz_result);
         $rows = DB::table('quiz_result')->where(array('user_id' => $id))->count();
         $sql = 'CONCAT(quiz3,", ' . $quiz_result . '")';
-        DB::table('quiz_result')->where(array('user_id' => $id))->update(['quiz3' => DB::raw($sql)]);
+        DB::table('quiz_result')->where(array('user_id' => $id))->orderBy('id','desc')->take(1)->update(['quiz3' => DB::raw($sql)]);
 
 
         $quizs = DB::table('recruiment_quiz_table')->where('項目', '現状確認')->get();
@@ -122,7 +122,7 @@ class UserController extends Controller
 
         $rows = DB::table('quiz_result')->where(array('user_id' => $id))->count();
         $sql = 'CONCAT(quiz3,", ' . $quiz_result . '")';
-        DB::table('quiz_result')->where(array('user_id' => $id))->update(['quiz3' => DB::raw($sql)]);
+        DB::table('quiz_result')->where(array('user_id' => $id))->orderBy('id','desc')->take(1)->update(['quiz3' => DB::raw($sql)]);
 
         $quiz_result = DB::table('quiz_result')->where('user_id', $id)->get('quiz3');
 
@@ -511,11 +511,11 @@ class UserController extends Controller
         $quiz_result = implode(",", $quiz_result);
         $rows = DB::table('quiz_result')->where('user_id', $id)->count();
 
-        if ($rows > 0) {
-            DB::table('quiz_result')->where('user_id', $id)->update(['quiz1' => $quiz_result]);
-        } else {
+        // if ($rows > 0) {
+        //     DB::table('quiz_result')->where('user_id', $id)->update(['quiz1' => $quiz_result]);
+        // } else {
             DB::table('quiz_result')->insert(['created_at' => date('Y-m-d h:i:s'), 'user_id' => $id, 'quiz1' => $quiz_result, 'type' => 'recruiment']);
-        }
+        // }
 
         // DB::table('users')->where('user_id', auth()->user()->id)->update(['status' => 1]);
 
@@ -537,7 +537,7 @@ class UserController extends Controller
         $rows = DB::table('quiz_result')->where('user_id', $id)->count();
 
         if ($rows > 0) {
-            DB::table('quiz_result')->where('user_id', $id)->update(['quiz2' => $quiz_result]);
+            DB::table('quiz_result')->where('user_id', $id)->orderBy('id','desc')->take(1)->update(['quiz2' => $quiz_result]);
         } else {
             DB::table('quiz_result')->insert(['created_at' => date('Y-m-d h:i:s'), 'user_id' => $id, 'quiz2' => $quiz_result, 'type' => 'recruiment']);
         }
@@ -562,11 +562,11 @@ class UserController extends Controller
         $quiz_result = implode(",", $quiz_result);
         $rows = DB::table('quiz_result')->where('user_id', $id)->count();
 
-        if ($rows > 0) {
-            DB::table('quiz_result')->where('user_id', $id)->update(['quiz1' => $quiz_result]);
-        } else {
+        // if ($rows > 0) {
+        //     DB::table('quiz_result')->where('user_id', $id)->update(['quiz1' => $quiz_result]);
+        // } else {
             DB::table('quiz_result')->insert(['created_at' => date('Y-m-d h:i:s'), 'user_id' => $id, 'quiz1' => $quiz_result, 'type' => 'sales']);
-        }
+        // }
 
         // DB::table('users')->where('user_id', auth()->user()->id)->update(['status' => 1]);
 
@@ -588,7 +588,7 @@ class UserController extends Controller
         $rows = DB::table('quiz_result')->where('user_id', $id)->count();
 
         if ($rows > 0) {
-            DB::table('quiz_result')->where('user_id', $id)->update(['quiz2' => $quiz_result]);
+            DB::table('quiz_result')->where('user_id', $id)->orderBy('id','desc')->take(1)->update(['quiz2' => $quiz_result]);
         } else {
             DB::table('quiz_result')->insert(['created_at' => date('Y-m-d h:i:s'), 'user_id' => $id, 'quiz2' => $quiz_result, 'type' => 'sales']);
         }
@@ -613,7 +613,7 @@ class UserController extends Controller
         $rows = DB::table('quiz_result')->where('user_id', $id)->count();
 
         if ($rows > 0) {
-            DB::table('quiz_result')->where('user_id', $id)->update(['quiz3' => $quiz_result]);
+            DB::table('quiz_result')->where('user_id', $id)->orderBy('id','desc')->take(1)->update(['quiz3' => $quiz_result]);
         } else {
             DB::table('quiz_result')->insert(['created_at' => date('Y-m-d h:i:s'), 'user_id' => $id, 'quiz3' => $quiz_result, 'type' => 'sales']);
         }
@@ -639,11 +639,11 @@ class UserController extends Controller
         $quiz_result = implode(",", $quiz_result);
         $rows = DB::table('quiz_result')->where(array('user_id' => $id))->count();
 
-        if ($rows < 1) {
-            DB::table('quiz_result')->insert(['created_at' => date('Y-m-d h:i:s'), 'user_id' => $id, 'quiz1' => $quiz_result, 'type' => 'management']);
-        } else {
+        // if ($rows < 1) {
+        //     DB::table('quiz_result')->insert(['created_at' => date('Y-m-d h:i:s'), 'user_id' => $id, 'quiz1' => $quiz_result, 'type' => 'management']);
+        // } else {
             DB::table('quiz_result')->where(array('user_id' => $id))->update(['quiz1' => $quiz_result]);
-        }
+        // }
 
         // DB::table('users')->where('user_id', auth()->user()->id)->update(['status' => 1]);
 
@@ -667,7 +667,7 @@ class UserController extends Controller
         if ($rows < 1) {
             DB::table('quiz_result')->insert(['created_at' => date('Y-m-d h:i:s'), 'user_id' => $id, 'quiz2' => $quiz_result, 'type' => 'management']);
         } else {
-            DB::table('quiz_result')->where(array('user_id' => $id))->update(['quiz2' => $quiz_result]);
+            DB::table('quiz_result')->where(array('user_id' => $id))->orderBy('id','desc')->take(1)->update(['quiz2' => $quiz_result]);
         }
 
         // DB::table('users')->where('user_id', auth()->user()->id)->update(['status' => 1]);
@@ -691,7 +691,7 @@ class UserController extends Controller
         if ($rows < 1) {
             DB::table('quiz_result')->insert(['created_at' => date('Y-m-d h:i:s'), 'user_id' => $id, 'quiz3' => $quiz_result, 'type' => 'management']);
         } else {
-            DB::table('quiz_result')->where(array('user_id' => $id))->update(['quiz3' => $quiz_result]);
+            DB::table('quiz_result')->where(array('user_id' => $id))->orderBy('id','desc')->take(1)->update(['quiz3' => $quiz_result]);
         }
         // DB::table('users')->where('user_id', auth()->user()->id)->update(['status' => 1]);
 
@@ -751,9 +751,9 @@ class UserController extends Controller
     public function Update(Request $request)
     {
         $id = $request->id;
-        $role = $request->role;
+        $status = $request->status;
 
-        return DB::table('users')->where('id', $id)->update(['role'=>$role]);
+        return DB::table('users')->where('id', $id)->update(['status'=>$status]);
     }
 
 
@@ -909,17 +909,6 @@ class UserController extends Controller
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
     public function Pdf(Request $request)
     {
 
@@ -954,6 +943,7 @@ class UserController extends Controller
             'quiz3' => $data['quiz3'],
             'no3' => $data['no3'],
             'res3' => $data['res3'],
+            'express' => $data['express'],
             'created_at' => $data['created_at'],
         ];
 
@@ -961,8 +951,8 @@ class UserController extends Controller
 
         $pdf_str = $type == 'recruiment' ? '_採用候補者データ.pdf' : ($type == 'sales' ? '_営業適性データ.pdf' : '_就業状況データ.pdf');
 
-        return $pdf->download($data['name'] . $pdf_str);
-        // return $pdf->stream($data['name'] . $pdf_str);
+        // return $pdf->download($data['name'] . $pdf_str);
+        return $pdf->stream($data['name'] . $pdf_str);
     }
 
 
@@ -1146,24 +1136,6 @@ class UserController extends Controller
         if($type == 'sales') return Excel::download(new Quiz2Export, $csv_str);
         if($type == 'management') return Excel::download(new Quiz3Export, $csv_str);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

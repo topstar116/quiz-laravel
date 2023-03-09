@@ -98,6 +98,14 @@
         
         @endif
 
+        @if($type == 'management')
+            <h4 style="margin-top: 30px;"> 
+                【感想】
+            </h4>
+            <h5 style="margin: 10px; width: 85%; padding: 10px;"> 
+                {{$express}} 
+            </h5>
+        @endif
 
     </div>
     @else
@@ -184,7 +192,6 @@
         <h4 style="padding-left:10px;">{{ $type == 'recruiment' ? '提案№' : ( $type == 'sales' ? 'ランク' : '状況')}}: {{$no3}}  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $type == 'recruiment' ? 'お勧め進路' : '説明概要'}}: {{$res3}}</h4>
         
         @endif
-
 
     </div>
     @endif
