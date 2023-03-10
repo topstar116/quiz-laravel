@@ -13,7 +13,7 @@
                 @endif
             </li>
         </ul>
-        @if(Auth::user()->role == 'admin')
+        @if(Auth::user()->status == 1)
         <header>
             <span class="text-xs text-gray-100 block py-6 px-6">質問管理</span>
         </header>
