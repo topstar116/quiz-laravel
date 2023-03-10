@@ -11,7 +11,7 @@
                     @include('layouts.admin')
 
                     <main class="bg-white-100 h-screen w-full overflow-y-auto">
-                        @if(Auth::user()->status != '0')
+                        
                         <section v-if="active === 'recruiment'" id="recruiment">
                             <section class="bg-white border border-gray-300 border-solid rounded shadow">
                                 <header class="border-b border-solid border-gray-300 p-4 text-lg font-medium">
@@ -33,9 +33,7 @@
                                                     <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-700 uppercase tracking-wider">
                                                         メールアドレス
                                                     </th>
-                                                    <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                                                        スターテス
-                                                    </th>
+                                                    
                                                     <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-700 uppercase tracking-wider">
                                                         Action
                                                     </th>
@@ -56,12 +54,7 @@
                                                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                                         <p class="text-gray-600 whitespace-no-wrap">{{ $user->email }}</p>
                                                     </td>
-                                                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                                        <select class="text-gray-900 whitespace-no-wrap" onchange="updateStatus(this, '{{ $user->id }}');">
-                                                            <option value="0" {{ $user->status == '0' ? 'selected' : ''}}>申請中</option>
-                                                            <option value="1" {{ $user->status == '1' ? 'selected' : ''}}>承認済</option>                                                            
-                                                        </select>
-                                                    </td>
+                                                    
                                                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                                         <form method="GET" action="{{ route('del.user') }}">
                                                             @csrf
@@ -84,11 +77,7 @@
 
                             </section>
                         </section>
-                        @else
-                        <header class="border-b border-solid border-gray-300 p-4 text-lg font-medium">
-                            申請中です。
-                        </header>
-                        @endif
+                        
                     </main>
 
                 </div>

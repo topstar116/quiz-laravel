@@ -63,11 +63,11 @@
                         </x-nav-link>
                     </div>
 
-                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <!-- <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <x-nav-link :href="route('express')" :active="request()->routeIs('express')">
                             {{ __('感想') }}
                         </x-nav-link>
-                    </div>
+                    </div> -->
                     @endif
 
                 @else
@@ -169,9 +169,9 @@
                 <x-dropdown-link :href="route('request1_m')" :active="request()->routeIs('request1_m')">
                     {{ __('検査を受ける') }}
                 </x-dropdown-link>
-                <x-dropdown-link :href="route('express')" :active="request()->routeIs('express')">
+                <!-- <x-dropdown-link :href="route('express')" :active="request()->routeIs('express')">
                     {{ __('感想') }}
-                </x-dropdown-link>
+                </x-dropdown-link> -->
                 @else
                 <hr />
                 <x-responsive-nav-link :href="route('admin')">

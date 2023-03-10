@@ -22,7 +22,7 @@
                             @elseif($next == 3)
                             <a href="{{ route('quiz3_m') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-5 px-20 rounded-full cursor-pointer text-sm">次へ</a>
                             @else
-                            <a href="/" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-5 px-10 rounded-full cursor-pointer text-sm">トップページへ移動</a>
+                            <a href="{{ route('express') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-5 px-20 rounded-full cursor-pointer text-sm">次へ</a>
                             @endif
 
                         </p>

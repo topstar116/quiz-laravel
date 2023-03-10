@@ -57,31 +57,31 @@ Route::middleware('auth')->group(function () {
 
     Route::get('request', function () { return view('quiz/request'); })->name('request');
     
-    Route::get('request1', function () { if(Auth::user()->status == '0') return view('pending'); return view('quiz/request1'); })->name('request1');
-    Route::get('request2', function () { if(Auth::user()->status == '0') return view('pending'); return view('quiz/request2'); })->name('request2');    
-    Route::get('request3_1', function () { if(Auth::user()->status == '0') return view('pending'); return view('quiz/request3_1'); })->name('request3_1');
+    Route::get('request1', function () { return view('quiz/request1'); })->name('request1');
+    Route::get('request2', function () { return view('quiz/request2'); })->name('request2');    
+    Route::get('request3_1', function () { return view('quiz/request3_1'); })->name('request3_1');
 
-    Route::get('request1_s', function () { if(Auth::user()->status == '0') return view('pending'); return view('quiz/request1_s'); })->name('request1_s');
-    Route::get('request2_s', function () { if(Auth::user()->status == '0') return view('pending'); return view('quiz/request2_s'); })->name('request2_s');
-    Route::get('request3_s', function () { if(Auth::user()->status == '0') return view('pending'); return view('quiz/request3_s'); })->name('request3_s');
+    Route::get('request1_s', function () { return view('quiz/request1_s'); })->name('request1_s');
+    Route::get('request2_s', function () { return view('quiz/request2_s'); })->name('request2_s');
+    Route::get('request3_s', function () { return view('quiz/request3_s'); })->name('request3_s');
 
-    Route::get('request1_m', function () { if(Auth::user()->status == '0') return view('pending'); return view('quiz/request1_m'); })->name('request1_m');
-    Route::get('request2_m', function () { if(Auth::user()->status == '0') return view('pending'); return view('quiz/request2_m'); })->name('request2_m');
-    Route::get('request3_m', function () { if(Auth::user()->status == '0') return view('pending'); return view('quiz/request3_m'); })->name('request3_m');
+    Route::get('request1_m', function () { return view('quiz/request1_m'); })->name('request1_m');
+    Route::get('request2_m', function () { return view('quiz/request2_m'); })->name('request2_m');
+    Route::get('request3_m', function () { return view('quiz/request3_m'); })->name('request3_m');
 
-    Route::get('explain', function () { if(Auth::user()->status == '0') return view('pending'); return view('quiz/explain'); })->name('explain');
+    Route::get('explain', function () { return view('quiz/explain'); })->name('explain');
 
-    Route::get('explain1', function () { if(Auth::user()->status == '0') return view('pending'); return view('quiz/explain1'); })->name('explain1');
-    Route::get('explain2', function () { if(Auth::user()->status == '0') return view('pending'); return view('quiz/explain2'); })->name('explain2');
-    Route::get('explain3_1', function () { if(Auth::user()->status == '0') return view('pending'); return view('quiz/explain3_1'); })->name('explain3_1');
+    Route::get('explain1', function () { return view('quiz/explain1'); })->name('explain1');
+    Route::get('explain2', function () { return view('quiz/explain2'); })->name('explain2');
+    Route::get('explain3_1', function () { return view('quiz/explain3_1'); })->name('explain3_1');
 
-    Route::get('explain1_s', function () { if(Auth::user()->status == '0') return view('pending'); return view('quiz/explain1_s'); })->name('explain1_s');
-    Route::get('explain2_s', function () { if(Auth::user()->status == '0') return view('pending'); return view('quiz/explain2_s'); })->name('explain2_s');
-    Route::get('explain3_s', function () { if(Auth::user()->status == '0') return view('pending'); return view('quiz/explain3_s'); })->name('explain3_s');
+    Route::get('explain1_s', function () { return view('quiz/explain1_s'); })->name('explain1_s');
+    Route::get('explain2_s', function () { return view('quiz/explain2_s'); })->name('explain2_s');
+    Route::get('explain3_s', function () { return view('quiz/explain3_s'); })->name('explain3_s');
 
-    Route::get('explain1_m', function () { if(Auth::user()->status == '0') return view('pending'); return view('quiz/explain1_m'); })->name('explain1_m');
-    Route::get('explain2_m', function () { if(Auth::user()->status == '0') return view('pending'); return view('quiz/explain2_m'); })->name('explain2_m');
-    Route::get('explain3_m', function () { if(Auth::user()->status == '0') return view('pending'); return view('quiz/explain3_m'); })->name('explain3_m');
+    Route::get('explain1_m', function () { return view('quiz/explain1_m'); })->name('explain1_m');
+    Route::get('explain2_m', function () { return view('quiz/explain2_m'); })->name('explain2_m');
+    Route::get('explain3_m', function () { return view('quiz/explain3_m'); })->name('explain3_m');
 
     Route::get('quiz', [UserController::class, 'viewQuiz'])->name('quiz');
     

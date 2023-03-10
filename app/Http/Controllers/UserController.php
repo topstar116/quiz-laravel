@@ -640,9 +640,9 @@ class UserController extends Controller
         $rows = DB::table('quiz_result')->where(array('user_id' => $id))->count();
 
         // if ($rows < 1) {
-        //     DB::table('quiz_result')->insert(['created_at' => date('Y-m-d h:i:s'), 'user_id' => $id, 'quiz1' => $quiz_result, 'type' => 'management']);
+            DB::table('quiz_result')->insert(['created_at' => date('Y-m-d h:i:s'), 'user_id' => $id, 'quiz1' => $quiz_result, 'type' => 'management']);
         // } else {
-            DB::table('quiz_result')->where(array('user_id' => $id))->update(['quiz1' => $quiz_result]);
+            // DB::table('quiz_result')->where(array('user_id' => $id))->update(['quiz1' => $quiz_result]);
         // }
 
         // DB::table('users')->where('user_id', auth()->user()->id)->update(['status' => 1]);
@@ -722,6 +722,9 @@ class UserController extends Controller
     ////////////////////////// admin ///////////////////////////////
     public function recruimentUser()
     {
+        if(Auth::user()->status == '0') 
+            return view('pending');
+        
         $users = User::paginate();
         $page = "recruimentUser";
         return view('quiz.admin.recruiment_user', compact('users', 'page'));
@@ -729,6 +732,9 @@ class UserController extends Controller
 
     public function salesUser()
     {
+        if(Auth::user()->status == '0') 
+            return view('pending');
+
         $users = User::paginate();
         $page = "salesUser";
         return view('quiz.admin.sales_user', compact('users', 'page'));
@@ -736,6 +742,9 @@ class UserController extends Controller
 
     public function managementUser()
     {
+        if(Auth::user()->status == '0') 
+            return view('pending');
+
         $users = User::paginate();
         $page = "managementUser";
         return view('quiz.admin.management_user', compact('users', 'page'));
@@ -743,6 +752,9 @@ class UserController extends Controller
 
     public function memberUser()
     {
+        if(Auth::user()->status == '0') 
+            return view('pending');
+
         $users = User::paginate();
         $page = "memberUser";
         return view('quiz.admin.member_user', compact('users', 'page'));
@@ -765,6 +777,9 @@ class UserController extends Controller
     //admin quiz
     public function recruimentQuiz()
     {
+        if(Auth::user()->status == '0') 
+            return view('pending');
+
         $quizs = DB::table('recruiment_quiz_table')->get();
         $page = "recruimentQuiz";
         return view('quiz.admin.recruiment_quiz', compact('quizs', 'page'));
@@ -772,6 +787,9 @@ class UserController extends Controller
 
     public function salesQuiz()
     {
+        if(Auth::user()->status == '0') 
+            return view('pending');
+
         $quizs = DB::table('sales_quiz_table')->get();
         $page = "salesQuiz";
         return view('quiz.admin.sales_quiz', compact('quizs', 'page'));
@@ -779,6 +797,9 @@ class UserController extends Controller
 
     public function managementQuiz()
     {
+        if(Auth::user()->status == '0') 
+            return view('pending');
+
         $quizs = DB::table('management_quiz_table')->get();
         $users = User::paginate();
         $page = "managementQuiz";
@@ -876,6 +897,9 @@ class UserController extends Controller
     //admin restul
     public function recruimentResult()
     {
+        if(Auth::user()->status == '0') 
+            return view('pending');
+
         $results = DB::table('quiz_result')->where('type', 'recruiment')
             ->join('users', 'quiz_result.user_id', '=', 'users.id')
             ->select('quiz_result.*', 'users.name')
@@ -888,6 +912,9 @@ class UserController extends Controller
 
     public function salesResult()
     {
+        if(Auth::user()->status == '0') 
+            return view('pending');
+
         $results = DB::table('quiz_result')->where('type', 'sales')
             ->join('users', 'quiz_result.user_id', '=', 'users.id')
             ->select('quiz_result.*', 'users.initName_f','users.initName_l')
@@ -899,6 +926,9 @@ class UserController extends Controller
 
     public function managementResult()
     {
+        if(Auth::user()->status == '0') 
+            return view('pending');
+            
         $results = DB::table('quiz_result')->where('type', 'management')
             ->join('users', 'quiz_result.user_id', '=', 'users.id')
             ->select('quiz_result.*', 'users.name')
