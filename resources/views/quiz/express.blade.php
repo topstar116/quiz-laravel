@@ -15,12 +15,13 @@
 
                             <div class="question">
 
-                                <p class="my-10">【感想】今回の回答についての感想や、会社や上司に伝えておきたいこと等をご記載ください。</p>
+                                
                                 @if(isset($result))
                                 <h1 class="p-5 bg-blue-400 max-w-7xl mx-auto sm:px-6 lg:px-8 text-white mt-10 mb-40">
                                     送信されました。
                                 </h1>
                                 @else
+                                <p class="my-10">【感想】今回の回答についての感想や、会社や上司に伝えておきたいこと等をご記載ください。</p>
                                 <textarea name="express" rows="4" class=" mb-20 block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"></textarea>
                                 @endif                                
 
