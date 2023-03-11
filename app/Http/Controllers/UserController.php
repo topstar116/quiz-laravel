@@ -250,7 +250,7 @@ class UserController extends Controller
             //右はSier、左はWEBに分岐
             if (str_contains($str, '職種適正-1-1')) {
                 $type = 'WEB';
-                $url = 'https://result.engineermatch.net/web/';
+                $url = 'https://engineer-match-recommend-result.com/web/';
 
                 //№1が左の場合、右であれば6
                 if (str_contains($str, '職種適正-6-2')) {
@@ -283,14 +283,14 @@ class UserController extends Controller
                     $type = 'その他';
                     $sub_type = 7;
                     $sub_title = '営業';
-                    $url = 'https://result.engineermatch.net/sales/';
+                    $url = 'https://engineer-match-recommend-result.com/sales/';
                 }
             }
 
             //右はSier、左はWEBに分岐
             if (str_contains($str, '職種適正-1-2')) {
                 $type = 'Sier';
-                $url = 'https://result.engineermatch.net/sier/';
+                $url = 'https://engineer-match-recommend-result.com/sier/';
                 //№1が右の場合、右であれば3
                 if (str_contains($str, '職種適正-6-2')) {
                     $sub_type = 3;
@@ -321,26 +321,16 @@ class UserController extends Controller
                     $type = 'その他';
                     $sub_type = 7;
                     $sub_title = '営業';
-                    $url = 'https://result.engineermatch.net/sales/';
+                    $url = 'https://engineer-match-recommend-result.com/sales/';
                 }
             }
-
-
-
-
-
-
-
-
-
-
 
 
 
             //右はSES、左は事業会社に分岐
             if (str_contains($str, '企業適正-1-1')) {
                 $type = '事業会社';
-                $url = 'https://result.engineermatch.net/mc/';
+                $url = 'https://engineer-match-recommend-result.com/ic/';
 
                 //№1が左の場合、左は1で右は2
                 if (str_contains($str, '企業適正-4-1')) {
@@ -355,7 +345,7 @@ class UserController extends Controller
             //右はSES、左は事業会社に分岐
             if (str_contains($str, '企業適正-1-2')) {
                 $type = 'SES';
-                $url = 'https://result.engineermatch.net/ses/';
+                $url = 'https://engineer-match-recommend-result.com/ses/';
 
                 //№1が右の場合、左は3で右は4
                 if (str_contains($str, '企業適正-7-1')) {
@@ -369,18 +359,13 @@ class UserController extends Controller
 
 
 
-
-
-
-
-
             //全部左あれば1、一つでも右あれば次ページに遷移
             if (str_contains($str, '現状確認-1-1-1') && str_contains($str, '現状確認-1-2-1') && str_contains($str, '現状確認-1-3-1')) {
 
                 $type = '';
                 $sub_type = 1;
                 $sub_title = 'PMO';
-                $url = 'https://result.engineermatch.net/status/';
+                $url = 'https://engineer-match-recommend-result.com/cs/';
             }
 
             //全部左あれば2、一つでも右あれば次ページに遷移
@@ -389,7 +374,7 @@ class UserController extends Controller
                 $type = '';
                 $sub_type = 2;
                 $sub_title = '開発・テスト';
-                $url = 'https://result.engineermatch.net/status/';
+                $url = 'https://engineer-match-recommend-result.com/cs/';
             }
 
             //全部左あれば3、一つでも右あれば4
@@ -398,14 +383,15 @@ class UserController extends Controller
                 $type = '';
                 $sub_type = 3;
                 $sub_title = 'インフラ';
-                $url = 'https://result.engineermatch.net/status/';
+                $url = 'https://engineer-match-recommend-result.com/cs/';
             } else if (str_contains($str, '現状確認')) {
 
                 $type = '';
                 $sub_type = 4;
                 $sub_title = 'IT研修受講';
-                $url = 'https://result.engineermatch.net/status/';
+                $url = 'https://engineer-match-recommend-result.com/cs/';
             }
+
         } elseif ($level == "sales") {
 
 
@@ -496,6 +482,27 @@ class UserController extends Controller
 
         );
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -981,8 +988,8 @@ class UserController extends Controller
 
         $pdf_str = $type == 'recruiment' ? '_採用候補者データ.pdf' : ($type == 'sales' ? '_営業適性データ.pdf' : '_就業状況データ.pdf');
 
-        // return $pdf->download($data['name'] . $pdf_str);
-        return $pdf->stream($data['name'] . $pdf_str);
+        return $pdf->download($data['name'] . $pdf_str);
+        // return $pdf->stream($data['name'] . $pdf_str);
     }
 
 
