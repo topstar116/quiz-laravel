@@ -335,10 +335,10 @@ class UserController extends Controller
                 //№1が左の場合、左は1で右は2
                 if (str_contains($str, '企業適正-4-1')) {
                     $sub_type = 1;
-                    $sub_title = 'WEB企業';
+                    $sub_title = 'システム企業';
                 } else if (str_contains($str, '企業適正-4-2')) {
                     $sub_type = 2;
-                    $sub_title = 'システム企業';
+                    $sub_title = 'WEB企業';
                 }
             }
 
