@@ -1118,7 +1118,7 @@ class UserController extends Controller
             $quiz3 = $res->quiz3;
             if ($quiz3 != '') {
                 $quiz3_array = explode(',', $quiz3);
-
+                $answer_str = '';
                 foreach ($quiz3_array as $item) {
                     $item = trim($item);
                     $answer_str .= $quiz_array[$item] . PHP_EOL;
