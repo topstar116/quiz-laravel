@@ -338,7 +338,7 @@ class UserController extends Controller
                     $sub_title = 'WEB企業';
                 } else if (str_contains($str, '企業適正-4-2')) {
                     $sub_type = 2;
-                    $sub_title = 'SaaS';
+                    $sub_title = 'システム企業';
                 }
             }
 
