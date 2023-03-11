@@ -77,7 +77,7 @@
                                                     <td class="py-5 border-b border-gray-200 bg-white text-sm">
 
 
-                                                        <form method="POST" action="{{ route('admin.pdf') }}">
+                                                        <form method="POST" action="{{ route('admin.pdf') }}" style="float: left;">
                                                             @csrf
                                                             <span class="relative inline-block px-3 py-1 font-semibold text-white-900 leading-tight">
                                                                 <span aria-hidden class="absolute inset-0 bg-blue-200 opacity-50 rounded-full"></span>
@@ -97,6 +97,16 @@
                                                                 <input type="hidden" name="created_at" value="{{ $result->created_at }}">
 
                                                                 <button type="submit" class="relative">PDF</button>
+                                                            </span>
+                                                        </form>
+
+                                                        <form method="GET" action="{{ route('del.result') }}">
+                                                            @csrf
+                                                            <span class="relative inline-block px-3 py-1 font-semibold text-red-900 leading-tight">
+                                                                <span aria-hidden class="absolute inset-0 bg-red-200 opacity-50 rounded-full"></span>
+                                                                <input type="hidden" name="result_id" value="{{ $result->id }}">
+                                                                <input type="hidden" name="level" value="sales">
+                                                                <button type="submit" class="relative" onclick="return confirm('削除しますか？');">削除</button>
                                                             </span>
                                                         </form>
 
