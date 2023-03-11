@@ -23,7 +23,7 @@ use Maatwebsite\Excel\Facades\Excel;
 
 
 
-// date_default_timezone_set('Asia/Tokyo');
+date_default_timezone_set('Asia/Tokyo');
 
 class UserController extends Controller
 {
