@@ -81,10 +81,10 @@ class UserController extends Controller
         $quiz_result = $request->all();
         unset($quiz_result['_token']);
         $quiz_result = implode(",", $quiz_result);
-        $rows = DB::table('quiz_result')->where(['user_id' => $id, 'quiz3' => ''])->count();
+        $rows = DB::table('quiz_result')->where(['user_id' => $id, 'quiz3' => null])->count();
 
         if ($rows > 0) {
-            DB::table('quiz_result')->where(['user_id' => $id, 'quiz3' => ''])->orderBy('id','desc')->take(1)->update(['quiz3' => $quiz_result]);            
+            DB::table('quiz_result')->where(['user_id' => $id, 'quiz3' => null])->orderBy('id','desc')->take(1)->update(['quiz3' => $quiz_result]);            
         } else {
             DB::table('quiz_result')->insert(['created_at' => date('Y-m-d h:i:s'), 'user_id' => $id, 'quiz3' => $quiz_result, 'type' => 'recruiment']);
         }
@@ -547,10 +547,10 @@ class UserController extends Controller
         $quiz_result = $request->all();
         unset($quiz_result['_token']);
         $quiz_result = implode(",", $quiz_result);
-        $rows = DB::table('quiz_result')->where(['user_id' => $id, 'quiz2' => ''])->count();
+        $rows = DB::table('quiz_result')->where(['user_id' => $id, 'quiz2' => null])->count();
 
         if ($rows > 0) {
-            DB::table('quiz_result')->where(['user_id' => $id, 'quiz2' => ''])->orderBy('id','desc')->take(1)->update(['quiz2' => $quiz_result]);
+            DB::table('quiz_result')->where(['user_id' => $id, 'quiz2' => null])->orderBy('id','desc')->take(1)->update(['quiz2' => $quiz_result]);
         } else {
             DB::table('quiz_result')->insert(['created_at' => date('Y-m-d h:i:s'), 'user_id' => $id, 'quiz2' => $quiz_result, 'type' => 'recruiment']);
         }
@@ -593,10 +593,10 @@ class UserController extends Controller
         $quiz_result = $request->all();
         unset($quiz_result['_token']);
         $quiz_result = implode(",", $quiz_result);
-        $rows = DB::table('quiz_result')->where(['user_id' => $id, 'quiz2' => ''])->count();
+        $rows = DB::table('quiz_result')->where(['user_id' => $id, 'quiz2' => null])->count();
 
         if ($rows > 0) {
-            DB::table('quiz_result')->where(['user_id' => $id, 'quiz2' => ''])->orderBy('id','desc')->take(1)->update(['quiz2' => $quiz_result]);
+            DB::table('quiz_result')->where(['user_id' => $id, 'quiz2' => null])->orderBy('id','desc')->take(1)->update(['quiz2' => $quiz_result]);
         } else {
             DB::table('quiz_result')->insert(['created_at' => date('Y-m-d h:i:s'), 'user_id' => $id, 'quiz2' => $quiz_result, 'type' => 'sales']);
         }
@@ -618,10 +618,10 @@ class UserController extends Controller
         $quiz_result = $request->all();
         unset($quiz_result['_token']);
         $quiz_result = implode(",", $quiz_result);
-        $rows = DB::table('quiz_result')->where(['user_id' => $id, 'quiz3' => ''])->count();
+        $rows = DB::table('quiz_result')->where(['user_id' => $id, 'quiz3' => null])->count();
 
         if ($rows > 0) {
-            DB::table('quiz_result')->where(['user_id' => $id, 'quiz3' => ''])->orderBy('id','desc')->take(1)->update(['quiz3' => $quiz_result]);
+            DB::table('quiz_result')->where(['user_id' => $id, 'quiz3' => null])->orderBy('id','desc')->take(1)->update(['quiz3' => $quiz_result]);
         } else {
             DB::table('quiz_result')->insert(['created_at' => date('Y-m-d h:i:s'), 'user_id' => $id, 'quiz3' => $quiz_result, 'type' => 'sales']);
         }
@@ -664,9 +664,10 @@ class UserController extends Controller
         unset($quiz_result['_token']);
         $quiz_result = implode(",", $quiz_result);
 
-        $rows = DB::table('quiz_result')->where(['user_id' => $id, 'quiz2' => ''])->count();
-        if ($rows < 0) {
-            DB::table('quiz_result')->where(['user_id' => $id, 'quiz2' => ''])->orderBy('id','desc')->take(1)->update(['quiz2' => $quiz_result]);
+        $rows = DB::table('quiz_result')->where(['user_id' => $id, 'quiz2' => null])->count();
+
+        if ($rows > 0) {
+            DB::table('quiz_result')->where(['user_id' => $id, 'quiz2' => null])->orderBy('id','desc')->take(1)->update(['quiz2' => $quiz_result]);
         } else {
             DB::table('quiz_result')->insert(['created_at' => date('Y-m-d h:i:s'), 'user_id' => $id, 'quiz2' => $quiz_result, 'type' => 'management']);            
         }
@@ -688,9 +689,9 @@ class UserController extends Controller
         unset($quiz_result['_token']);
         $quiz_result = implode(",", $quiz_result);
 
-        $rows = DB::table('quiz_result')->where(['user_id' => $id, 'quiz3' => ''])->count();
+        $rows = DB::table('quiz_result')->where(['user_id' => $id, 'quiz3' => null])->count();
         if ($rows > 0) {
-            DB::table('quiz_result')->where(['user_id' => $id, 'quiz3' => ''])->orderBy('id','desc')->take(1)->update(['quiz3' => $quiz_result]);
+            DB::table('quiz_result')->where(['user_id' => $id, 'quiz3' => null])->orderBy('id','desc')->take(1)->update(['quiz3' => $quiz_result]);
         } else {
             DB::table('quiz_result')->insert(['created_at' => date('Y-m-d h:i:s'), 'user_id' => $id, 'quiz3' => $quiz_result, 'type' => 'management']);
         }
@@ -768,9 +769,6 @@ class UserController extends Controller
 
         return DB::table('users')->where('id', $id)->update(['status'=>$status]);
     }
-
-
-
 
 
 
