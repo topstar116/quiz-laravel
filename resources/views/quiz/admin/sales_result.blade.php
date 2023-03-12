@@ -81,7 +81,7 @@
                                                             @csrf
                                                             <span class="relative inline-block px-3 py-1 font-semibold text-white-900 leading-tight">
                                                                 <span aria-hidden class="absolute inset-0 bg-blue-200 opacity-50 rounded-full"></span>
-                                                                <input type="hidden" name="name" value="{{ $result->initName_f.' '.$result->initName_l }}">
+                                                                <input type="hidden" name="name" value="{{ $result->initName_f.'.'.$result->initName_l }}">
                                                                 <input type="hidden" name="id" value="{{ $result->id }}">
                                                                 <input type="hidden" name="type" value="{{ $result->type }}">
                                                                 <input type="hidden" name="quiz1" value="{{ $result->quiz1 }}">

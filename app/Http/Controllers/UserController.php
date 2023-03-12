@@ -978,7 +978,7 @@ class UserController extends Controller
 
         $pdf = PDF::loadView('pdf', $content);
 
-        $pdf_str = $type == 'recruiment' ? '_採用候補者データ.pdf' : ($type == 'sales' ? '_営業適性データ.pdf' : '_就業状況データ.pdf');
+        $pdf_str = $type == 'recruiment' ? '_採用候補者データ.pdf' : ($type == 'sales' ? '（イニシャル）_人材データ.pdf' : '_就業状況データ.pdf');
 
         return $pdf->download($data['name'] . $pdf_str);
         // return $pdf->stream($data['name'] . $pdf_str);
