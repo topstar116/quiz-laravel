@@ -19,6 +19,12 @@ use App\Models\Quiz2;
 use App\Exports\Quiz2Export;
 use App\Models\Quiz3;
 use App\Exports\Quiz3Export;
+
+use App\Models\Man1;
+use App\Exports\RecruimentExport;
+use App\Exports\SalesExport;
+use App\Exports\AdminExport;
+
 use Maatwebsite\Excel\Facades\Excel;
 
 
@@ -27,7 +33,7 @@ date_default_timezone_set('Asia/Tokyo');
 
 class UserController extends Controller
 {
-    
+
     public function index()
     {
         $users = User::paginate();
@@ -84,7 +90,7 @@ class UserController extends Controller
         $rows = DB::table('quiz_result')->where(['user_id' => $id, 'quiz3' => null])->count();
 
         if ($rows > 0) {
-            DB::table('quiz_result')->where(['user_id' => $id, 'quiz3' => null])->orderBy('id','desc')->take(1)->update(['quiz3' => $quiz_result]);            
+            DB::table('quiz_result')->where(['user_id' => $id, 'quiz3' => null])->orderBy('id', 'desc')->take(1)->update(['quiz3' => $quiz_result]);
         } else {
             DB::table('quiz_result')->insert(['created_at' => date('Y-m-d h:i:s'), 'user_id' => $id, 'quiz3' => $quiz_result, 'type' => 'recruiment']);
         }
@@ -103,14 +109,14 @@ class UserController extends Controller
         unset($quiz_result['_token']);
         $quiz_result = implode(",", $quiz_result);
 
-        $old_quiz_result = DB::table('quiz_result')->where(array('user_id' => $id))->orderBy('id','desc')->first('quiz3');
+        $old_quiz_result = DB::table('quiz_result')->where(array('user_id' => $id))->orderBy('id', 'desc')->first('quiz3');
         $old_quiz_result = $old_quiz_result->quiz3;
 
-        if(!str_contains($old_quiz_result, $quiz_result)){
+        if (!str_contains($old_quiz_result, $quiz_result)) {
             $sql = 'CONCAT(quiz3,",' . $quiz_result . '")';
-            DB::table('quiz_result')->where(array('user_id' => $id))->orderBy('id','desc')->take(1)->update(['quiz3' => DB::raw($sql)]);
-            $quiz_result = $old_quiz_result.','.$quiz_result;            
-        }else{
+            DB::table('quiz_result')->where(array('user_id' => $id))->orderBy('id', 'desc')->take(1)->update(['quiz3' => DB::raw($sql)]);
+            $quiz_result = $old_quiz_result . ',' . $quiz_result;
+        } else {
             $quiz_result = $old_quiz_result;
         }
 
@@ -127,23 +133,23 @@ class UserController extends Controller
         unset($quiz_result['_token']);
         $quiz_result = implode(",", $quiz_result);
 
-        $old_quiz_result = DB::table('quiz_result')->where(array('user_id' => $id))->orderBy('id','desc')->first('quiz3');
+        $old_quiz_result = DB::table('quiz_result')->where(array('user_id' => $id))->orderBy('id', 'desc')->first('quiz3');
         $old_quiz_result = $old_quiz_result->quiz3;
 
-        if(!str_contains($old_quiz_result, $quiz_result)){
+        if (!str_contains($old_quiz_result, $quiz_result)) {
             $sql = 'CONCAT(quiz3,",' . $quiz_result . '")';
-            DB::table('quiz_result')->where(array('user_id' => $id))->orderBy('id','desc')->take(1)->update(['quiz3' => DB::raw($sql)]);
-            $quiz_result = $old_quiz_result.','.$quiz_result;            
-        }else{
+            DB::table('quiz_result')->where(array('user_id' => $id))->orderBy('id', 'desc')->take(1)->update(['quiz3' => DB::raw($sql)]);
+            $quiz_result = $old_quiz_result . ',' . $quiz_result;
+        } else {
             $quiz_result = $old_quiz_result;
         }
 
         // DB::table('users')->where('user_id', auth()->user()->id)->update(['status' => 1]);
-        
+
         $result = $this->checkResult($quiz_result, 'recruiment');
 
-        DB::table('quiz_result')->where(array('user_id' => $id))->orderBy('id','desc')->take(1)->update(['no3' => $result['sub_type'], 'res3' => $result['sub_title']]);
-        
+        DB::table('quiz_result')->where(array('user_id' => $id))->orderBy('id', 'desc')->take(1)->update(['no3' => $result['sub_type'], 'res3' => $result['sub_title']]);
+
         return view('quiz.result3_1', compact('result'));
     }
 
@@ -401,8 +407,6 @@ class UserController extends Controller
                 $sub_title = 'IT研修受講';
                 $url = 'https://engineer-match-recommend-result.com/cs/';
             }
-
-
         } elseif ($level == "sales") {
 
 
@@ -550,7 +554,7 @@ class UserController extends Controller
         $rows = DB::table('quiz_result')->where(['user_id' => $id, 'quiz2' => null])->count();
 
         if ($rows > 0) {
-            DB::table('quiz_result')->where(['user_id' => $id, 'quiz2' => null])->orderBy('id','desc')->take(1)->update(['quiz2' => $quiz_result]);
+            DB::table('quiz_result')->where(['user_id' => $id, 'quiz2' => null])->orderBy('id', 'desc')->take(1)->update(['quiz2' => $quiz_result]);
         } else {
             DB::table('quiz_result')->insert(['created_at' => date('Y-m-d h:i:s'), 'user_id' => $id, 'quiz2' => $quiz_result, 'type' => 'recruiment']);
         }
@@ -584,7 +588,7 @@ class UserController extends Controller
 
         $next = 2;
 
-        return view('quiz.result_s', compact('result','next'));
+        return view('quiz.result_s', compact('result', 'next'));
     }
 
     public function viewResult2_s(Request $request)
@@ -596,7 +600,7 @@ class UserController extends Controller
         $rows = DB::table('quiz_result')->where(['user_id' => $id, 'quiz2' => null])->count();
 
         if ($rows > 0) {
-            DB::table('quiz_result')->where(['user_id' => $id, 'quiz2' => null])->orderBy('id','desc')->take(1)->update(['quiz2' => $quiz_result]);
+            DB::table('quiz_result')->where(['user_id' => $id, 'quiz2' => null])->orderBy('id', 'desc')->take(1)->update(['quiz2' => $quiz_result]);
         } else {
             DB::table('quiz_result')->insert(['created_at' => date('Y-m-d h:i:s'), 'user_id' => $id, 'quiz2' => $quiz_result, 'type' => 'sales']);
         }
@@ -621,7 +625,7 @@ class UserController extends Controller
         $rows = DB::table('quiz_result')->where(['user_id' => $id, 'quiz3' => null])->count();
 
         if ($rows > 0) {
-            DB::table('quiz_result')->where(['user_id' => $id, 'quiz3' => null])->orderBy('id','desc')->take(1)->update(['quiz3' => $quiz_result]);
+            DB::table('quiz_result')->where(['user_id' => $id, 'quiz3' => null])->orderBy('id', 'desc')->take(1)->update(['quiz3' => $quiz_result]);
         } else {
             DB::table('quiz_result')->insert(['created_at' => date('Y-m-d h:i:s'), 'user_id' => $id, 'quiz3' => $quiz_result, 'type' => 'sales']);
         }
@@ -667,9 +671,9 @@ class UserController extends Controller
         $rows = DB::table('quiz_result')->where(['user_id' => $id, 'quiz2' => null])->count();
 
         if ($rows > 0) {
-            DB::table('quiz_result')->where(['user_id' => $id, 'quiz2' => null])->orderBy('id','desc')->take(1)->update(['quiz2' => $quiz_result]);
+            DB::table('quiz_result')->where(['user_id' => $id, 'quiz2' => null])->orderBy('id', 'desc')->take(1)->update(['quiz2' => $quiz_result]);
         } else {
-            DB::table('quiz_result')->insert(['created_at' => date('Y-m-d h:i:s'), 'user_id' => $id, 'quiz2' => $quiz_result, 'type' => 'management']);            
+            DB::table('quiz_result')->insert(['created_at' => date('Y-m-d h:i:s'), 'user_id' => $id, 'quiz2' => $quiz_result, 'type' => 'management']);
         }
 
         // DB::table('users')->where('user_id', auth()->user()->id)->update(['status' => 1]);
@@ -691,7 +695,7 @@ class UserController extends Controller
 
         $rows = DB::table('quiz_result')->where(['user_id' => $id, 'quiz3' => null])->count();
         if ($rows > 0) {
-            DB::table('quiz_result')->where(['user_id' => $id, 'quiz3' => null])->orderBy('id','desc')->take(1)->update(['quiz3' => $quiz_result]);
+            DB::table('quiz_result')->where(['user_id' => $id, 'quiz3' => null])->orderBy('id', 'desc')->take(1)->update(['quiz3' => $quiz_result]);
         } else {
             DB::table('quiz_result')->insert(['created_at' => date('Y-m-d h:i:s'), 'user_id' => $id, 'quiz3' => $quiz_result, 'type' => 'management']);
         }
@@ -703,7 +707,7 @@ class UserController extends Controller
 
         $next = 4;
         return view('quiz.result_m', compact('result', 'next'));
-    }    
+    }
     ////////////////////////////////////////////////////////////////
 
 
@@ -724,9 +728,9 @@ class UserController extends Controller
     ////////////////////////// admin ///////////////////////////////
     public function recruimentUser()
     {
-        if(Auth::user()->status == '0') 
+        if (Auth::user()->status == '0')
             return view('pending');
-        
+
         $users = User::paginate();
         $page = "recruimentUser";
         return view('quiz.admin.recruiment_user', compact('users', 'page'));
@@ -734,7 +738,7 @@ class UserController extends Controller
 
     public function salesUser()
     {
-        if(Auth::user()->status == '0') 
+        if (Auth::user()->status == '0')
             return view('pending');
 
         $users = User::paginate();
@@ -744,7 +748,7 @@ class UserController extends Controller
 
     public function managementUser()
     {
-        if(Auth::user()->status == '0') 
+        if (Auth::user()->status == '0')
             return view('pending');
 
         $users = User::paginate();
@@ -754,7 +758,7 @@ class UserController extends Controller
 
     public function memberUser()
     {
-        if(Auth::user()->status == '0') 
+        if (Auth::user()->status == '0')
             return view('pending');
 
         $users = User::paginate();
@@ -767,7 +771,7 @@ class UserController extends Controller
         $id = $request->id;
         $status = $request->status;
 
-        return DB::table('users')->where('id', $id)->update(['status'=>$status]);
+        return DB::table('users')->where('id', $id)->update(['status' => $status]);
     }
 
 
@@ -776,7 +780,7 @@ class UserController extends Controller
     //admin quiz
     public function recruimentQuiz()
     {
-        if(Auth::user()->status == '0') 
+        if (Auth::user()->status == '0')
             return view('pending');
 
         $quizs = DB::table('recruiment_quiz_table')->get();
@@ -786,7 +790,7 @@ class UserController extends Controller
 
     public function salesQuiz()
     {
-        if(Auth::user()->status == '0') 
+        if (Auth::user()->status == '0')
             return view('pending');
 
         $quizs = DB::table('sales_quiz_table')->get();
@@ -796,7 +800,7 @@ class UserController extends Controller
 
     public function managementQuiz()
     {
-        if(Auth::user()->status == '0') 
+        if (Auth::user()->status == '0')
             return view('pending');
 
         $quizs = DB::table('management_quiz_table')->get();
@@ -896,7 +900,7 @@ class UserController extends Controller
     //admin restul
     public function recruimentResult()
     {
-        if(Auth::user()->status == '0') 
+        if (Auth::user()->status == '0')
             return view('pending');
 
         $results = DB::table('quiz_result')->where('type', 'recruiment')
@@ -911,12 +915,12 @@ class UserController extends Controller
 
     public function salesResult()
     {
-        if(Auth::user()->status == '0') 
+        if (Auth::user()->status == '0')
             return view('pending');
 
         $results = DB::table('quiz_result')->where('type', 'sales')
             ->join('users', 'quiz_result.user_id', '=', 'users.id')
-            ->select('quiz_result.*', 'users.initName_f','users.initName_l')
+            ->select('quiz_result.*', 'users.initName_f', 'users.initName_l')
             ->get();
 
         $page = "salesResult";
@@ -925,9 +929,9 @@ class UserController extends Controller
 
     public function managementResult()
     {
-        if(Auth::user()->status == '0') 
+        if (Auth::user()->status == '0')
             return view('pending');
-            
+
         $results = DB::table('quiz_result')->where('type', 'management')
             ->join('users', 'quiz_result.user_id', '=', 'users.id')
             ->select('quiz_result.*', 'users.name')
@@ -991,6 +995,8 @@ class UserController extends Controller
         Quiz1::getQuery()->delete();
         Quiz2::getQuery()->delete();
         Quiz3::getQuery()->delete();
+        Man1::getQuery()->delete();
+
 
         $type = $request->type;
 
@@ -998,172 +1004,207 @@ class UserController extends Controller
 
         $items = explode(',', $request->items);
 
-        $quizs = DB::table($type . '_quiz_table')->get();
-        $quiz_array = [];
-        foreach ($quizs as $quiz) {
-            $temp = [];
-            $quiz_key = $quiz->項目 . '-' . $quiz->提案NO;
-            $temp[$quiz_key . '-1'] = explode(',', $quiz->回答項目)[0];
-            $temp[$quiz_key . '-2'] = explode(',', $quiz->回答項目)[1];
-            $quiz_array = array_merge($quiz_array, $temp);
-        }
-
-        // dd($quiz_array['現状確認-2-1-2']);
-
-
         foreach ($items as $item) {
 
 
-            $res = DB::table('quiz_result')->where('id', $item)->first();
-            $user = DB::table('users')->where('id', $res->user_id)->first();
+            $user = DB::table('users')->where('id', $item)->first();
 
-            // dd($user->initName_f);
-
-            $quiz1 = $res->quiz1;
-            if ($quiz1 != '') {
-                $quiz1_array = explode(',', $quiz1);
-                $answer_str = '';
-                foreach ($quiz1_array as $item) {
-                    $item = trim($item);
-                    $answer_str .= $quiz_array[$item] . PHP_EOL;
-                }
-
-                $no1 = $res->no1;
-                $res1 = $res->res1;
-
-                if ($type == 'recruiment') {
-                    DB::table('quiz1s')->insert(array(
-                        '氏名' => $user->name,
-                        '項目' => explode('-', $quiz1)[0],
-                        '回答項目' => $answer_str,
-                        '提案№' => $no1,
-                        'お勧め進路' => $res1,
-                        '回答日' => $res->created_at
-                    ));
-                }
+            if ($type == 'recruiment_user') {
+                DB::table('man1s')->insert(array(
+                    '名前' => $user->name,
+                    'メールアドレス' => $user->email,
+                    'パスワード' => $user->pwd
+                ));
+            }else if ($type == 'sales_user') {
+                DB::table('man1s')->insert(array(
+                    '会社名' => $user->company,
+                    'イニシャル名字' => $user->initName_f,
+                    'イニシャル名前' => $user->initName_l,            
+                    'メールアドレス' => $user->email,
+                    'パスワード' => $user->pwd
+                ));
+            }else if ($type == 'management_user') {
+                DB::table('man1s')->insert(array(
+                    '名前' => $user->name,
+                    'メールアドレス' => $user->email,
+                    'パスワード' => $user->pwd
+                ));
+            }else if ($type == 'member_user') {
+                DB::table('man1s')->insert(array(
+                    '名前' => $user->name,
+                    'メールアドレス' => $user->email,
+                    'パスワード' => $user->pwd,
+                    'ステータス' => $user->status == 0 ? '申請中' : 'システム管理者'
+                ));
+            } else {
                 
-                if($type == 'sales'){
-                    DB::table('quiz2s')->insert(array(
-                        '氏名' => $user->initName_f.' '.$user->initName_l,
-                        '項目' => explode('-', $quiz1)[0],
-                        '回答項目' => $answer_str,
-                        'ランク' => $no1,
-                        '説明概要' => $res1,
-                        '回答日' => $res->created_at
-                    ));
-                }
-                if($type == 'management'){
-                    DB::table('quiz3s')->insert(array(
-                        '氏名' => $user->name,
-                        '項目' => explode('-', $quiz1)[0],
-                        '回答項目' => $answer_str,
-                        '状況' => $no1,
-                        '説明概要' => $res1,
-                        '回答日' => $res->created_at
-                    ));
-                }
-            }
+                $res = DB::table('quiz_result')->where('id', $item)->first();
+                $user = DB::table('users')->where('id', $res->user_id)->first();
 
-            ////////2
-
-            $quiz2 = $res->quiz2;
-            if ($quiz2 != '') {
-                $quiz2_array = explode(',', $quiz2);
-                $answer_str = '';
-                foreach ($quiz2_array as $item) {
-                    $item = trim($item);
-                    $answer_str .= $quiz_array[$item] . PHP_EOL;
+                $quizs = DB::table($type . '_quiz_table')->get();
+                $quiz_array = [];
+                foreach ($quizs as $quiz) {
+                    $temp = [];
+                    $quiz_key = $quiz->項目 . '-' . $quiz->提案NO;
+                    $temp[$quiz_key . '-1'] = explode(',', $quiz->回答項目)[0];
+                    $temp[$quiz_key . '-2'] = explode(',', $quiz->回答項目)[1];
+                    $quiz_array = array_merge($quiz_array, $temp);
                 }
 
-                $no2 = $res->no2;
-                $res2 = $res->res2;
+                // dd($quiz_array['現状確認-2-1-2']);
 
+                // dd($user->initName_f);
 
-                if ($type == 'recruiment') {
-                    DB::table('quiz1s')->insert(array(
-                        '氏名' => $user->name,
-                        '項目' => explode('-', $quiz2)[0],
-                        '回答項目' => $answer_str,
-                        '提案№' => $no2,
-                        'お勧め進路' => $res2,
-                        '回答日' => $res->created_at
-                    ));
+                $quiz1 = $res->quiz1;
+                if ($quiz1 != '') {
+                    $quiz1_array = explode(',', $quiz1);
+                    $answer_str = '';
+                    foreach ($quiz1_array as $item) {
+                        $item = trim($item);
+                        $answer_str .= $quiz_array[$item] . PHP_EOL;
+                    }
+
+                    $no1 = $res->no1;
+                    $res1 = $res->res1;
+
+                    if ($type == 'recruiment') {
+                        DB::table('quiz1s')->insert(array(
+                            '氏名' => $user->name,
+                            '項目' => explode('-', $quiz1)[0],
+                            '回答項目' => $answer_str,
+                            '提案№' => $no1,
+                            'お勧め進路' => $res1,
+                            '回答日' => $res->created_at
+                        ));
+                    }
+
+                    if ($type == 'sales') {
+                        DB::table('quiz2s')->insert(array(
+                            '氏名' => $user->initName_f . ' ' . $user->initName_l,
+                            '項目' => explode('-', $quiz1)[0],
+                            '回答項目' => $answer_str,
+                            'ランク' => $no1,
+                            '説明概要' => $res1,
+                            '回答日' => $res->created_at
+                        ));
+                    }
+                    if ($type == 'management') {
+                        DB::table('quiz3s')->insert(array(
+                            '氏名' => $user->name,
+                            '項目' => explode('-', $quiz1)[0],
+                            '回答項目' => $answer_str,
+                            '状況' => $no1,
+                            '説明概要' => $res1,
+                            '回答日' => $res->created_at
+                        ));
+                    }
                 }
-                if($type == 'sales'){
-                    DB::table('quiz2s')->insert(array(
-                        '氏名' => $user->initName_f.' '.$user->initName_l,
-                        '項目' => explode('-', $quiz2)[0],
-                        '回答項目' => $answer_str,
-                        'ランク' => $no2,
-                        '説明概要' => $res2,
-                        '回答日' => $res->created_at
-                    ));
-                }
-                if($type == 'management'){
-                    DB::table('quiz3s')->insert(array(
-                        '氏名' => $user->name,
-                        '項目' => explode('-', $quiz2)[0],
-                        '回答項目' => $answer_str,
-                        '状況' => $no2,
-                        '説明概要' => $res2,
-                        '回答日' => $res->created_at
-                    ));
-                }
-            }
 
-            //////3
+                ////////2
 
-            $quiz3 = $res->quiz3;
-            if ($quiz3 != '') {
-                $quiz3_array = explode(',', $quiz3);
-                $answer_str = '';
-                foreach ($quiz3_array as $item) {
-                    $item = trim($item);
-                    $answer_str .= $quiz_array[$item] . PHP_EOL;
-                }
+                $quiz2 = $res->quiz2;
+                if ($quiz2 != '') {
+                    $quiz2_array = explode(',', $quiz2);
+                    $answer_str = '';
+                    foreach ($quiz2_array as $item) {
+                        $item = trim($item);
+                        $answer_str .= $quiz_array[$item] . PHP_EOL;
+                    }
 
-                $no3 = $res->no3;
-                $res3 = $res->res3;
+                    $no2 = $res->no2;
+                    $res2 = $res->res2;
 
 
-                if ($type == 'recruiment') {
-                    DB::table('quiz1s')->insert(array(
-                        '氏名' => $user->name,
-                        '項目' => explode('-', $quiz3)[0],
-                        '回答項目' => $answer_str,
-                        '提案№' => $no3,
-                        'お勧め進路' => $res3,
-                        '回答日' => $res->created_at
-                    ));
+                    if ($type == 'recruiment') {
+                        DB::table('quiz1s')->insert(array(
+                            '氏名' => $user->name,
+                            '項目' => explode('-', $quiz2)[0],
+                            '回答項目' => $answer_str,
+                            '提案№' => $no2,
+                            'お勧め進路' => $res2,
+                            '回答日' => $res->created_at
+                        ));
+                    }
+                    if ($type == 'sales') {
+                        DB::table('quiz2s')->insert(array(
+                            '氏名' => $user->initName_f . ' ' . $user->initName_l,
+                            '項目' => explode('-', $quiz2)[0],
+                            '回答項目' => $answer_str,
+                            'ランク' => $no2,
+                            '説明概要' => $res2,
+                            '回答日' => $res->created_at
+                        ));
+                    }
+                    if ($type == 'management') {
+                        DB::table('quiz3s')->insert(array(
+                            '氏名' => $user->name,
+                            '項目' => explode('-', $quiz2)[0],
+                            '回答項目' => $answer_str,
+                            '状況' => $no2,
+                            '説明概要' => $res2,
+                            '回答日' => $res->created_at
+                        ));
+                    }
                 }
-                
-                if($type == 'sales'){
-                    DB::table('quiz2s')->insert(array(
-                        '氏名' => $user->initName_f.' '.$user->initName_l,
-                        '項目' => explode('-', $quiz3)[0],
-                        '回答項目' => $answer_str,
-                        'ランク' => $no3,
-                        '説明概要' => $res3,
-                        '回答日' => $res->created_at
-                    ));
-                }
-                if($type == 'management'){
-                    DB::table('quiz3s')->insert(array(
-                        '氏名' => $user->name,
-                        '項目' => explode('-', $quiz3)[0],
-                        '回答項目' => $answer_str,
-                        '状況' => $no3,
-                        '説明概要' => $res3,
-                        '回答日' => $res->created_at
-                    ));
+
+                //////3
+
+                $quiz3 = $res->quiz3;
+                if ($quiz3 != '') {
+                    $quiz3_array = explode(',', $quiz3);
+                    $answer_str = '';
+                    foreach ($quiz3_array as $item) {
+                        $item = trim($item);
+                        $answer_str .= $quiz_array[$item] . PHP_EOL;
+                    }
+
+                    $no3 = $res->no3;
+                    $res3 = $res->res3;
+
+
+                    if ($type == 'recruiment') {
+                        DB::table('quiz1s')->insert(array(
+                            '氏名' => $user->name,
+                            '項目' => explode('-', $quiz3)[0],
+                            '回答項目' => $answer_str,
+                            '提案№' => $no3,
+                            'お勧め進路' => $res3,
+                            '回答日' => $res->created_at
+                        ));
+                    }
+
+                    if ($type == 'sales') {
+                        DB::table('quiz2s')->insert(array(
+                            '氏名' => $user->initName_f . ' ' . $user->initName_l,
+                            '項目' => explode('-', $quiz3)[0],
+                            '回答項目' => $answer_str,
+                            'ランク' => $no3,
+                            '説明概要' => $res3,
+                            '回答日' => $res->created_at
+                        ));
+                    }
+                    if ($type == 'management') {
+                        DB::table('quiz3s')->insert(array(
+                            '氏名' => $user->name,
+                            '項目' => explode('-', $quiz3)[0],
+                            '回答項目' => $answer_str,
+                            '状況' => $no3,
+                            '説明概要' => $res3,
+                            '回答日' => $res->created_at
+                        ));
+                    }
                 }
             }
         }
 
         $csv_str = $type == 'recruiment' ? '採用候補者データ.xlsx' : ($type == 'sales' ? '営業適性データ.xlsx' : '就業状況データ.xlsx');
-        if($type == 'recruiment') return Excel::download(new Quiz1Export, $csv_str);
-        if($type == 'sales') return Excel::download(new Quiz2Export, $csv_str);
-        if($type == 'management') return Excel::download(new Quiz3Export, $csv_str);
+        if ($type == 'recruiment') return Excel::download(new Quiz1Export, $csv_str);
+        if ($type == 'sales') return Excel::download(new Quiz2Export, $csv_str);
+        if ($type == 'management') return Excel::download(new Quiz3Export, $csv_str);
+        if ($type == 'recruiment_user') return Excel::download(new RecruimentExport, 'ユーザー管理(採用).xlsx');
+        if ($type == 'sales_user') return Excel::download(new SalesExport, 'ユーザー管理(営業).xlsx');
+        if ($type == 'management_user') return Excel::download(new RecruimentExport, 'ユーザー管理(管理).xlsx');
+        if ($type == 'member_user') return Excel::download(new AdminExport, 'システム管理者.xlsx');
     }
 
 
@@ -1224,6 +1265,5 @@ class UserController extends Controller
 
             return $this->managementResult();
         }
-
     }
 }
