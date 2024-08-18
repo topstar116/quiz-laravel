@@ -103,6 +103,7 @@
 
 
 
+                        <p></p>
                         <div class="text-center">
                             <div id="answer_finish_base"></div>
                             <input type="submit" name="commit" value="回答を送信する" id="answer_submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-5 px-20 rounded-full cursor-pointer" data-confirm="本当に回答を送信しますか?" data-disable-with="回答を送信する" disabled="">

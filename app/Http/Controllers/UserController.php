@@ -288,10 +288,16 @@ class UserController extends Controller
                     $sub_title = '開発ディレクター';
                 }
 
-                //№1が左の場合、右であれば5
-                else if (str_contains($str, '職種適正-8-2')) {
+		//9,"人と相談しながら問題解決することが好きだ"で分岐
+                else if (str_contains($str, '職種適正-9-1')) {
                     $sub_type = 5;
                     $sub_title = 'WEB開発エンジニア';
+                }
+
+		//9,"黙々と指示された作業をすることが好きだ"で分岐
+                else if (str_contains($str, '職種適正-9-2')) {
+                    $sub_type = 6;
+                    $sub_title = 'テスター';
                 }
 
                 //except
@@ -325,11 +331,17 @@ class UserController extends Controller
                     $sub_type = 1;
                     $sub_title = 'ITコンサルタント';
                 }
-
-                //№1が右の場合、右であれば2
-                else if (str_contains($str, '職種適正-8-2')) {
+		
+		//9,"人と相談しながら問題解決することが好きだ"で分岐
+                else if (str_contains($str, '職種適正-9-1')) {
                     $sub_type = 2;
                     $sub_title = '技術リーダー';
+                }
+		
+		//9,"黙々と指示された作業をすることが好きだ"で分岐
+                else if (str_contains($str, '職種適正-9-2')) {
+                    $sub_type = 3;
+                    $sub_title = 'メンバーエンジニア';
                 }
 
                 //except
@@ -362,12 +374,25 @@ class UserController extends Controller
             if (str_contains($str, '企業適正-1-2')) {
                 $type = 'SES';
                 $url = 'https://engineer-match-recommend-result.com/ses/';
+		
+		//3、社長が近い距離の会社で働きたい0分岐
+                if (str_contains($str, '企業適正-3-1')) {
+                    $sub_type = 4;
+                    $sub_title = '小規模SES';
+                } 
 
-                //№1が右の場合、左は3で右は4
-                if (str_contains($str, '企業適正-7-1')) {
+		//5、自社の先輩達に囲まれて教育されたい1分岐
+                else if (str_contains($str, '企業適正-5-2')) {
                     $sub_type = 3;
                     $sub_title = '中堅以上SES';
-                } else if (str_contains($str, '企業適正-7-2')) {
+                } 		
+
+                //№1が右の場合、左は3で右は4
+                else if (str_contains($str, '企業適正-7-1')) {
+                    $sub_type = 3;
+                    $sub_title = '中堅以上SES';
+                } 
+		else if (str_contains($str, '企業適正-7-2')) {
                     $sub_type = 4;
                     $sub_title = '小規模SES';
                 }
@@ -446,7 +471,7 @@ class UserController extends Controller
             if ($count >= 8) {
                 $sub_type = 'A';
                 $sub_title = 'どんな現場でも活躍してもらえそうです！';
-            } elseif ($count >= 6 and $count < 8) {
+            } elseif ($count >= 4 and $count < 8) {
                 $sub_type = 'B';
                 $sub_title = '現場によって合う合わないが分かれそうです！';
             } else {
@@ -731,7 +756,7 @@ class UserController extends Controller
         if (Auth::user()->status == '0')
             return view('pending');
 
-        $users = User::paginate();
+        $users = DB::table('users')->get();
         $page = "recruimentUser";
         return view('quiz.admin.recruiment_user', compact('users', 'page'));
     }
@@ -741,7 +766,7 @@ class UserController extends Controller
         if (Auth::user()->status == '0')
             return view('pending');
 
-        $users = User::paginate();
+        $users = DB::table('users')->get();
         $page = "salesUser";
         return view('quiz.admin.sales_user', compact('users', 'page'));
     }
@@ -751,7 +776,7 @@ class UserController extends Controller
         if (Auth::user()->status == '0')
             return view('pending');
 
-        $users = User::paginate();
+        $users = DB::table('users')->get();
         $page = "managementUser";
         return view('quiz.admin.management_user', compact('users', 'page'));
     }
@@ -761,8 +786,11 @@ class UserController extends Controller
         if (Auth::user()->status == '0')
             return view('pending');
 
-        $users = User::paginate();
+        $users = DB::table('users')->get();
         $page = "memberUser";
+
+        // dd($users); exit();
+
         return view('quiz.admin.member_user', compact('users', 'page'));
     }
 
@@ -783,7 +811,7 @@ class UserController extends Controller
         if (Auth::user()->status == '0')
             return view('pending');
 
-        $quizs = DB::table('recruiment_quiz_table')->get();
+        $quizs = DB::table('recruiment_quiz_table') -> orderBy('項目', 'desc') -> get();
         $page = "recruimentQuiz";
         return view('quiz.admin.recruiment_quiz', compact('quizs', 'page'));
     }
@@ -793,7 +821,7 @@ class UserController extends Controller
         if (Auth::user()->status == '0')
             return view('pending');
 
-        $quizs = DB::table('sales_quiz_table')->get();
+        $quizs = DB::table('sales_quiz_table') -> orderBy('項目', 'desc') -> get();
         $page = "salesQuiz";
         return view('quiz.admin.sales_quiz', compact('quizs', 'page'));
     }
@@ -803,7 +831,7 @@ class UserController extends Controller
         if (Auth::user()->status == '0')
             return view('pending');
 
-        $quizs = DB::table('management_quiz_table')->get();
+        $quizs = DB::table('management_quiz_table') -> orderBy('項目', 'desc') -> get();
         $users = User::paginate();
         $page = "managementQuiz";
         return view('quiz.admin.management_quiz', compact('quizs', 'page'));

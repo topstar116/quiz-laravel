@@ -46,7 +46,7 @@
                                 @endforeach
                             </div>
 
-                        </div>
+                        </div><br><br><br>
 
                         <div class="text-center">
                             <div id="answer_finish_base"></div>

@@ -39,7 +39,7 @@
                                 @endforeach
                             </div>
 
-                        </div>
+                        </div><br><br><br>
 
 
                         <div class="question-group__description mt-20">
@@ -99,7 +99,7 @@
 
                             </div>
 
-                        </div>
+                        </div><br><br>
 
 
 

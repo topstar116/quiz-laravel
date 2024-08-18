@@ -50,13 +50,15 @@
                 </label> -->
             </div>
 
-            <div class="flex items-center justify-end mt-4">
+            <div class="flex items-center justify-end mt-4 ">
                 @if (Route::has('password.request'))
                     <!-- <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('password.request') }}">
                         {{ __('パスワード設定はこちら') }}
                     </a> -->
                 @endif
-
+                <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('register') }}" >
+                新規登録はこちら
+                </a>
                 <x-button class="ml-4">
                     {{ __('ログイン') }}
                 </x-button>
@@ -68,24 +70,21 @@
                         {{ __('パスワード設定はこちら') }}
                     </a> -->
                 @endif
-
-                <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('register') }}">
-                    {{ __('採用') }}
-                </a>
-
-                <a class="underline text-sm text-gray-600 hover:text-gray-900 mx-4" href="{{ route('sales_register') }}">
-                    {{ __('営業') }}
-                </a>
-
-                <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('management_register') }}">
-                    {{ __('管理') }}
-                </a>
-
-                <!-- <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('member_register') }}">
-                    {{ __('ADMIN') }}
-                </a> -->
                 
-                登録はこちら
+		<SCRIPT LANGUAGE="JavaScript">
+		function jump(){
+    			var flag = 0;
+    			for(i=0; i<document.forms[0].url.length; i++){
+        			if(document.forms[0].url[i].checked){
+            				flag = 1;
+            				window.location.href = document.forms[0].url[i].value;
+        			}
+    			}
+    			if(flag == 0){
+        		alert('選択されていません。');
+    			}
+		}
+		</SCRIPT>
 
             </div>
         </form>
