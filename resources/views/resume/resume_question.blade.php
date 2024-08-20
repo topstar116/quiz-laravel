@@ -4,6 +4,8 @@
         scroll-behavior: smooth;
     }
 
+
+
     .question__description:before {
         content: "Q" counter(question-counter);
     }
@@ -33,7 +35,7 @@
                                             <li class="my-10">
                                                 <input type="radio"
                                                     value="{{ explode(',', $resume->question)[0] }}-1-{{ $resume->question_id }}"
-                                                    name="{{ $resume->question_id }}-1" id="{{ $resume->id }}"
+                                                    name="{{ $resume->question_id }}-1" id="{{ $resume->id }}-1"
                                                     data-gtm-form-interact-field-id="0"
                                                     onclick="return window.scrollBy(0,300);">
                                                 <label class="question__choices--label"
@@ -42,8 +44,8 @@
                                             </li>
                                             <li class="my-10">
                                                 <input type="radio" value="{{ explode(',', $resume->question)[1] }}-2"
-                                                    name="{{ $resume->question_id }}-2" id="{{ $resume->id }}"
-                                                    data-gtm-form-interact-field-id="0"
+                                                    name="{{ $resume->question_id }}-2" id="{{ $resume->id }}-2"
+                                                    data-gtm-form-interact-field-id="1"
                                                     onclick="return window.scrollBy(0,300);">
                                                 <label class="question__choices--label"
                                                     for="{{ $resume->question_id }}-2">{{ explode(',', $resume->question)[1] }}</label>
@@ -54,7 +56,6 @@
                                     </div>
                                 @endforeach
                             </div>
-
                         </div>
 
                         <div class="text-center">

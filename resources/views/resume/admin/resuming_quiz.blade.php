@@ -179,7 +179,7 @@
                                                                                 <input type="text"
                                                                                     name="question_id"
                                                                                     value="{{ $quiz->question_id }}"
-                                                                                    class="w-full bg-gray-100 p-2 mt-2 mb-3" />
+                                                                                    class="w-full bg-gray-100 p-2 mt-2 mb-3 disabled:opacity-75" />
                                                                                 <label>回答項目</label>
                                                                                 <input type="text" name="question1"
                                                                                     value="{{ explode(',', $quiz->question)[0] }}"

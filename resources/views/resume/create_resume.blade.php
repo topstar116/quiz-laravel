@@ -28,7 +28,7 @@
                     <thead class="bg-gray-50">
                         <tr>
                             <th scope="col"
-                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                class="px-1 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 タイトル
                             </th>
                             <th scope="col"
@@ -38,19 +38,38 @@
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
-                        @foreach ($result_datas as $result_data)
-                            <tr>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <a href="{{ $result_data[2] }}"
-                                        class="text-blue-400 hover:underline hover:text-blue-600">
-                                        {{ $result_data[0] }}
-                                    </a>
-                                </td>
-                                <td class="px-6 py-4 whitespace-normal tracking-wide leading-8 text-gray-700 flex-wrap">
-                                    {{ $result_data[1] }}
-                                </td>
-                            </tr>
-                        @endforeach
+                        @if ($identify == 0)
+                            @foreach ($result_datas as $result_data)
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <a href="{{ $result_data[2] }}"
+                                            class="text-blue-400 hover:underline hover:text-blue-600">
+                                            {{ $result_data[0] }}
+                                        </a>
+                                    </td>
+                                    <td
+                                        class="px-6 py-4 whitespace-normal tracking-wide leading-8 text-gray-700 flex-wrap">
+                                        {{ $result_data[1] }}
+                                    </td>
+                                </tr>
+                            @endforeach
+                        @else
+                            @foreach ($result_datas as $result_data)
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <a href="{{ $result_data->url }}"
+                                            class="text-blue-400 hover:underline hover:text-blue-600">
+                                            {{ $result_data->job }}
+                                        </a>
+                                    </td>
+                                    <td
+                                        class="px-6 py-4 whitespace-normal tracking-wide leading-8 text-gray-700 flex-wrap">
+                                        {{ $result_data->comment }}
+                                    </td>
+                                </tr>
+                            @endforeach
+                        @endif
+
                     </tbody>
                 </table>
             </div>

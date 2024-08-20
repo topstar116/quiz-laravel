@@ -1,8 +1,9 @@
 <link rel="stylesheet" href="{{ asset('css/mikiwa.css') }}">
 <style>
-    html{
+    html {
         scroll-behavior: smooth;
     }
+
     .question-group__description:before {
         content: "{{ $項目 }}";
     }
@@ -29,20 +30,28 @@
 
                             <div class="question">
 
-                                @foreach($quizs as $quiz)
-                                <div class="question__description mt-20"></div>
-                                <div class="question__choices">
-                                    <ol>
-                                        <li class="my-10">
-                                            <input type="radio" value="{{ $quiz->項目 }}-{{ $quiz->提案NO }}-1" name="{{ $quiz->id }}" id="{{ $quiz->id }}-1" data-gtm-form-interact-field-id="0" onclick="return window.scrollBy(0,300);">
-                                            <label class="question__choices--label" for="{{ $quiz->id }}-1">{{ explode(",",$quiz->回答項目)[0] }}</label>
-                                        </li>
-                                        <li class="my-10">
-                                            <input type="radio" value="{{ $quiz->項目 }}-{{ $quiz->提案NO }}-2" name="{{ $quiz->id }}" id="{{ $quiz->id }}-2" data-gtm-form-interact-field-id="1" onclick="return window.scrollBy(0,300);">
-                                            <label class="question__choices--label" for="{{ $quiz->id }}-2">{{ explode(",",$quiz->回答項目)[1] }}</label>
-                                        </li>
-                                    </ol>
-                                </div>
+                                @foreach ($quizs as $quiz)
+                                    <div class="question__description mt-20"></div>
+                                    <div class="question__choices">
+                                        <ol>
+                                            <li class="my-10">
+                                                <input type="radio" value="{{ $quiz->項目 }}-{{ $quiz->提案NO }}-1"
+                                                    name="{{ $quiz->id }}" id="{{ $quiz->id }}-1"
+                                                    data-gtm-form-interact-field-id="0"
+                                                    onclick="return window.scrollBy(0,300);">
+                                                <label class="question__choices--label"
+                                                    for="{{ $quiz->id }}-1">{{ explode(',', $quiz->回答項目)[0] }}</label>
+                                            </li>
+                                            <li class="my-10">
+                                                <input type="radio" value="{{ $quiz->項目 }}-{{ $quiz->提案NO }}-2"
+                                                    name="{{ $quiz->id }}" id="{{ $quiz->id }}-2"
+                                                    data-gtm-form-interact-field-id="1"
+                                                    onclick="return window.scrollBy(0,300);">
+                                                <label class="question__choices--label"
+                                                    for="{{ $quiz->id }}-2">{{ explode(',', $quiz->回答項目)[1] }}</label>
+                                            </li>
+                                        </ol>
+                                    </div>
                                 @endforeach
                             </div>
 
@@ -50,7 +59,8 @@
 
                         <div class="text-center">
                             <div id="answer_finish_base"></div>
-                            <input type="submit" value="回答を送信する" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-5 px-20 rounded-full cursor-pointer">
+                            <input type="submit" value="回答を送信する"
+                                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-5 px-20 rounded-full cursor-pointer">
                         </div>
                     </form>
                 </div>

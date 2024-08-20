@@ -1410,7 +1410,12 @@ class UserController extends Controller
         public function resume_question()
     {
         $resumes = DB::table('resume_question')->get();
-
+        
+        foreach($resumes as $key => $resume){
+            if($resume->question_id == 10){
+                unset($resumes[$key]);
+            }
+        }
         return view('resume.resume_question', compact('resumes'));
     }
 
@@ -1451,7 +1456,15 @@ class UserController extends Controller
         } else {
             DB::table('resume_result')->insert(['created_at' => date('Y-m-d h:i:s'), 'user_id' => $id, 'resume_content' => $data, 'job' => $jobs]);
         }
-        return view('resume.create_resume', compact('result_datas'));
+        if(count($result_datas) == 9){
+            $result_datas = DB::table('resume_question')->where('question_id', 10)->get();
+            $identify = 1;
+            return view('resume.create_resume', compact('result_datas', 'identify'));
+        }
+        else{
+            $identify = 0;
+            return view('resume.create_resume', compact('result_datas', 'identify'));
+        }
     }
 
     public function resume_generator(Request $request) {
