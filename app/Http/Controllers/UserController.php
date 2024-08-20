@@ -956,6 +956,7 @@ class UserController extends Controller
                 'question_id' => $request->input('question_id'),
                 'question' => $request->input('question1') . "," . $request->input('question2'),
                 'comment' => $request->input('comment'),
+                'url' => $request->input('url')
             );
     
             $res = DB::table('resume_question')->insert($data);
@@ -970,6 +971,7 @@ class UserController extends Controller
             'question_id' => $request->input('question_id'),
             'question' => $request->input('question1') . "," . $request->input('question2'),
             'comment' => $request->input('comment'),
+            'url' => $request->input('url')
         );
 
         $res = DB::table('resume_question')->where('id', $request->input('id'))->update($data);

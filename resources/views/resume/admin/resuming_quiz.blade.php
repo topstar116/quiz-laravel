@@ -47,6 +47,9 @@
                                                         <label>職種説明</label>
                                                         <input type="text" name="comment"
                                                             class="w-full bg-gray-100 p-2 mt-2 mb-3" />
+                                                        <label>参考リンク</label>
+                                                        <input type="text" name="url"
+                                                            class="w-full bg-gray-100 p-2 mt-2 mb-3" />
                                                     </div>
                                                     <div class="bg-gray-200 px-4 py-3 text-right">
                                                         <button type="button"
@@ -188,6 +191,11 @@
                                                                                 <input type="textarea" name="comment"
                                                                                     aria-rowspan="4"
                                                                                     value="{{ $quiz->comment }}"
+                                                                                    class="w-full bg-gray-100 p-2 mt-2 mb-3 border border-gray-500" />
+                                                                                <label>参考リンク</label>
+                                                                                <input type="textarea" name="url"
+                                                                                    aria-rowspan="4"
+                                                                                    value="{{ $quiz->url }}"
                                                                                     class="w-full bg-gray-100 p-2 mt-2 mb-3 border border-gray-500" />
                                                                             </div>
                                                                             <div
