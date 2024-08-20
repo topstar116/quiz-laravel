@@ -26,6 +26,10 @@ use App\Exports\SalesExport;
 use App\Exports\AdminExport;
 
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Storage;
+use App\Services\OpenAIService;
+use Gemini\Laravel\Facades\Gemini;
+use Illuminate\Support\Facades\File; 
 
 
 
@@ -33,6 +37,12 @@ date_default_timezone_set('Asia/Tokyo');
 
 class UserController extends Controller
 {
+    protected $openAIService;
+
+    public function __construct(OpenAIService $openAIService)
+    {
+        $this->openAIService = $openAIService;
+    }
 
     public function index()
     {
@@ -836,6 +846,14 @@ class UserController extends Controller
         $page = "managementQuiz";
         return view('quiz.admin.management_quiz', compact('quizs', 'page'));
     }
+    public function resumingQuiz()
+    {
+        $resumingquizs = DB::table('resume_question')->get();
+        $users = User::paginate();
+        // dd($resumingquizs);
+        $page = "resumingQuiz";
+        return view('resume.admin.resuming_quiz', compact('resumingquizs', 'page'));
+    }
 
 
     public function addQuiz(Request $request)
@@ -924,6 +942,50 @@ class UserController extends Controller
         }
     }
 
+    // resume Quiz
+    public function addresumeQuiz(Request $request)
+    {
+        $question_id = $request->input('question_id');
+        $id = DB::table('resume_question')->where('question_id', $question_id)->first();
+        if($id) {
+            return $this->resumingQuiz();
+        }
+        else{
+            $data = array(
+                'job' => $request->input('job'),
+                'question_id' => $request->input('question_id'),
+                'question' => $request->input('question1') . "," . $request->input('question2'),
+                'comment' => $request->input('comment'),
+            );
+    
+            $res = DB::table('resume_question')->insert($data);
+            return $this->resumingQuiz();
+        }
+    }
+    public function updateresumeQuiz(Request $request)
+    {
+ 
+        $data = array(
+            'job' => $request->input('job'),
+            'question_id' => $request->input('question_id'),
+            'question' => $request->input('question1') . "," . $request->input('question2'),
+            'comment' => $request->input('comment'),
+        );
+
+        $res = DB::table('resume_question')->where('id', $request->input('id'))->update($data);
+        return $this->resumingQuiz();
+        
+    }
+
+
+    public function delresumeQuiz(Request $request)
+    {
+        $id = $request->id;
+        $res = DB::table('resume_question')->where('id', $id)->delete();
+        return $this->resumingQuiz();
+    }
+
+
 
     //admin restul
     public function recruimentResult()
@@ -967,6 +1029,29 @@ class UserController extends Controller
 
         $page = "managementResult";
         return view('quiz.admin.management_result', compact('results', 'page'));
+    }
+    public function resumingResult()
+    {
+        $results = DB::table('resume_result')
+            ->join('users', 'resume_result.user_id', '=', 'users.id')
+            ->select('resume_result.*', 'users.initName_f', 'users.initName_l', 'users.role')
+            ->get();
+        $page = "resumingResult";
+        return view('resume.admin.resuming_result', compact('results', 'page'));
+    }
+
+    public function resumingMovie(Request $request) {
+        $user_id = $request->input('user_id');
+        $movieList = DB::table('resume_result')->where('user_id', $user_id)->select('video_urls')->get();
+        
+        if($movieList[0]->video_urls){
+            $movieList = explode(',', $movieList[0]->video_urls);
+            $page = "resumingMovie";
+            return view('resume.admin.view_moving', compact('movieList', 'page'));
+        }
+        else{
+            return back()->with('error', 'Video file is not exited!');
+        }
     }
 
 
@@ -1014,6 +1099,31 @@ class UserController extends Controller
 
         return $pdf->download($data['name'] . $pdf_str);
         // return $pdf->stream($data['name'] . $pdf_str);
+    }
+
+        public function resumepdf(Request $request)
+    {
+        $user_id = Auth::user()->id;
+        $name = Auth::user()->initName_f;
+        $data = $request->all();
+        $resume_content = $data['resume_content'];
+        // save to database
+        $user = DB::table('users')->where('id', $user_id)->first();
+    
+        if ($user) {
+            // Update existing resume content
+            DB::table('users')->where('id', $user_id)->update(['resume_content' => $resume_content]);
+        } else {
+            // Insert new resume content (note: this part might not be needed if the user exists)
+            DB::table('users')->where('id', $user_id)->insert('resume_content', $resume_content);
+        }
+        
+        // save pdf and download this file
+        $pdf = PDF::loadView('resumepdf', ['resume_content' => $resume_content]);
+
+        $pdf_str = $user_id . '経歴書.pdf';
+
+        return $pdf->download($name . $pdf_str);
     }
 
 
@@ -1293,5 +1403,134 @@ class UserController extends Controller
 
             return $this->managementResult();
         }
+    }
+
+        public function resume_question()
+    {
+        $resumes = DB::table('resume_question')->get();
+
+        return view('resume.resume_question', compact('resumes'));
+    }
+
+    public function resume()
+    {
+        $id = Auth::user()->id;
+        $rows = DB::table('quiz_result')->where(array('user_id' => $id))->count();
+
+        return view('resume.create_resume');
+    }
+
+    public function question_confirm(Request $request)
+    {
+        $id = Auth::user()->id;
+        $data = $request->all();
+        $result_data = array();
+        $jobs = array();
+        $result_datas = array();
+        unset($data['_token']);
+        foreach ($data as $job){
+            if(explode('-', $job)[1] == 1){
+                $question_id = explode('-', $job)[2];
+                $job_name = DB::table('resume_question')->where('question_id',  $question_id)->value('job');
+                $comment = DB::table('resume_question')->where('question_id',  $question_id)->value('comment');
+                $url = DB::table('resume_question')->where('question_id',  $question_id)->value('url');
+                array_push($result_data, $job_name, $comment, $url);
+                array_push($jobs, $job_name);
+                array_push($result_datas, $result_data);
+                $result_data = array();
+            }
+        }
+        $data = implode(',', $data);
+        $rows = DB::table('resume_result')->where('user_id', $id)->count();
+        $jobs = implode(', ', $jobs);
+        
+        if ($rows > 0) {
+            DB::table('resume_result')->where('user_id', $id)->update(['updated_at' => date('Y-m-d h:i:s'), 'resume_content' => $data, 'job' => $jobs]);
+        } else {
+            DB::table('resume_result')->insert(['created_at' => date('Y-m-d h:i:s'), 'user_id' => $id, 'resume_content' => $data, 'job' => $jobs]);
+        }
+        return view('resume.create_resume', compact('result_datas'));
+    }
+
+    public function resume_generator(Request $request) {
+
+        // Handle video file if uploaded
+        $id = Auth::user()->id;
+        $rows = DB::table('resume_result')->where('user_id', $id)->count();
+        $paths = array();
+        
+        $directory = 'videos/' . Auth::id();
+        $files = glob($directory . '/*');  // Get all files in the directory
+
+        // Loop through the files and delete each one
+        
+        $deleted_directorys = Storage::disk('public')->files($directory);
+
+        foreach($deleted_directorys as $deleted_file){
+            Storage::disk('public')->delete($deleted_file);
+        }
+
+        // $existingFiles = Storage::disk('public')->files($directory);
+        // dd($existingFiles);
+
+        // if (count($existingFiles) >= 5) {
+        //     return back()->with('error', '');
+        // }
+        // foreach ($existingFiles as $file) {
+        //     File::delete($file);
+        // }
+
+        $request->validate([
+            'video' => 'file|mimes:mp4,avi,mkv,mov,ogg|max:2000000',
+        ]);
+
+        // dd($existingFiles);
+
+        if ($request->hasFile('videos')) {
+            $files = $request->file('videos');
+            foreach ($files as $file) {
+
+                // $path = Storage::putFile($directory, $file);
+
+                // Create the full path where the file will be stored
+                $filePath = $directory . '/' . $file->getClientOriginalName();
+                
+                // Move the file to the public directory
+                $file->move(public_path($directory), $file->getClientOriginalName());
+                array_push($paths, $filePath);
+                $filePath = array();
+            }
+        }
+        $paths = implode(',', $paths);
+
+        //data process
+       $data = $request->validate([
+            'select_job' => 'required|string|max:255',
+            'experience' => 'required|string|max:1000',
+            'available_skill' => 'required|string|max:1000',
+            'resume' => 'required|string|max:1000',
+        ]);
+
+        // Prepare the details for OpenAI
+        $details = [
+            'job_title' => $data['select_job'],
+            'job_summary' => $data['experience'],
+            'skills_experience' => $data['available_skill'],
+            'job_history' => $data['resume'],
+        ];
+
+        // Generate resume content from OpenAI
+        $resumeContent = $this->openAIService->generateResume($details);
+        if ($rows > 0) {
+            DB::table('resume_result')->where('user_id', $id)->update(['updated_at' => date('Y-m-d h:i:s'), 'video_urls' => $paths, 'building_code' => $resumeContent ]);
+        } else {
+            DB::table('resume_result')->insert(['created_at' => date('Y-m-d h:i:s'), 'user_id' => $id, 'video_urls' => $paths, 'building_code' => $resumeContent]);
+        }
+        
+
+        // Return the result to the view
+        return view('result.resume_result', [
+            'resumeContent' => $resumeContent,
+        ]);
     }
 }

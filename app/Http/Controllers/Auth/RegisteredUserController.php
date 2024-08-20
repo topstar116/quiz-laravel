@@ -50,14 +50,16 @@ class RegisteredUserController extends Controller
     {
         if ($request->role == 'recruiment') {
             $request->validate([
-                'name' => ['required', 'string', 'max:255'],
+                'initName_f' => ['required', 'string', 'max:255'],
+                'initName_l' => ['required', 'string', 'max:255'],
                 'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
                 'password' => ['required', 'confirmed', Rules\Password::defaults()],
             ]);
 
             $user = User::create([
                 'role' => $request->role,
-                'name' => $request->name,
+                'initName_f' => $request->initName_f,
+                'initName_l' => $request->initName_l,
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
                 'pwd' => $request->password,
@@ -143,7 +145,8 @@ class RegisteredUserController extends Controller
 
             $user = User::create([
                 'role' => $request->role,
-                'name' => $request->name,
+                'initName_f' => $request->initName_f,
+                'initName_l' => $request->initName_l,
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
                 'pwd' => $request->password,

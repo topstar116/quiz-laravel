@@ -1,9 +1,9 @@
 <x-guest-layout>
     <x-auth-card>
         <x-slot name="logo">
-            
+
             <div style="font-size: 40px;font-weight: bolder;">ログイン</div>
-            
+
         </x-slot>
 
         <!-- Session Status -->
@@ -19,23 +19,24 @@
             <div>
                 <x-label for="email" :value="__('メールアドレス')" />
 
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
+                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required
+                    autofocus />
             </div>
 
             <!-- Password -->
             <div class="mt-4">
                 <x-label for="password" :value="__('パスワード')" />
 
-                <x-input id="password" class="block mt-1 w-full"
-                                type="password"
-                                name="password"
-                                required autocomplete="current-password" />
+                <x-input id="password" class="block mt-1 w-full" type="password" name="password" required
+                    autocomplete="current-password" />
             </div>
 
             <!-- Remember Me -->
             <div class="block mt-4 flex flex-col">
                 <label for="remember_me" class="inline-flex items-center">
-                    <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" name="remember">
+                    <input id="remember_me" type="checkbox"
+                        class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                        name="remember">
                     <span class="ml-2 text-sm text-gray-600">{{ __('ログインしたままにする') }}</span>
                 </label>
                 <!-- <label for="user" class="inline-flex items-center my-4">
@@ -56,9 +57,22 @@
                         {{ __('パスワード設定はこちら') }}
                     </a> -->
                 @endif
-                <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('register') }}" >
-                新規登録はこちら
-                </a>
+                <div class="flex flex-rounded">
+
+                    <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('register') }}">
+                        {{ __('採用、管理') }}
+                    </a>
+
+                    <a class="underline text-sm text-gray-600 hover:text-gray-900 mx-4"
+                        href="{{ route('sales_register') }}">
+                        {{ __('営業') }}
+                    </a>
+
+                    <a class="underline text-sm text-gray-600 hover:text-gray-900"
+                        href="{{ route('management_register') }}">
+                        {{ __('企業登録') }}
+                    </a>
+                </div>
                 <x-button class="ml-4">
                     {{ __('ログイン') }}
                 </x-button>
@@ -70,21 +84,23 @@
                         {{ __('パスワード設定はこちら') }}
                     </a> -->
                 @endif
-                
-		<SCRIPT LANGUAGE="JavaScript">
-		function jump(){
-    			var flag = 0;
-    			for(i=0; i<document.forms[0].url.length; i++){
-        			if(document.forms[0].url[i].checked){
-            				flag = 1;
-            				window.location.href = document.forms[0].url[i].value;
-        			}
-    			}
-    			if(flag == 0){
-        		alert('選択されていません。');
-    			}
-		}
-		</SCRIPT>
+
+
+
+                <SCRIPT LANGUAGE="JavaScript">
+                    function jump() {
+                        var flag = 0;
+                        for (i = 0; i < document.forms[0].url.length; i++) {
+                            if (document.forms[0].url[i].checked) {
+                                flag = 1;
+                                window.location.href = document.forms[0].url[i].value;
+                            }
+                        }
+                        if (flag == 0) {
+                            alert('選択されていません。');
+                        }
+                    }
+                </SCRIPT>
 
             </div>
         </form>
