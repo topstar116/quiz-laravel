@@ -1407,7 +1407,7 @@ class UserController extends Controller
         }
     }
 
-        public function resume_question()
+    public function career_question()
     {
         $resumes = DB::table('resume_question')->get();
         
@@ -1416,7 +1416,7 @@ class UserController extends Controller
                 unset($resumes[$key]);
             }
         }
-        return view('resume.resume_question', compact('resumes'));
+        return view('resume.career_question', compact('resumes'));
     }
 
     public function resume()
@@ -1467,85 +1467,154 @@ class UserController extends Controller
         }
     }
 
-    public function resume_generator(Request $request) {
+    public function question_resuming() {
+        return view('resume.question_resuming');
+    }
 
-        // Handle video file if uploaded
+    public function view_movie() {
         $id = Auth::user()->id;
+        $result_datas = [];
         $rows = DB::table('resume_result')->where('user_id', $id)->count();
-        $paths = array();
-        
-        $directory = 'videos/' . Auth::id();
-        $files = glob($directory . '/*');  // Get all files in the directory
-
-        // Loop through the files and delete each one
-        
-        $deleted_directorys = Storage::disk('public')->files($directory);
-
-        foreach($deleted_directorys as $deleted_file){
-            Storage::disk('public')->delete($deleted_file);
+        if($rows > 0){
+            $datas = DB::table('resume_result')->where('user_id', $id)->select('video_urls','file_names', )->first();
+            $video_urls = explode(',', $datas->video_urls);
+            $file_names = explode(',', $datas->file_names);
+            for($i = 0; $i < count($video_urls); $i++){
+                $data = [
+                    'video_url' => $video_urls[$i],
+                    'file_name' => $file_names[$i],
+                ];
+                array_push($result_datas, $data);
+            }
+        }else{
+            return back()->with('error', '');
         }
+        return view('resume.view_movie', compact('result_datas') );
+    }
 
-        // $existingFiles = Storage::disk('public')->files($directory);
-        // dd($existingFiles);
+    public function add_movie() {
+        return view('resume.add_movie');
+    }
 
-        // if (count($existingFiles) >= 5) {
-        //     return back()->with('error', '');
-        // }
-        // foreach ($existingFiles as $file) {
-        //     File::delete($file);
-        // }
+    public function save_movie(Request $request) {
 
-        $request->validate([
-            'video' => 'file|mimes:mp4,avi,mkv,mov,ogg|max:2000000',
-        ]);
+    // declare variables
+    $id = Auth::user()->id;
+    $rows = DB::table('resume_result')->where('user_id', $id)->count();
+    $paths = [];
+    $file_names = [];
 
-        // dd($existingFiles);
+    if ($request->hasFile('videos')) {
+        $files = $request->file('videos');
 
-        if ($request->hasFile('videos')) {
-            $files = $request->file('videos');
-            foreach ($files as $file) {
-
-                // $path = Storage::putFile($directory, $file);
-
-                // Create the full path where the file will be stored
+        foreach ($files as $file) {
+            // Check if the file is valid
+            if ($file->isValid()) {
+                // Define the path to store the file
+                $directory = 'videos/' . Auth::id();
                 $filePath = $directory . '/' . $file->getClientOriginalName();
-                
-                // Move the file to the public directory
+
+                // Move the file to the designated directory
                 $file->move(public_path($directory), $file->getClientOriginalName());
+
+                // Collect file details
+                $file_name = $file->getClientOriginalName();
+                // Store file details in arrays
                 array_push($paths, $filePath);
-                $filePath = array();
+                array_push($file_names, $file_name);
+            } else {
+                // Handle invalid file error
+                return response()->json(['error' => 'Invalid file uploaded.'], 400);
             }
         }
-        $paths = implode(',', $paths);
+    } else {
+        // Handle no file uploaded error
+        return response()->json(['error' => 'No files were uploaded.'], 400);
+    }
 
-        //data process
-       $data = $request->validate([
-            'select_job' => 'required|string|max:255',
-            'experience' => 'required|string|max:1000',
-            'available_skill' => 'required|string|max:1000',
-            'resume' => 'required|string|max:1000',
+
+    $paths = implode(',', $paths);
+    $file_names = implode(',', $file_names);
+    // Save to the database
+    if($rows > 0) {
+        DB::table('resume_result')->where('user_id', $id)->update(['updated_at' => now(), 'video_urls' => $paths, 'file_names' => $file_names,]);
+    } else {
+        DB::table('resume_result')->insert(['user_id' => $id, 'created_at' => now(), 'video_urls' => $paths, 'file_names' => $file_names,]);
+    }
+    
+    return redirect()->back()->with('success', 'Movies uploaded successfully.');
+}
+
+
+  public function resume_generator(Request $request) {
+
+    $id = Auth::user()->id;
+    $rows = DB::table('resume_result')->where('user_id', $id)->count();
+
+    // Data processing and validation
+    $data = $request->validate([
+        'select_job' => 'required|string|max:255',
+        'experience_summary' => 'required|string|max:255',
+        'experience_reason' => 'required|string|max:255',
+        'future_plans' => 'required|string|max:255',
+        'excel_experience' => 'required|string|max:255',
+        'excel_function_experience' => 'required|string|max:255',
+        'ppt_experience' => 'required|string|max:255',
+        'leadership_experience' => 'required|string|max:255',
+        'qualification' => 'nullable|string|max:255',
+        'start_date' => 'required|date',
+        'end_date' => 'required|date',
+        'job_summary' => 'required|string|max:255',
+        'team_size' => 'required|integer',
+        'role' => 'required|string|max:255',
+        'experience_details' => 'required|string|max:1000',
+    ]);
+
+    // Prepare the details for OpenAI
+    $details = [
+        'username' => Auth::user()->initName_f.' '.Auth::user()->initName_l,
+        'job_title' => $data['select_job'],
+        'job_summary' => $data['experience_summary'],
+        'experience_reason' => $data['experience_reason'],
+        'future_plans' => $data['future_plans'],
+        'skills_experience' => [
+            'excel' => $data['excel_experience'],
+            'excel_function' => $data['excel_function_experience'],
+            'ppt' => $data['ppt_experience'],
+            'leadership' => $data['leadership_experience'],
+        ],
+        'qualification' => $data['qualification'],
+        'job_history' => [
+            'start_date' => $data['start_date'],
+            'end_date' => $data['end_date'],
+            'job_summary' => $data['job_summary'],
+            'team_size' => $data['team_size'],
+            'role' => $data['role'],
+            'experience_details' => $data['experience_details'],
+        ],
+    ];
+
+    // Generate resume content from OpenAI
+    $resumeContent = $this->openAIService->generateResume($details);
+
+    // Insert or update the resume result in the database
+    if ($rows > 0) {
+        DB::table('resume_result')->where('user_id', $id)->update([
+            'updated_at' => date('Y-m-d h:i:s'),
+            'building_code' => $resumeContent,
         ]);
-
-        // Prepare the details for OpenAI
-        $details = [
-            'job_title' => $data['select_job'],
-            'job_summary' => $data['experience'],
-            'skills_experience' => $data['available_skill'],
-            'job_history' => $data['resume'],
-        ];
-
-        // Generate resume content from OpenAI
-        $resumeContent = $this->openAIService->generateResume($details);
-        if ($rows > 0) {
-            DB::table('resume_result')->where('user_id', $id)->update(['updated_at' => date('Y-m-d h:i:s'), 'video_urls' => $paths, 'building_code' => $resumeContent ]);
-        } else {
-            DB::table('resume_result')->insert(['created_at' => date('Y-m-d h:i:s'), 'user_id' => $id, 'video_urls' => $paths, 'building_code' => $resumeContent]);
-        }
-        
-
-        // Return the result to the view
-        return view('result.resume_result', [
-            'resumeContent' => $resumeContent,
+    } else {
+        DB::table('resume_result')->insert([
+            'created_at' => date('Y-m-d h:i:s'),
+            'user_id' => $id,
+            'building_code' => $resumeContent,
         ]);
     }
+
+    // Return the result to the view
+    return view('result.resume_result', [
+        'resumeContent' => $resumeContent,
+    ]);
+}
+
 }

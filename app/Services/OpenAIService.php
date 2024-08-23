@@ -47,70 +47,87 @@ class OpenAIService
         }
     }
 
-    protected function createResumePrompt(array $details)
-    {
-        return "
-        
-           あなたはウェブ開発者です。プロフェッショナルな履歴書のために、以下のセクションを含むHTMLページを作成してください。上記のコードはサンプルコードです。スタイリングはTailwindCSSを使用する必要があり、HTMLコードのみを提供する必要があります。 最初の説明文や最後の説明文のようなものを提供せず、resume_tableというクラス名を持つdivタグで囲まれたHTMLコードのみを提供する必要があります。 職務概要、活用可能な経験知識、保有スキル、経歴事項については、詳細な説明が必要です。経歴書作成というタイトルは必ず必要です。応答の最初と最後に ```html ``` と言う文字が表示されないようにする。:
+protected function createResumePrompt(array $details)
+{
+    // Start building the prompt
+    $prompt = '
+        プロフェッショナルな履歴書のために、以下のセクションを含むHTMLページを作成してください。以下のコードはサンプルコードです。スタイリングはTailwindCSSを使用する必要があり、HTMLコードのみを提供する必要があります。 最初の説明文や最後の説明文のようなものを提供せず、resume_tableというクラス名を持つdivタグで囲まれたHTMLコードのみを提供する必要があります。 職務概要、活用可能な経験知識、保有スキル、経歴事項については、詳細な説明が必要です。経歴書作成というタイトルは必ず必要です。応答の最初と最後に 「```html, ```」と言う文字が表示されないようにする。HTML構造はサンプルと同じように作成する必要があります。
+        details資料に基づいて作成してください。
+        フィードバックを提供することができないので、一度で最高の経歴書を作成してください。 少なくとも空白の値が返ってきたらダメです。
+        繰り返しになりますが、HTML構造がサンプルと全く同じでなければならず、生成結果の最初と最後に「```html, ```」などの文字が絶対に入ってはいけません。
 
-        <div class='font-sans bg-gray-100 p-8'>
-          <div class='bg-white shadow-md rounded-lg p-10 max-w-3xl mx-auto'>
-            <div class='text-center p-10'>
-              <h1 class='text-2xl font-bold mb-6'>職務経歴書</h1>
-            </div>
+        <div class="bg-gray-100 pt-15">
+            <div class="bg-white w-full p-6 pb-10 pt-16 rounded-lg shadow-md m-auto">
+                <h1 class="text-2xl font-bold text-center mb-4">職務経歴書</h1>
+                <div class="text-right mb-4">
+                    <p class="text-sm">日付: ' . date('Y年m月d日') . '</p>
+                    <p class="text-sm">氏名: ' . $details['username'] . '</p>
+                </div>
 
-            <!-- Job Summary Section -->
-            <section class='mb-8'>
-                <h2 class='font-semibold mb-2 text-gray-800'> 職務要約</h2>
-                <p class='mb-6 text-gray-800 tracking-wide'>
-                    {$details['job_title']}
-                </p>
-                <h2 class='font-semibold mb-2 text-gray-800'> 活かせる経験・知識</h2>
-                <ul class='list-disc list-inside ml-4 mb-6 text-gray-800 tracking-wide'>
-                    <li>{$details['job_summary']}</li>
+                <h2 class="text-xl font-semibold border-b-2 border-gray-300 mt-6 mb-2">経験分野・内容</h2>
+                <p class="mb-4">' . $details['job_summary'] . '</p>
+
+                <h2 class="text-xl font-semibold border-b-2 border-gray-300 mt-6 mb-2">活用可能な経験知識</h2>
+                <p class="mb-4">' . $details['experience_reason'] . '</p>
+
+                <h2 class="text-xl font-semibold border-b-2 border-gray-300 mt-6 mb-2">将来の展望</h2>
+                <p class="mb-4">' . $details['future_plans'] . '</p>
+
+                <h2 class="text-xl font-semibold border-b-2 border-gray-300 mt-6 mb-2">保有スキル</h2>
+                <ul class="list-disc list-inside mb-4">
+                    <li>Excel: ' . $details['skills_experience']['excel'] . '</li>
+                    <li>Excel Functions: ' . $details['skills_experience']['excel_function'] . '</li>
+                    <li>PowerPoint: ' . $details['skills_experience']['ppt'] . '</li>
+                    <li>Leadership: ' . $details['skills_experience']['leadership'] . '</li>
                 </ul>
-                <h2 class='font-semibold mb-2 text-gray-800'> 保有技術</h2>
-                <ul class='list-disc list-inside ml-4 mb-6 text-gray-800 tracking-wide'>
-                    <li>{$details['skills_experience']}</li>
-                </ul>
-            </section>
 
-            <!-- Work Experience Section -->
-            <section>
-                <h2 class='font-semibold mb-4 text-gray-800'> 経歴詳細 (直近のものから記載)</h2>
-                <table class='w-full border-collapse'>
-                    <thead>
-                        <tr>
-                            <th class='border px-4 py-2 w-1/4 text-gray-800'>期間</th>
-                            <th class='border px-4 py-2 w-3/4 text-gray-800'>担当業務 (プロジェクト内容)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                        {$details['job_history']}
-                        </tr>
-                        <tr>
-                            <td class='border px-4 py-2 align-top'>2014年04月〜<br>2016年4月</td>
-                            <td class='border px-4 py-2 align-top text-gray-800'>
-                                <b>【プロジェクト】</b> 直販家具商品の企画設計<br>
-                                <b>【メンバー数】</b> 10人<br>
-                                <div class='flex'>
-                                  <b>【業務内容】</b>
-                                  <ul class='list-disc list-inside ml-4 text-gray-800'>
-                                      <li>商品企画書作成と社内提案</li>
-                                      <li>承認後にCAD設計資料作成</li>
-                                      <li>ベトナム工場等と技術支援</li>
-                                      <li>進捗・品質管理、納品後の確認</li>
-                                  </ul>
-                                </div>
-                                
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </section>
-          </div>
-        </div>
-        ";
+                <h2 class="text-xl font-semibold border-b-2 border-gray-300 mt-6 mb-2">資格</h2>
+                <p class="mb-4">' . $details['qualification'] . '</p>
+
+                <h2 class="text-xl font-semibold border-b-2 border-gray-300 mt-6 mb-2">職務経歴</h2>';
+
+    // Check if job_history is an array and has entries
+    if (isset($details['job_history']) && is_array($details['job_history'])) {
+        // Start building the job history table
+        $prompt .= '
+                    <table class="min-w-full bg-white border border-blue-700 mt-4">
+                        <thead>
+                            <tr>
+                                <th class="border px-4 py-2">期間</th>
+                                <th class="border px-4 py-2">業務内容</th>
+                                <th class="border px-4 py-2">環境</th>
+                                <th class="border px-4 py-2">役割</th>
+                            </tr>
+                        </thead>
+                        <tbody>';
+
+        // Loop through each job history item and add a row to the table
+        foreach ($details['job_history'] as $job) {
+            if (is_array($job)) {
+                $prompt .= '
+                            <tr>
+                                <td class="border px-4 py-2">' . htmlspecialchars($job['start_date']) . ' - ' . htmlspecialchars($job['end_date']) . '</td>
+                                <td class="border px-4 py-2">' . htmlspecialchars($job['job_summary']) . '</td>
+                                <td class="border px-4 py-2">' . htmlspecialchars($job['experience_details']) . '</td>
+                                <td class="border px-4 py-2">' . htmlspecialchars($job['role']) . '</td>
+                            </tr>';
+            }
+        }
+
+        // Close the table
+        $prompt .= '
+                        </tbody>
+                    </table>';
     }
+
+    // Close the main divs
+    $prompt .= '
+            </div>
+        </div>
+    ';
+
+    return $prompt;
+}
+
+
 }

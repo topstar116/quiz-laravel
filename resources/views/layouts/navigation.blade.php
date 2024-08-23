@@ -6,7 +6,7 @@
                 <!-- Logo -->
                 <div class="flex flex-shrink-0 items-center text-xl font-bold">
                     <a href="{{ route('home') }}">
-                        Engineer Match
+                        AI Career Consultant
                     </a>
                 </div>
 
@@ -24,7 +24,7 @@
                     @if (Auth::user()->role == 'recruiment')
                         <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                             <x-nav-link :href="route('request1')" :active="request()->routeIs('request1')">
-                                {{ __('検査を受ける') }}
+                                {{ __('職種提案を受ける') }}
                             </x-nav-link>
                         </div>
 
@@ -38,13 +38,13 @@
                     @elseif(Auth::user()->role == 'sales')
                         <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                             <x-nav-link :href="route('request1_s')" :active="request()->routeIs('request1_s')">
-                                {{ __('検査を受ける') }}
+                                {{ __('職種提案を受ける') }}
                             </x-nav-link>
                         </div>
                     @elseif(Auth::user()->role == 'management')
                         <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                             <x-nav-link :href="route('request1_m')" :active="request()->routeIs('request1_m')">
-                                {{ __('検査を受ける') }}
+                                {{ __('職種提案を受ける') }}
                             </x-nav-link>
                         </div>
 
@@ -63,8 +63,23 @@
                 @endif
                 @if (Auth::user()->role != 'admin')
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                        <x-nav-link :href="route('resume.question')" :active="request()->routeIs('resume.question')">
+                        <x-nav-link :href="route('question_resuming')" :active="request()->routeIs('question.resuming')">
                             {{ __('経歴書作成') }}
+                        </x-nav-link>
+                    </div>
+                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                        <x-nav-link :href="route('resume.career.question')" :active="request()->routeIs('resume.career.question')">
+                            {{ __('業務適性検査を受ける') }}
+                        </x-nav-link>
+                    </div>
+                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                        <x-nav-link :href="route('add.movie')" :active="request()->routeIs('add.movie')">
+                            {{ __('自己PR動画撮影する') }}
+                        </x-nav-link>
+                    </div>
+                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                        <x-nav-link href="https://shigoto.mhlw.go.jp/User/">
+                            {{ __('職種一覧を見る') }}
                         </x-nav-link>
                     </div>
                 @endif
@@ -141,7 +156,7 @@
                     </x-responsive-nav-link>
                     @if (Auth::user()->role == 'recruiment')
                         <x-responsive-nav-link :href="route('request1')" :active="request()->routeIs('request1')">
-                            {{ __('検査を受ける') }}
+                            {{ __('職種提案を受ける') }}
                         </x-responsive-nav-link>
 
                         <x-responsive-nav-link :href="route('home')">
@@ -152,16 +167,16 @@
                         </x-responsive-nav-link>
                     @elseif(Auth::user()->role == 'sales')
                         <x-responsive-nav-link :href="route('request1_s')" :active="request()->routeIs('request1_s')">
-                            {{ __('検査を受ける') }}
+                            {{ __('職種提案を受ける') }}
                         </x-responsive-nav-link>
                     @elseif(Auth::user()->role == 'management')
                         <x-responsive-nav-link :href="route('request1_m')" :active="request()->routeIs('request1_m')">
-                            {{ __('検査を受ける') }}
+                            {{ __('職種提案を受ける') }}
                         </x-responsive-nav-link>
 
                         <!-- <x-dropdown-link :href="route('express')" :active="request()->routeIs('express')">
-                                    {{ __('感想') }}
-                                </x-dropdown-link> -->
+                                                                                                        {{ __('感想') }}
+                                                                                                    </x-dropdown-link> -->
                     @else
                         <hr />
                         <x-responsive-nav-link :href="route('admin')">
@@ -169,9 +184,21 @@
                         </x-responsive-nav-link>
                     @endif
                     @if (Auth::user()->role != 'admin')
-                        <x-responsive-nav-link :href="route('resume.question')" :active="request()->routeIs('resume.question')">
+                        <x-responsive-nav-link :href="route('resume.career.question')" :active="request()->routeIs('resume.career.question')">
                             {{ __('経歴書作成') }}
                         </x-responsive-nav-link>
+                        <x-nav-link :href="route('question_resuming')" :active="request()->routeIs('question.resuming')">
+                            {{ __('経歴書作成') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('resume.career.question')" :active="request()->routeIs('resume.career.question')">
+                            {{ __('業務適性検査を受ける') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('add.movie')" :active="request()->routeIs('add.movie')">
+                            {{ __('自己PR動画撮影する') }}
+                        </x-nav-link>
+                        <x-nav-link href="https://shigoto.mhlw.go.jp/User/">
+                            {{ __('職種一覧を見る') }}
+                        </x-nav-link>
                     @endif
 
                 </div>

@@ -105,8 +105,6 @@ Route::middleware('auth')->group(function () {
 
 
 
-
-
     Route::get('express', [UserController::class, 'viewExpress'])->name('express');
     Route::post('result_express', [UserController::class, 'resultExpress'])->name('result_express');
     
@@ -127,16 +125,6 @@ Route::middleware('auth')->group(function () {
     
     Route::get('data', function () { return view('quiz/data'); })->name('data');
     
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -183,9 +171,15 @@ Route::middleware('auth')->group(function () {
 
     //custom
     Route::get('resume', [UserController::class, 'resume'])->name('resume');
-    Route::get('resume.question', [UserController::class, 'resume_question'])->name('resume.question');
-    Route::get('question.confirm', [UserController::class, 'question_confirm'])->name('question.confirm');
-    Route::post('resume.generator', [UserController::class, 'resume_generator'])->name('resume.generator');
+    Route::post('questionConfirm', [UserController::class, 'question_confirm'])->name('question.confirm');
+    Route::post('resume/generator', [UserController::class, 'resume_generator'])->name('resume.generator');
+    
+    Route::get('careerQuestion', [UserController::class, 'career_question'])->name('resume.career.question');
+    Route::get('questionResuming', [UserController::class, 'question_resuming'])->name('question_resuming');
+    Route::get('addMovie', [UserController::class, 'add_movie'])->name('add.movie');
+    Route::get('viewMovie', [UserController::class, 'view_movie'])->name('view.movie');
+
+    Route::post('saveMovie', [UserController::class, 'save_movie'])->name('save.movie');
 
 });
 

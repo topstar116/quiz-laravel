@@ -57,22 +57,9 @@
                         {{ __('パスワード設定はこちら') }}
                     </a> -->
                 @endif
-                <div class="flex flex-rounded">
-
-                    <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('register') }}">
-                        {{ __('採用、管理') }}
-                    </a>
-
-                    <a class="underline text-sm text-gray-600 hover:text-gray-900 mx-4"
-                        href="{{ route('sales_register') }}">
-                        {{ __('営業') }}
-                    </a>
-
-                    <a class="underline text-sm text-gray-600 hover:text-gray-900"
-                        href="{{ route('management_register') }}">
-                        {{ __('企業登録') }}
-                    </a>
-                </div>
+                <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('register') }}">
+                    新規登録はこちら
+                </a>
                 <x-button class="ml-4">
                     {{ __('ログイン') }}
                 </x-button>
@@ -84,8 +71,6 @@
                         {{ __('パスワード設定はこちら') }}
                     </a> -->
                 @endif
-
-
 
                 <SCRIPT LANGUAGE="JavaScript">
                     function jump() {
