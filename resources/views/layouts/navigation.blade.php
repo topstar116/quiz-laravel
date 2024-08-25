@@ -224,7 +224,6 @@
                         </x-responsive-nav-link>
                     </form>
                 </div>
-
             @endauth
         </div>
     </div>

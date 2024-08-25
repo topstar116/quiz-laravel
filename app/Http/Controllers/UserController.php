@@ -501,18 +501,18 @@ class UserController extends Controller
         $quiz_result = $request->all();
         unset($quiz_result['_token']);
         $quiz_result = implode(",", $quiz_result);
-        $rows = DB::table('quiz_result')->where(['user_id' => $id])->count();
+        $rows = DB::table('work_second_result')->where(['user_id' => $id])->count();
 
         if($rows > 0) {
-            DB::table('quiz_result')->update(['updated_at' => date('Y-m-d h:i:s'), 'quiz1' => $quiz_result]);
+            DB::table('work_second_result')->update(['updated_at' => date('Y-m-d h:i:s'), 'quiz1' => $quiz_result]);
         }
         else{
-            DB::table('quiz_result')->insert(['created_at' => date('Y-m-d h:i:s'), 'user_id' => $id, 'quiz1' => $quiz_result]);
+            DB::table('work_second_result')->insert(['created_at' => date('Y-m-d h:i:s'), 'user_id' => $id, 'quiz1' => $quiz_result]);
         }
 
         $result = $this->checkResult($quiz_result, 'management');
 
-        DB::table('quiz_result')->where(array('user_id' => $id))->update(['no1' => $result['sub_type'], 'res1' => $result['sub_title']]);
+        DB::table('work_second_result')->where(array('user_id' => $id))->update(['no1' => $result['sub_type'], 'res1' => $result['sub_title']]);
 
         $next = 2;
 
@@ -526,19 +526,19 @@ class UserController extends Controller
         unset($quiz_result['_token']);
         $quiz_result = implode(",", $quiz_result);
 
-        $rows = DB::table('quiz_result')->where(['user_id' => $id])->count();
+        $rows = DB::table('work_second_result')->where(['user_id' => $id])->count();
 
         if ($rows > 0) {
-            DB::table('quiz_result')->where(['user_id' => $id])->orderBy('id', 'desc')->take(1)->update(['quiz2' => $quiz_result]);
+            DB::table('work_second_result')->where(['user_id' => $id])->orderBy('id', 'desc')->take(1)->update(['quiz2' => $quiz_result]);
         } else {
-            DB::table('quiz_result')->insert(['created_at' => date('Y-m-d h:i:s'), 'user_id' => $id, 'quiz2' => $quiz_result, 'type' => 'management']);
+            DB::table('work_second_result')->insert(['created_at' => date('Y-m-d h:i:s'), 'user_id' => $id, 'quiz2' => $quiz_result, 'type' => 'management']);
         }
 
         // DB::table('users')->where('user_id', auth()->user()->id)->update(['status' => 1]);
 
         $result = $this->checkResult($quiz_result, 'management');
 
-        DB::table('quiz_result')->where(array('user_id' => $id))->update(['no2' => $result['sub_type'], 'res2' => $result['sub_title']]);
+        DB::table('work_second_result')->where(array('user_id' => $id))->update(['no2' => $result['sub_type'], 'res2' => $result['sub_title']]);
 
         $next = 3;
 
@@ -551,17 +551,17 @@ class UserController extends Controller
         unset($quiz_result['_token']);
         $quiz_result = implode(",", $quiz_result);
 
-        $rows = DB::table('quiz_result')->where(['user_id' => $id])->count();
+        $rows = DB::table('work_second_result')->where(['user_id' => $id])->count();
         if ($rows > 0) {
-            DB::table('quiz_result')->where(['user_id' => $id])->orderBy('id', 'desc')->take(1)->update(['quiz3' => $quiz_result]);
+            DB::table('work_second_result')->where(['user_id' => $id])->orderBy('id', 'desc')->take(1)->update(['quiz3' => $quiz_result]);
         } else {
-            DB::table('quiz_result')->insert(['created_at' => date('Y-m-d h:i:s'), 'user_id' => $id, 'quiz3' => $quiz_result, 'type' => 'management']);
+            DB::table('work_second_result')->insert(['created_at' => date('Y-m-d h:i:s'), 'user_id' => $id, 'quiz3' => $quiz_result, 'type' => 'management']);
         }
         // DB::table('users')->where('user_id', auth()->user()->id)->update(['status' => 1]);
 
         $result = $this->checkResult($quiz_result, 'management');
 
-        DB::table('quiz_result')->where(array('user_id' => $id))->update(['no3' => $result['sub_type'], 'res3' => $result['sub_title']]);
+        DB::table('work_second_result')->where(array('user_id' => $id))->update(['no3' => $result['sub_type'], 'res3' => $result['sub_title']]);
 
         $next = 4;
         return view('quiz.result_m', compact('result', 'next'));
