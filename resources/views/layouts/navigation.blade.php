@@ -18,10 +18,8 @@
                     </x-nav-link>
                 </div>
 
-                @if (Auth::user()->role != 'admin' && Auth::user()->role != 'member' && Auth::user()->role != 'pending')
-
-
-                    @if (Auth::user()->role == 'recruiment')
+                {{-- @if (Auth::user()->role != 'admin' && Auth::user()->role != 'member' && Auth::user()->role != 'pending') --}}
+                {{-- @if (Auth::user()->role == 'recruiment')
                         <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                             <x-nav-link :href="route('request1')" :active="request()->routeIs('request1')">
                                 {{ __('職種提案を受ける') }}
@@ -53,8 +51,8 @@
                             {{ __('感想') }}
                         </x-nav-link>
                     </div> -->
-                    @endif
-                @else
+                    @endif --}}
+                @if (Auth::user()->role == 'admin')
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <x-nav-link :href="route('admin')" :active="request()->routeIs('admin')">
                             {{ __('管理ページ') }}
@@ -63,12 +61,17 @@
                 @endif
                 @if (Auth::user()->role != 'admin')
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                        <x-nav-link :href="route('resume.career.question')" :active="request()->routeIs('resume.career.question')">
+                            {{ __('職種提案を受ける') }}
+                        </x-nav-link>
+                    </div>
+                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <x-nav-link :href="route('question_resuming')" :active="request()->routeIs('question.resuming')">
                             {{ __('経歴書作成') }}
                         </x-nav-link>
                     </div>
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                        <x-nav-link :href="route('resume.career.question')" :active="request()->routeIs('resume.career.question')">
+                        <x-nav-link :href="route('work.question')" :active="request()->routeIs('work.question')">
                             {{ __('業務適性検査を受ける') }}
                         </x-nav-link>
                     </div>
@@ -154,8 +157,8 @@
                     <x-responsive-nav-link :href="route('home')">
                         {{ __('TOP') }}
                     </x-responsive-nav-link>
-                    @if (Auth::user()->role == 'recruiment')
-                        <x-responsive-nav-link :href="route('request1')" :active="request()->routeIs('request1')">
+                    @if (Auth::user()->role == 'admin')
+                        {{-- <x-responsive-nav-link :href="route('request1')" :active="request()->routeIs('request1')">
                             {{ __('職種提案を受ける') }}
                         </x-responsive-nav-link>
 
@@ -172,25 +175,23 @@
                     @elseif(Auth::user()->role == 'management')
                         <x-responsive-nav-link :href="route('request1_m')" :active="request()->routeIs('request1_m')">
                             {{ __('職種提案を受ける') }}
-                        </x-responsive-nav-link>
+                        </x-responsive-nav-link> --}}
 
-                        <!-- <x-dropdown-link :href="route('express')" :active="request()->routeIs('express')">
-                                                                                                        {{ __('感想') }}
-                                                                                                    </x-dropdown-link> -->
-                    @else
-                        <hr />
+                        {{-- <!-- <x-dropdown-link :href="route('express')" :active="request()->routeIs('express')">
+                    {{ __('感想') }}
+                </x-dropdown-link> --> --}}
                         <x-responsive-nav-link :href="route('admin')">
                             {{ __('管理ページ') }}
                         </x-responsive-nav-link>
                     @endif
                     @if (Auth::user()->role != 'admin')
                         <x-responsive-nav-link :href="route('resume.career.question')" :active="request()->routeIs('resume.career.question')">
-                            {{ __('経歴書作成') }}
+                            {{ __('職種提案を受ける') }}
                         </x-responsive-nav-link>
                         <x-nav-link :href="route('question_resuming')" :active="request()->routeIs('question.resuming')">
                             {{ __('経歴書作成') }}
                         </x-nav-link>
-                        <x-nav-link :href="route('resume.career.question')" :active="request()->routeIs('resume.career.question')">
+                        <x-nav-link :href="route('work.question')" :active="request()->routeIs('work.question')">
                             {{ __('業務適性検査を受ける') }}
                         </x-nav-link>
                         <x-nav-link :href="route('add.movie')" :active="request()->routeIs('add.movie')">

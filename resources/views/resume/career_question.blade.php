@@ -12,21 +12,21 @@
 
 <x-app-layout>
     <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-10 bg-gray-50">
+                <div class="p-10 bg-white">
                     <form class="js-api-form js-loading-form" action="{{ route('question.confirm') }}" method="POST">
                         @csrf
                         <div class="mt-5">
                             <p class="bg-blue-500 p-3 text-xl text-white font-semibold rounded-md">適性質問項目</p>
                         </div>
-                        <div class="mt-8 space-y-10">
+                        <div class="mt-8">
                             @foreach ($resumes as $resume)
                                 <div class="question-group__questions">
-                                    <div class="question">
-                                        <div class="question__description mt-8 text-lg font-semibold text-gray-800">
+                                    <div class="question  bg-gray-50 p-6 rounded-lg shadow-sm">
+                                        <div class="question__description text-lg font-semibold text-gray-800">
                                         </div>
-                                        <div class="question__choices mt-4 space-y-4">
+                                        <div class="question__choices space-y-4">
                                             <ol>
                                                 <li>
                                                     <input type="radio"

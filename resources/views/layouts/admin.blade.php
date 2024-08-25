@@ -22,11 +22,11 @@
             <li class="text-gray-100">
                 <a href="{{ route('admin.quiz') }}"><button href="#recruiment" v-on:click="select('recruiment')"
                         class="rounded text-sm text-left block py-3 px-6 {{ $page == 'recruimentQuiz' ? '' : 'hover:' }}bg-blue-600 w-full active">採用</button></a>
-                <a href="{{ route('admin.quiz.sales') }}"><button href="#sales" v-on:click="select('sales')"
-                        class="rounded text-sm block py-3 px-6 {{ $page == 'salesQuiz' ? '' : 'hover:' }}bg-blue-600 w-full text-left">営業</button></a>
+                <a href="{{ route('admin.quiz.work') }}"><button href="#sales" v-on:click="select('sales')"
+                        class="rounded text-sm block py-3 px-6 {{ $page == 'salesQuiz' ? '' : 'hover:' }}bg-blue-600 w-full text-left">業務適性</button></a>
                 <a href="{{ route('admin.quiz.management') }}"><button href="#management"
                         v-on:click="select('management')"
-                        class="rounded text-sm block py-3 px-6 {{ $page == 'managementQuiz' ? '' : 'hover:' }}bg-blue-600 w-full text-left">管理</button></a>
+                        class="rounded text-sm block py-3 px-6 {{ $page == 'managementQuiz' ? '' : 'hover:' }}bg-blue-600 w-full text-left">転職・外部人材用</button></a>
                 <a href="{{ route('admin.quiz.resuming') }}"><button href="#resuming" v-on:click="select('resuming')"
                         class="rounded text-sm block py-3 px-6 {{ $page == 'resumingQuiz' ? '' : 'hover:' }}bg-blue-600 w-full text-left">職種</button></a>
             </li>
@@ -40,10 +40,10 @@
                 <a href="{{ route('admin.result') }}"><button href="#recruiment" v-on:click="select('recruiment')"
                         class="rounded text-sm text-left block py-3 px-6 {{ $page == 'recruimentResult' ? '' : 'hover:' }}bg-blue-600 w-full active">採用</button></a>
                 <a href="{{ route('admin.result.sales') }}"><button href="#sales" v-on:click="select('sales')"
-                        class="rounded text-sm block py-3 px-6 {{ $page == 'salesResult' ? '' : 'hover:' }}bg-blue-600 w-full text-left">営業</button></a>
+                        class="rounded text-sm block py-3 px-6 {{ $page == 'salesResult' ? '' : 'hover:' }}bg-blue-600 w-full text-left">業務適性</button></a>
                 <a href="{{ route('admin.result.management') }}"><button href="#management"
                         v-on:click="select('management')"
-                        class="rounded text-sm block py-3 px-6 {{ $page == 'managementResult' ? '' : 'hover:' }}bg-blue-600 w-full text-left">管理</button></a>
+                        class="rounded text-sm block py-3 px-6 {{ $page == 'managementResult' ? '' : 'hover:' }}bg-blue-600 w-full text-left">転職・外部人材用</button></a>
                 <a href="{{ route('admin.result.resuming') }}"><button href="#resuming_result"
                         v-on:click="select('resuming_result')"
                         class="rounded text-sm block py-3 px-6 {{ $page == 'resumingResult' ? '' : 'hover:' }}bg-blue-600 w-full text-left">職種</button></a>

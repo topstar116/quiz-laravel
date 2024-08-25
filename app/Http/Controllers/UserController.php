@@ -30,6 +30,8 @@ use Illuminate\Support\Facades\Storage;
 use App\Services\OpenAIService;
 use Gemini\Laravel\Facades\Gemini;
 use Illuminate\Support\Facades\File; 
+use Carbon\Carbon;
+
 
 
 
@@ -167,22 +169,28 @@ class UserController extends Controller
 
     //sales
 
-    public function viewQuiz1_s(Request $request)
-    {
+    // public function viewQuiz1_s(Request $request)
+    // {
 
 
-        $quizs = DB::table('sales_quiz_table')->where('項目', 'PJ適性')->get();
-        $項目 = 'PJ適性';
+    //     $quizs = DB::table('sales_quiz_table')->where('項目', 'PJ適性')->get();
+    //     $項目 = 'PJ適性';
 
-        return view('quiz.quiz1_s', compact('quizs', '項目'));
+    //     return view('quiz.quiz1_s', compact('quizs', '項目'));
+    // }
+    public function work_question() {
+         $quizs = DB::table('work_question')->where('項目', '柔軟性')->get();
+        $項目 = '柔軟性';
+
+        return view('work.workQuestion', compact('quizs', '項目'));
     }
 
 
     public function viewQuiz2_s(Request $request)
     {
 
-        $quizs = DB::table('sales_quiz_table')->where('項目', 'コミュニケーション')->get();
-        $項目 = 'コミュニケーション';
+        $quizs = DB::table('work_question')->where('項目', '協調性')->get();
+        $項目 = '協調性';
 
         return view('quiz.quiz2_s', compact('quizs', '項目'));
     }
@@ -190,7 +198,7 @@ class UserController extends Controller
     public function viewQuiz3_s(Request $request)
     {
 
-        $quizs = DB::table('sales_quiz_table')->where('項目', 'リーダー適性')->get();
+        $quizs = DB::table('work_question')->where('項目', 'リーダー適性')->get();
         $項目 = 'リーダー適性';
 
         return view('quiz.quiz3_s', compact('quizs', '項目'));
@@ -263,210 +271,35 @@ class UserController extends Controller
 
     public function checkResult($str, $level)
     {
-
         $type = '';
         $sub_type = '';
         $sub_title = '';
         $url = '';
-
         $count = 0;
+        if($level == "work"){
 
-        if ($level == "recruiment") {
-
-            //右はSier、左はWEBに分岐
-            if (str_contains($str, '職種適正-1-1')) {
-                $type = 'WEB';
-                $url = 'https://engineer-match-recommend-result.com/web/';
-
-                //№1が左の場合、右であれば6
-                if (str_contains($str, '職種適正-6-2')) {
-                    $sub_type = 6;
-                    $sub_title = 'テスター';
-                    $no = 6;
-                }
-
-                //左であればその他7
-                else if (str_contains($str, '職種適正-7-1')) {
-                    $type = 'その他';
-                    $sub_type = 7;
-                    $sub_title = '営業';
-                }
-
-                //№1が左の場合、左であれば4
-                else if (str_contains($str, '職種適正-8-1')) {
-                    $sub_type = 4;
-                    $sub_title = '開発ディレクター';
-                }
-
-		//9,"人と相談しながら問題解決することが好きだ"で分岐
-                else if (str_contains($str, '職種適正-9-1')) {
-                    $sub_type = 5;
-                    $sub_title = 'WEB開発エンジニア';
-                }
-
-		//9,"黙々と指示された作業をすることが好きだ"で分岐
-                else if (str_contains($str, '職種適正-9-2')) {
-                    $sub_type = 6;
-                    $sub_title = 'テスター';
-                }
-
-                //except
-                if (str_contains($str, '職種適正-7-1')) {
-                    $type = 'その他';
-                    $sub_type = 7;
-                    $sub_title = '営業';
-                    $url = 'https://engineer-match-recommend-result.com/sales/';
-                }
-            }
-
-            //右はSier、左はWEBに分岐
-            if (str_contains($str, '職種適正-1-2')) {
-                $type = 'Sier';
-                $url = 'https://engineer-match-recommend-result.com/sier/';
-                //№1が右の場合、右であれば3
-                if (str_contains($str, '職種適正-6-2')) {
-                    $sub_type = 3;
-                    $sub_title = 'メンバーエンジニア';
-                }
-
-                //左であればその他7
-                else if (str_contains($str, '職種適正-7-1')) {
-                    $type = 'その他';
-                    $sub_type = 7;
-                    $sub_title = '営業';
-                }
-
-                //№1が右の場合、左であれば1
-                else if (str_contains($str, '職種適正-8-1')) {
-                    $sub_type = 1;
-                    $sub_title = 'ITコンサルタント';
-                }
-		
-		//9,"人と相談しながら問題解決することが好きだ"で分岐
-                else if (str_contains($str, '職種適正-9-1')) {
-                    $sub_type = 2;
-                    $sub_title = '技術リーダー';
-                }
-		
-		//9,"黙々と指示された作業をすることが好きだ"で分岐
-                else if (str_contains($str, '職種適正-9-2')) {
-                    $sub_type = 3;
-                    $sub_title = 'メンバーエンジニア';
-                }
-
-                //except
-                if (str_contains($str, '職種適正-7-1')) {
-                    $type = 'その他';
-                    $sub_type = 7;
-                    $sub_title = '営業';
-                    $url = 'https://engineer-match-recommend-result.com/sales/';
-                }
-            }
-
-
-
-            //右はSES、左は事業会社に分岐
-            if (str_contains($str, '企業適正-1-1')) {
-                $type = '事業会社';
-                $url = 'https://engineer-match-recommend-result.com/ic/';
-
-                //№1が左の場合、左は1で右は2
-                if (str_contains($str, '企業適正-4-1')) {
-                    $sub_type = 1;
-                    $sub_title = 'システム企業';
-                } else if (str_contains($str, '企業適正-4-2')) {
-                    $sub_type = 2;
-                    $sub_title = 'WEB企業';
-                }
-            }
-
-            //右はSES、左は事業会社に分岐
-            if (str_contains($str, '企業適正-1-2')) {
-                $type = 'SES';
-                $url = 'https://engineer-match-recommend-result.com/ses/';
-		
-		//3、社長が近い距離の会社で働きたい0分岐
-                if (str_contains($str, '企業適正-3-1')) {
-                    $sub_type = 4;
-                    $sub_title = '小規模SES';
-                } 
-
-		//5、自社の先輩達に囲まれて教育されたい1分岐
-                else if (str_contains($str, '企業適正-5-2')) {
-                    $sub_type = 3;
-                    $sub_title = '中堅以上SES';
-                } 		
-
-                //№1が右の場合、左は3で右は4
-                else if (str_contains($str, '企業適正-7-1')) {
-                    $sub_type = 3;
-                    $sub_title = '中堅以上SES';
-                } 
-		else if (str_contains($str, '企業適正-7-2')) {
-                    $sub_type = 4;
-                    $sub_title = '小規模SES';
-                }
-            }
-
-
-
-            //全部左あれば1、一つでも右あれば次ページに遷移
-            if (str_contains($str, '現状確認-1-1-1') && str_contains($str, '現状確認-1-2-1') && str_contains($str, '現状確認-1-3-1')) {
-
-                $type = '';
-                $sub_type = 1;
-                $sub_title = 'PMO';
-                $url = 'https://engineer-match-recommend-result.com/cs/';
-            }
-
-            //全部左あれば2、一つでも右あれば次ページに遷移
-            else if (str_contains($str, '現状確認-2-1-1') && str_contains($str, '現状確認-2-2-1') && str_contains($str, '現状確認-2-3-1')) {
-
-                $type = '';
-                $sub_type = 2;
-                $sub_title = '開発・テスト';
-                $url = 'https://engineer-match-recommend-result.com/cs/';
-            }
-
-            //全部左あれば3、一つでも右あれば4
-            else if (str_contains($str, '現状確認-3-1-1') && str_contains($str, '現状確認-3-2-1') && str_contains($str, '現状確認-3-3-1')) {
-
-                $type = '';
-                $sub_type = 3;
-                $sub_title = 'インフラ';
-                $url = 'https://engineer-match-recommend-result.com/cs/';
-            } else if (str_contains($str, '現状確認')) {
-
-                $type = '';
-                $sub_type = 4;
-                $sub_title = 'IT研修受講';
-                $url = 'https://engineer-match-recommend-result.com/cs/';
-            }
-        } elseif ($level == "sales") {
-
-
-            if (str_contains($str, 'PJ適性-1-1')) $count++;
-            if (str_contains($str, 'PJ適性-2-1')) $count++;
-            if (str_contains($str, 'PJ適性-3-1')) $count++;
-            if (str_contains($str, 'PJ適性-4-1')) $count++;
-            if (str_contains($str, 'PJ適性-5-1')) $count++;
-            if (str_contains($str, 'PJ適性-6-1')) $count++;
-            if (str_contains($str, 'PJ適性-7-1')) $count++;
-            if (str_contains($str, 'PJ適性-8-1')) $count++;
-            if (str_contains($str, 'PJ適性-9-1')) $count++;
-            if (str_contains($str, 'PJ適性-10-1')) $count++;
-
-            if (str_contains($str, 'コミュニケーション-1-1')) $count++;
-            if (str_contains($str, 'コミュニケーション-2-1')) $count++;
-            if (str_contains($str, 'コミュニケーション-3-1')) $count++;
-            if (str_contains($str, 'コミュニケーション-4-1')) $count++;
-            if (str_contains($str, 'コミュニケーション-5-1')) $count++;
-            if (str_contains($str, 'コミュニケーション-6-1')) $count++;
-            if (str_contains($str, 'コミュニケーション-7-1')) $count++;
-            if (str_contains($str, 'コミュニケーション-8-1')) $count++;
-            if (str_contains($str, 'コミュニケーション-9-1')) $count++;
-            if (str_contains($str, 'コミュニケーション-10-1')) $count++;
-
+            if (str_contains($str, '柔軟性-1-1')) $count++;
+            if (str_contains($str, '柔軟性-2-1')) $count++;
+            if (str_contains($str, '柔軟性-3-1')) $count++;
+            if (str_contains($str, '柔軟性-4-1')) $count++;
+            if (str_contains($str, '柔軟性-5-1')) $count++;
+            if (str_contains($str, '柔軟性-6-1')) $count++;
+            if (str_contains($str, '柔軟性-7-1')) $count++;
+            if (str_contains($str, '柔軟性-8-1')) $count++;
+            if (str_contains($str, '柔軟性-9-1')) $count++;
+            if (str_contains($str, '柔軟性-10-1')) $count++;
+    
+            if (str_contains($str, '協調性-1-1')) $count++;
+            if (str_contains($str, '協調性-2-1')) $count++;
+            if (str_contains($str, '協調性-3-1')) $count++;
+            if (str_contains($str, '協調性-4-1')) $count++;
+            if (str_contains($str, '協調性-5-1')) $count++;
+            if (str_contains($str, '協調性-6-1')) $count++;
+            if (str_contains($str, '協調性-7-1')) $count++;
+            if (str_contains($str, '協調性-8-1')) $count++;
+            if (str_contains($str, '協調性-9-1')) $count++;
+            if (str_contains($str, '協調性-10-1')) $count++;
+    
             if (str_contains($str, 'リーダー適性-1-1')) $count++;
             if (str_contains($str, 'リーダー適性-2-1')) $count++;
             if (str_contains($str, 'リーダー適性-3-1')) $count++;
@@ -477,52 +310,48 @@ class UserController extends Controller
             if (str_contains($str, 'リーダー適性-8-1')) $count++;
             if (str_contains($str, 'リーダー適性-9-1')) $count++;
             if (str_contains($str, 'リーダー適性-10-1')) $count++;
-
+    
             if ($count >= 8) {
                 $sub_type = 'A';
                 $sub_title = 'どんな現場でも活躍してもらえそうです！';
-            } elseif ($count >= 4 and $count < 8) {
+            } elseif ($count >= 6 and $count < 8) {
                 $sub_type = 'B';
                 $sub_title = '現場によって合う合わないが分かれそうです！';
             } else {
                 $sub_type = 'C';
                 $sub_title = '現場によっては少し不安な面があります！';
             }
-        } else {
-
+        }
+        if($level == "management"){
             if (str_contains($str, '仕事内容-1-1')) $count++;
             if (str_contains($str, '仕事内容-2-1')) $count++;
             if (str_contains($str, '仕事内容-3-1')) $count++;
             if (str_contains($str, '仕事内容-4-1')) $count++;
             if (str_contains($str, '仕事内容-5-1')) $count++;
-
+    
             if (str_contains($str, '人間関係-1-1')) $count++;
             if (str_contains($str, '人間関係-2-1')) $count++;
             if (str_contains($str, '人間関係-3-1')) $count++;
             if (str_contains($str, '人間関係-4-1')) $count++;
             if (str_contains($str, '人間関係-5-1')) $count++;
-
+    
             if (str_contains($str, '業務負担-1-1')) $count++;
             if (str_contains($str, '業務負担-2-1')) $count++;
             if (str_contains($str, '業務負担-3-1')) $count++;
             if (str_contains($str, '業務負担-4-1')) $count++;
             if (str_contains($str, '業務負担-5-1')) $count++;
-
+    
             if ($count == 5) {
-
                 $sub_type = '◎';
                 $sub_title = '順調です！引き続き活躍していきしょう！';
             } else if ($count == 3 || $count == 4) {
-
                 $sub_type = '〇';
                 $sub_title = '少し気になることがあれば営業担当に相談しましょう！';
             } else {
-
                 $sub_type = '△';
                 $sub_title = '営業担当にいち早く電話して相談しましょう！';
             }
         }
-
 
         return array(
             'type' => $type,
@@ -532,27 +361,6 @@ class UserController extends Controller
 
         );
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -612,14 +420,17 @@ class UserController extends Controller
         $quiz_result = $request->all();
         unset($quiz_result['_token']);
         $quiz_result = implode(",", $quiz_result);
-
-        DB::table('quiz_result')->insert(['created_at' => date('Y-m-d h:i:s'), 'user_id' => $id, 'quiz1' => $quiz_result, 'type' => 'sales']);
-
+        $rows = DB::table('work_result')->where(['user_id' => $id])->count();
+        if($rows > 0) {
+            DB::table('work_result')->update(['updated_at' => date('Y-m-d h:i:s'), 'quiz1' => $quiz_result]);
+        }else{
+            DB::table('work_result')->insert(['created_at' => date('Y-m-d h:i:s'), 'user_id' => $id, 'quiz1' => $quiz_result]);
+        }
         // DB::table('users')->where('user_id', auth()->user()->id)->update(['status' => 1]);
 
-        $result = $this->checkResult($quiz_result, 'sales');
+        $result = $this->checkResult($quiz_result, "work");
 
-        DB::table('quiz_result')->where(array('user_id' => $id))->update(['no1' => $result['sub_type'], 'res1' => $result['sub_title']]);
+        DB::table('work_result')->where(array('user_id' => $id))->update(['no1' => $result['sub_type'], 'res1' => $result['sub_title']]);
 
         $next = 2;
 
@@ -632,19 +443,19 @@ class UserController extends Controller
         $quiz_result = $request->all();
         unset($quiz_result['_token']);
         $quiz_result = implode(",", $quiz_result);
-        $rows = DB::table('quiz_result')->where(['user_id' => $id, 'quiz2' => null])->count();
+        $rows = DB::table('work_result')->where(['user_id' => $id])->count();
 
         if ($rows > 0) {
-            DB::table('quiz_result')->where(['user_id' => $id, 'quiz2' => null])->orderBy('id', 'desc')->take(1)->update(['quiz2' => $quiz_result]);
+            DB::table('work_result')->where(['user_id' => $id])->orderBy('id', 'desc')->take(1)->update(['quiz2' => $quiz_result]);
         } else {
-            DB::table('quiz_result')->insert(['created_at' => date('Y-m-d h:i:s'), 'user_id' => $id, 'quiz2' => $quiz_result, 'type' => 'sales']);
+            DB::table('work_result')->insert(['created_at' => date('Y-m-d h:i:s'), 'user_id' => $id, 'quiz2' => $quiz_result]);
         }
 
         // DB::table('users')->where('user_id', auth()->user()->id)->update(['status' => 1]);
 
-        $result = $this->checkResult($quiz_result, 'sales');
+        $result = $this->checkResult($quiz_result, "work");
 
-        DB::table('quiz_result')->where(array('user_id' => $id))->update(['no2' => $result['sub_type'], 'res2' => $result['sub_title']]);
+        DB::table('work_result')->where(array('user_id' => $id))->update(['no2' => $result['sub_type'], 'res2' => $result['sub_title']]);
 
         $next = 3;
 
@@ -657,26 +468,32 @@ class UserController extends Controller
         $quiz_result = $request->all();
         unset($quiz_result['_token']);
         $quiz_result = implode(",", $quiz_result);
-        $rows = DB::table('quiz_result')->where(['user_id' => $id, 'quiz3' => null])->count();
+        $rows = DB::table('work_result')->where(['user_id' => $id])->count();
 
         if ($rows > 0) {
-            DB::table('quiz_result')->where(['user_id' => $id, 'quiz3' => null])->orderBy('id', 'desc')->take(1)->update(['quiz3' => $quiz_result]);
+            DB::table('work_result')->where(['user_id' => $id])->orderBy('id', 'desc')->take(1)->update(['quiz3' => $quiz_result]);
         } else {
-            DB::table('quiz_result')->insert(['created_at' => date('Y-m-d h:i:s'), 'user_id' => $id, 'quiz3' => $quiz_result, 'type' => 'sales']);
+            DB::table('work_result')->insert(['created_at' => date('Y-m-d h:i:s'), 'user_id' => $id, 'quiz3' => $quiz_result, 'type' => 'sales']);
         }
 
         // DB::table('users')->where('user_id', auth()->user()->id)->update(['status' => 1]);
 
-        $result = $this->checkResult($quiz_result, 'sales');
+        $result = $this->checkResult($quiz_result, "work");
 
-        DB::table('quiz_result')->where(array('user_id' => $id))->update(['no3' => $result['sub_type'], 'res3' => $result['sub_title']]);
-
+        DB::table('work_result')->where(array('user_id' => $id))->update(['no3' => $result['sub_type'], 'res3' => $result['sub_title']]);
+        $results = DB::table('work_result')->where('user_id', $id)->select('no1', 'no2', 'no3')->first();
+        $values = array_values(get_object_vars($results));
+        if(in_array("C", $values)){
+            $result = "職人";
+        }elseif(in_array("B", $values)) {
+            $result = "技術リーダー";
+        }else{
+            $result = "管理職リーダー";
+        }
         $next = 1;
 
         return view('quiz.result_s', compact('result', 'next'));
     }
-
-
 
     public function viewResult1_m(Request $request)
     {
@@ -684,8 +501,14 @@ class UserController extends Controller
         $quiz_result = $request->all();
         unset($quiz_result['_token']);
         $quiz_result = implode(",", $quiz_result);
+        $rows = DB::table('quiz_result')->where(['user_id' => $id])->count();
 
-        DB::table('quiz_result')->insert(['created_at' => date('Y-m-d h:i:s'), 'user_id' => $id, 'quiz1' => $quiz_result, 'type' => 'management']);
+        if($rows > 0) {
+            DB::table('quiz_result')->update(['updated_at' => date('Y-m-d h:i:s'), 'quiz1' => $quiz_result]);
+        }
+        else{
+            DB::table('quiz_result')->insert(['created_at' => date('Y-m-d h:i:s'), 'user_id' => $id, 'quiz1' => $quiz_result]);
+        }
 
         $result = $this->checkResult($quiz_result, 'management');
 
@@ -703,10 +526,10 @@ class UserController extends Controller
         unset($quiz_result['_token']);
         $quiz_result = implode(",", $quiz_result);
 
-        $rows = DB::table('quiz_result')->where(['user_id' => $id, 'quiz2' => null])->count();
+        $rows = DB::table('quiz_result')->where(['user_id' => $id])->count();
 
         if ($rows > 0) {
-            DB::table('quiz_result')->where(['user_id' => $id, 'quiz2' => null])->orderBy('id', 'desc')->take(1)->update(['quiz2' => $quiz_result]);
+            DB::table('quiz_result')->where(['user_id' => $id])->orderBy('id', 'desc')->take(1)->update(['quiz2' => $quiz_result]);
         } else {
             DB::table('quiz_result')->insert(['created_at' => date('Y-m-d h:i:s'), 'user_id' => $id, 'quiz2' => $quiz_result, 'type' => 'management']);
         }
@@ -728,9 +551,9 @@ class UserController extends Controller
         unset($quiz_result['_token']);
         $quiz_result = implode(",", $quiz_result);
 
-        $rows = DB::table('quiz_result')->where(['user_id' => $id, 'quiz3' => null])->count();
+        $rows = DB::table('quiz_result')->where(['user_id' => $id])->count();
         if ($rows > 0) {
-            DB::table('quiz_result')->where(['user_id' => $id, 'quiz3' => null])->orderBy('id', 'desc')->take(1)->update(['quiz3' => $quiz_result]);
+            DB::table('quiz_result')->where(['user_id' => $id])->orderBy('id', 'desc')->take(1)->update(['quiz3' => $quiz_result]);
         } else {
             DB::table('quiz_result')->insert(['created_at' => date('Y-m-d h:i:s'), 'user_id' => $id, 'quiz3' => $quiz_result, 'type' => 'management']);
         }
@@ -826,14 +649,14 @@ class UserController extends Controller
         return view('quiz.admin.recruiment_quiz', compact('quizs', 'page'));
     }
 
-    public function salesQuiz()
+    public function workQuiz()
     {
         if (Auth::user()->status == '0')
             return view('pending');
 
-        $quizs = DB::table('sales_quiz_table') -> orderBy('項目', 'desc') -> get();
-        $page = "salesQuiz";
-        return view('quiz.admin.sales_quiz', compact('quizs', 'page'));
+        $quizs = DB::table('work_question') -> orderBy('項目', 'desc') -> get();
+        $page = "work_quiz";
+        return view('quiz.admin.work_quiz', compact('quizs', 'page'));
     }
 
     public function managementQuiz()
@@ -866,8 +689,8 @@ class UserController extends Controller
                 '回答項目' => $request->input('回答項目1') . "," . $request->input('回答項目2')
             );
 
-            $res = DB::table('recruiment_quiz_table')->insert($data);
-            return $this->recruimentQuiz();
+            $res = DB::table('work_question')->insert($data);
+            return $this->workQuiz();
         } else if ($request->input('level') == "sales") {
             $data = array(
                 '項目' => $request->input('項目'),
@@ -875,8 +698,8 @@ class UserController extends Controller
                 '回答項目' => $request->input('回答項目1') . "," . $request->input('回答項目2')
             );
 
-            $res = DB::table('sales_quiz_table')->insert($data);
-            return $this->salesQuiz();
+            $res = DB::table('work_question')->insert($data);
+            return $this->workQuiz();
         } else {
             $data = array(
                 '項目' => $request->input('項目'),
@@ -884,8 +707,8 @@ class UserController extends Controller
                 '回答項目' => $request->input('回答項目1') . "," . $request->input('回答項目2')
             );
 
-            $res = DB::table('management_quiz_table')->insert($data);
-            return $this->managementQuiz();
+            $res = DB::table('work_question')->insert($data);
+            return $this->workQuiz();
         }
     }
 
@@ -899,8 +722,8 @@ class UserController extends Controller
                 '回答項目' => $request->input('回答項目1') . "," . $request->input('回答項目2')
             );
 
-            $res = DB::table('recruiment_quiz_table')->where('id', $request->input('id'))->update($data);
-            return $this->recruimentQuiz();
+            $res = DB::table('work_question')->where('id', $request->input('id'))->update($data);
+            return $this->workQuiz();
         } else if ($request->input('level') == "sales") {
             $data = array(
                 '項目' => $request->input('項目'),
@@ -908,8 +731,8 @@ class UserController extends Controller
                 '回答項目' => $request->input('回答項目1') . "," . $request->input('回答項目2')
             );
 
-            $res = DB::table('sales_quiz_table')->where('id', $request->input('id'))->update($data);
-            return $this->salesQuiz();
+            $res = DB::table('work_question')->where('id', $request->input('id'))->update($data);
+            return $this->workQuiz();
         } else {
             $data = array(
                 '項目' => $request->input('項目'),
@@ -917,8 +740,8 @@ class UserController extends Controller
                 '回答項目' => $request->input('回答項目1') . "," . $request->input('回答項目2')
             );
 
-            $res = DB::table('management_quiz_table')->where('id', $request->input('id'))->update($data);
-            return $this->managementQuiz();
+            $res = DB::table('work_question')->where('id', $request->input('id'))->update($data);
+            return $this->workQuiz();
         }
     }
 
@@ -928,17 +751,17 @@ class UserController extends Controller
         if ($request->input('level') == "recruiment") {
 
             $id = $request->id;
-            $res = DB::table('recruiment_quiz_table')->where('id', $id)->delete();
-            return $this->recruimentQuiz();
+            $res = DB::table('work_question')->where('id', $id)->delete();
+            return $this->workQuiz();
         } else if ($request->input('level') == "sales") {
 
             $id = $request->id;
-            $res = DB::table('sales_quiz_table')->where('id', $id)->delete();
-            return $this->salesQuiz();
+            $res = DB::table('work_question')->where('id', $id)->delete();
+            return $this->workQuiz();
         } else {
             $id = $request->id;
-            $res = DB::table('management_quiz_table')->where('id', $id)->delete();
-            return $this->managementQuiz();
+            $res = DB::table('work_question')->where('id', $id)->delete();
+            return $this->workQuiz();
         }
     }
 
@@ -1005,18 +828,19 @@ class UserController extends Controller
         return view('quiz.admin.recruiment_result', compact('results', 'page'));
     }
 
-    public function salesResult()
+    public function workResult()
     {
+        $id = Auth::user()->id;
         if (Auth::user()->status == '0')
             return view('pending');
 
-        $results = DB::table('quiz_result')->where('type', 'sales')
-            ->join('users', 'quiz_result.user_id', '=', 'users.id')
-            ->select('quiz_result.*', 'users.initName_f', 'users.initName_l')
+        $results = DB::table('work_result')
+            ->join('users', 'work_result.user_id', '=', 'users.id')
+            ->select('work_result.*', 'users.initName_f', 'users.initName_l')
             ->get();
 
-        $page = "salesResult";
-        return view('quiz.admin.sales_result', compact('results', 'page'));
+        $page = "workResult";
+        return view('work.work_result', compact('results', 'page'));
     }
 
     public function managementResult()
@@ -1546,8 +1370,8 @@ class UserController extends Controller
 }
 
 
-  public function resume_generator(Request $request) {
-
+ public function resume_generator(Request $request)
+{
     $id = Auth::user()->id;
     $rows = DB::table('resume_result')->where('user_id', $id)->count();
 
@@ -1558,63 +1382,83 @@ class UserController extends Controller
         'experience_reason' => 'required|string|max:255',
         'future_plans' => 'required|string|max:255',
         'excel_experience' => 'required|string|max:255',
-        'excel_function_experience' => 'required|string|max:255',
         'ppt_experience' => 'required|string|max:255',
         'leadership_experience' => 'required|string|max:255',
-        'qualification' => 'nullable|string|max:255',
-        'start_date' => 'required|date',
-        'end_date' => 'required|date',
-        'job_summary' => 'required|string|max:255',
-        'team_size' => 'required|integer',
-        'role' => 'required|string|max:255',
-        'experience_details' => 'required|string|max:1000',
+        'skills' => 'nullable|array',
+        'skills.*' => 'string|max:255',
+        'qualifications' => 'nullable|array',
+        'qualifications.*' => 'string|max:255',
+        'job_start_date' => 'required|array',
+        'job_start_date.*' => 'date',
+        'job_end_date' => 'required|array',
+        'job_end_date.*' => 'date|after_or_equal:job_start_date.*',
+        'job_name' => 'required|array',
+        'job_name.*' => 'string|max:255',
+        'team_members_count' => 'required|array',
+        'team_members_count.*' => 'integer|min:1',
+        'job_role' => 'required|array',
+        'job_role.*' => 'string|max:255',
+        'job_details' => 'required|array',
+        'job_details.*' => 'string|max:1000',
     ]);
 
-    // Prepare the details for OpenAI
+    // Prepare the details array for further processing
     $details = [
-        'username' => Auth::user()->initName_f.' '.Auth::user()->initName_l,
+        'username' => Auth::user()->initName_f . ' ' . Auth::user()->initName_l,
         'job_title' => $data['select_job'],
         'job_summary' => $data['experience_summary'],
         'experience_reason' => $data['experience_reason'],
         'future_plans' => $data['future_plans'],
         'skills_experience' => [
             'excel' => $data['excel_experience'],
-            'excel_function' => $data['excel_function_experience'],
             'ppt' => $data['ppt_experience'],
             'leadership' => $data['leadership_experience'],
         ],
-        'qualification' => $data['qualification'],
-        'job_history' => [
-            'start_date' => $data['start_date'],
-            'end_date' => $data['end_date'],
-            'job_summary' => $data['job_summary'],
-            'team_size' => $data['team_size'],
-            'role' => $data['role'],
-            'experience_details' => $data['experience_details'],
-        ],
+        'skills' => $data['skills'] ?? [],
+        'qualifications' => $data['qualifications'] ?? [],
+        'job_history' => [],
     ];
 
+    // Loop through job history entries
+    foreach ($data['job_start_date'] as $index => $start_date) {
+        $details['job_history'][] = [
+            'start_date' => $start_date,
+            'end_date' => $data['job_end_date'][$index],
+            'job_name' => $data['job_name'][$index],
+            'team_size' => $data['team_members_count'][$index],
+            'role' => $data['job_role'][$index],
+            'experience_details' => $data['job_details'][$index],
+        ];
+    }
+
     // Generate resume content from OpenAI
-    $resumeContent = $this->openAIService->generateResume($details);
+    try {
+        $resumeContent = $this->openAIService->generateResume($details);
+    } catch (\Exception $e) {
+        // Handle error appropriately, e.g., log it or return an error message
+        return back()->withErrors(['error' => 'Failed to generate resume. Please try again later.']);
+    }
 
     // Insert or update the resume result in the database
+    $timestamp = Carbon::now();
     if ($rows > 0) {
         DB::table('resume_result')->where('user_id', $id)->update([
-            'updated_at' => date('Y-m-d h:i:s'),
+            'updated_at' => $timestamp,
             'building_code' => $resumeContent,
         ]);
     } else {
         DB::table('resume_result')->insert([
-            'created_at' => date('Y-m-d h:i:s'),
+            'created_at' => $timestamp,
             'user_id' => $id,
             'building_code' => $resumeContent,
         ]);
     }
-
     // Return the result to the view
     return view('result.resume_result', [
         'resumeContent' => $resumeContent,
     ]);
 }
 
+    // work question 業務適性検査を受ける
+    
 }

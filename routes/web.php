@@ -134,7 +134,7 @@ Route::middleware('auth')->group(function () {
     Route::get('admin/member', [UserController::class, 'memberUser'])->name('admin.member');
 
     Route::get('admin/quiz', [UserController::class, 'recruimentQuiz'])->name('admin.quiz');
-    Route::get('admin/quiz/sales', [UserController::class, 'salesQuiz'])->name('admin.quiz.sales');
+    Route::get('admin/quiz/work', [UserController::class, 'workQuiz'])->name('admin.quiz.work');
     Route::get('admin/quiz/management', [UserController::class, 'managementQuiz'])->name('admin.quiz.management');
     Route::get('admin/quiz/resume', [UserController::class, 'resumingQuiz'])->name('admin.quiz.resuming');
 
@@ -149,7 +149,7 @@ Route::middleware('auth')->group(function () {
 
 
     Route::get('admin/result', [UserController::class, 'recruimentResult'])->name('admin.result');
-    Route::get('admin/result/sales', [UserController::class, 'salesResult'])->name('admin.result.sales');
+    Route::get('admin/result/sales', [UserController::class, 'workResult'])->name('admin.result.sales');
     Route::get('admin/result/management', [UserController::class, 'managementResult'])->name('admin.result.management');
     Route::get('admin/result/resultResume', [UserController::class, 'resumingResult'])->name('admin.result.resuming');
     Route::post('admin/result/resumingmovie', [UserController::class, 'resumingMovie'])->name('admin.result.resumingmovie');
@@ -180,6 +180,7 @@ Route::middleware('auth')->group(function () {
     Route::get('viewMovie', [UserController::class, 'view_movie'])->name('view.movie');
 
     Route::post('saveMovie', [UserController::class, 'save_movie'])->name('save.movie');
+    Route::get('work/workQuestion', [UserController::class, 'work_question'])->name('work.question');
 
 });
 
