@@ -188,18 +188,18 @@
                         <x-responsive-nav-link :href="route('resume.career.question')" :active="request()->routeIs('resume.career.question')">
                             {{ __('職種提案を受ける') }}
                         </x-responsive-nav-link>
-                        <x-nav-link :href="route('question_resuming')" :active="request()->routeIs('question.resuming')">
+                        <x-responsive-nav-link :href="route('question_resuming')" :active="request()->routeIs('question.resuming')">
                             {{ __('経歴書作成') }}
-                        </x-nav-link>
-                        <x-nav-link :href="route('work.question')" :active="request()->routeIs('work.question')">
+                        </x-responsive-nav-link>
+                        <x-responsive-nav-link :href="route('work.question')" :active="request()->routeIs('work.question')">
                             {{ __('業務適性検査を受ける') }}
-                        </x-nav-link>
-                        <x-nav-link :href="route('add.movie')" :active="request()->routeIs('add.movie')">
+                        </x-responsive-nav-link>
+                        <x-responsive-nav-link :href="route('add.movie')" :active="request()->routeIs('add.movie')">
                             {{ __('自己PR動画撮影する') }}
-                        </x-nav-link>
-                        <x-nav-link href="https://shigoto.mhlw.go.jp/User/">
+                        </x-responsive-nav-link>
+                        <x-responsive-nav-link href="https://shigoto.mhlw.go.jp/User/">
                             {{ __('職種一覧を見る') }}
-                        </x-nav-link>
+                        </x-responsive-nav-link>
                     @endif
 
                 </div>
