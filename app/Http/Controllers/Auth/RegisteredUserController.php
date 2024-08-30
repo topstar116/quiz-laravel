@@ -10,6 +10,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
+use App\Mail\UserRegistered;
+use Illuminate\Support\Facades\Mail;
 
 class RegisteredUserController extends Controller
 {
@@ -127,7 +129,6 @@ class RegisteredUserController extends Controller
             ]);
 
             // $user = User::create([
-
             //     'role' => $request->role,
             //     'company' => $request->company,
             //     'pos' => $request->pos,
@@ -140,7 +141,6 @@ class RegisteredUserController extends Controller
             //     'others' => $request->others,
             //     'password' => Hash::make($request->password),
             //     'pwd' => $request->password,
-                
             // ]);
 
             $user = User::create([
@@ -150,13 +150,13 @@ class RegisteredUserController extends Controller
                 'password' => Hash::make($request->password),
                 'pwd' => $request->password,
             ]);
-
+            Mail::to('superdev0607@gmail.com')->send(new UserRegistered($user));
         }
 
         event(new Registered($user));
 
         Auth::login($user);
 
-        return redirect(RouteServiceProvider::HOME);
+        return view('');
     }
 }

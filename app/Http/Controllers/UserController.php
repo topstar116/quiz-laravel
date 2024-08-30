@@ -30,6 +30,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Services\OpenAIService;
 use Gemini\Laravel\Facades\Gemini;
 use Illuminate\Support\Facades\File; 
+
 use Carbon\Carbon;
 
 
@@ -313,7 +314,7 @@ class UserController extends Controller
     
             if ($count >= 8) {
                 $sub_type = 'A';
-                $sub_title = 'どんな現場でも活躍してもらえそうです！';
+                $sub_title = 'どんな現場でも活躍できそうです！';
             } elseif ($count >= 6 and $count < 8) {
                 $sub_type = 'B';
                 $sub_title = '現場によって合う合わないが分かれそうです！';
@@ -343,10 +344,10 @@ class UserController extends Controller
     
             if ($count == 5) {
                 $sub_type = '◎';
-                $sub_title = '順調です！引き続き活躍していきしょう！';
+                $sub_title = '就業前にご自身の仕事ぶりを相談しましょう！';
             } else if ($count == 3 || $count == 4) {
                 $sub_type = '〇';
-                $sub_title = '少し気になることがあれば営業担当に相談しましょう！';
+                $sub_title = '少し気になることがあれば就業前に相談しましょう！';
             } else {
                 $sub_type = '△';
                 $sub_title = '営業担当にいち早く電話して相談しましょう！';
@@ -594,6 +595,7 @@ class UserController extends Controller
         return view('quiz.admin.recruiment_user', compact('users', 'page'));
     }
 
+
     public function salesUser()
     {
         if (Auth::user()->status == '0')
@@ -635,7 +637,66 @@ class UserController extends Controller
         return DB::table('users')->where('id', $id)->update(['status' => $status]);
     }
 
+    public function email() {
+        $user = Auth::user()->role;
+        $page = 'email';
+        $email_data = DB::table('email')->get();
+        $email_data = $email_data[0];
+        if($user == "admin"){
+            return view('manager.email', compact('email_data','page'));
+        }
+    }
 
+    public function save_email(Request $request) {
+        $identifynumber = $request->emailnumber;
+        if($identifynumber == "one"){
+            $content = DB::table('email')->select('contentOne')->first();
+            if($content) {
+                DB::table('email')->update(['updated_at' => date('Y-m-d h:i:s'), 'contentOne' => $request->input('contentOne')]);
+            }else{
+                DB::table('email')->insert(['created_at' => date('Y-m-d h:i:s'), 'contentOne' => $request->input('contentOne')]);
+            }
+        }
+        if($identifynumber == "two"){
+            $content = DB::table('email')->select('contentTwo')->first();
+            if($content) {
+                DB::table('email')->update(['updated_at' => date('Y-m-d h:i:s'), 'contentTwo' => $request->input('contentTwo')]);
+            }else{
+                DB::table('email')->insert(['created_at' => date('Y-m-d h:i:s'), 'contentTwo' => $request->input('contentTwo')]);
+            }
+        }
+        return $this->email();
+    }
+
+    public function manager_movie() {
+        $page = "movie";
+        
+        $results = DB::table('resume_result')
+            ->join('users', 'resume_result.user_id', '=', 'users.id')
+            ->select('resume_result.video_urls', 'resume_result.docs_url', 'users.initName_f', 'users.initName_l')
+            ->get();
+        
+        // Transform the video URLs and include docs_url in the data structure
+        $results->transform(function ($item) {
+            $item->video_urls = $item->video_urls ? explode(',', $item->video_urls) : [];
+            return $item;
+        });
+
+        // Create an associative array with combined first and last names as keys
+        $videoUrls = $results->mapWithKeys(function ($item) {
+            $key = $item->initName_f . $item->initName_l; // Combine first and last names
+            $value = [
+                'videos' => $item->video_urls,  // Get the video URLs
+                'docs_url' => $item->docs_url   // Get the docs URL
+            ];
+            
+            return [$key => $value]; // Return as an associative array
+        });
+    
+        return view('manager.movie', compact('videoUrls', 'page'));
+    }
+
+    
 
 
     //admin quiz
@@ -655,7 +716,7 @@ class UserController extends Controller
             return view('pending');
 
         $quizs = DB::table('work_question') -> orderBy('項目', 'desc') -> get();
-        $page = "work_quiz";
+        $page = "workQuiz";
         return view('quiz.admin.work_quiz', compact('quizs', 'page'));
     }
 
@@ -673,7 +734,6 @@ class UserController extends Controller
     {
         $resumingquizs = DB::table('resume_question')->get();
         $users = User::paginate();
-        // dd($resumingquizs);
         $page = "resumingQuiz";
         return view('resume.admin.resuming_quiz', compact('resumingquizs', 'page'));
     }
@@ -856,6 +916,7 @@ class UserController extends Controller
         $page = "managementResult";
         return view('quiz.admin.management_result', compact('results', 'page'));
     }
+
     public function resumingResult()
     {
         $results = DB::table('resume_result')
@@ -925,6 +986,35 @@ class UserController extends Controller
 
         return $pdf->download($data['name'] . $pdf_str);
         // return $pdf->stream($data['name'] . $pdf_str);
+    }
+
+    public function work_pdf(Request $request) {
+        $data = $request->all();
+
+        $quizs = DB::table('resume_result')->get();
+        $quiz_array = explode(',', $quizs->resume_content);
+        dd($quiz_array);
+        foreach ($quizs as $quiz) {
+            $temp = [];
+            $quiz_key = $quiz->job;
+            $temp[$quiz_key . '-1'] = explode(',', $quiz->回答項目)[0];
+            $temp[$quiz_key . '-2'] = explode(',', $quiz->回答項目)[1];
+            $quiz_array = array_merge($quiz_array, $temp);
+        }
+
+        // dd($quiz_array);
+
+        $content = [
+            'name' => $data['name'],
+            'quiz_array' => $quiz_array,
+            'created_at' => $data['created_at'],
+        ];
+
+        $pdf = PDF::loadView('work_pdf', $content);
+
+        $pdf_str = $type == $data->user . '_業務適性回答データ.pdf';
+
+        return $pdf->download($data['name'] . $pdf_str);
     }
 
         public function resumepdf(Request $request)
@@ -1460,5 +1550,59 @@ class UserController extends Controller
 }
 
     // work question 業務適性検査を受ける
+
+    // resume Document save
+
+    public function add_resumedocs(Request $request) {
+        // Validate the request
+        
+
+        // Check if a file was uploaded
+        if ($request->hasFile('resume_file')) {
+            $file = $request->file('resume_file');
+            $userId = Auth::id(); // Get the authenticated user's ID
+
+            // Create a unique name for the file
+            $fileName = time() . '_' . $file->getClientOriginalName();
+
+            // Define the path to store the file in a user-specific directory
+            $directory = 'resumes/' . $userId;
+            $filePath = $directory . '/' . $fileName;
+
+            // Ensure the directory exists
+            if (!file_exists(public_path($directory))) {
+                mkdir(public_path($directory), 0755, true);
+            }
+
+            // Move the file to the designated directory
+            $file->move(public_path($directory), $fileName);
+
+            // Create the URL for the uploaded file
+            $fileUrl = asset($filePath);
+
+            // Example of saving file URL to the database
+            // Check if a record for the user already exists
+            $recordExists = DB::table('resume_result')->where('user_id', $userId)->exists();
+
+            if ($recordExists) {
+                DB::table('resume_result')->where('user_id', $userId)->update([
+                    'updated_at' => now(),
+                    'docs_url' => $fileUrl,
+                ]);
+            } else {
+                DB::table('resume_result')->insert([
+                    'user_id' => $userId,
+                    'created_at' => now(),
+                    'docs_url' => $fileUrl,
+                ]);
+            }
+
+            return redirect()->back()->with('success', 'File uploaded successfully!');
+        }
+        
+
+        return redirect()->back()->with('error', 'File upload failed.');
+    }
+
     
 }

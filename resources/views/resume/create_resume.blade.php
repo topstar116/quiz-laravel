@@ -13,11 +13,11 @@
                     <thead class="bg-gray-50">
                         <tr>
                             <th scope="col"
-                                class="px-1 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                class="px-1 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 タイトル
                             </th>
                             <th scope="col"
-                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 職種説明
                             </th>
                         </tr>
@@ -44,7 +44,7 @@
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <a href="{{ $result_data->url }}"
                                             class="text-blue-400 hover:underline hover:text-blue-600">
-                                            {{ $result_data->job }}
+                                            全職種
                                         </a>
                                     </td>
                                     <td

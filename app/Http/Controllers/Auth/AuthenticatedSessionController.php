@@ -7,6 +7,7 @@ use App\Http\Requests\Auth\LoginRequest;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -26,14 +27,17 @@ class AuthenticatedSessionController extends Controller
      * @param  \App\Http\Requests\Auth\LoginRequest  $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(LoginRequest $request)
-    {
-        $request->authenticate();
+public function store(LoginRequest $request)
+{
+    $request->authenticate();
+    $request->session()->regenerate();
 
-        $request->session()->regenerate();
+    // Retrieve the first record from the email table
+    $mail_content = DB::table('email')->select('contentOne')->first();
 
-        return redirect()->intended(RouteServiceProvider::HOME);
-    }
+    // Check if mail_content is not null and pass the content to the view
+    return redirect()->intended(RouteServiceProvider::HOME)->with('mail_content', $mail_content ? $mail_content->contentOne : null);
+}
 
     /**
      * Destroy an authenticated session.

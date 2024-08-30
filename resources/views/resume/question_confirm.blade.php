@@ -15,7 +15,7 @@
                                 タイトル
                             </th>
                             <th scope="col"
-                                class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                                class="px-6 py-3 text-center text-xs font-semibold text-gray-500 uppercase tracking-wider">
                                 職種説明
                             </th>
                         </tr>
@@ -24,7 +24,7 @@
                         @if ($identify == 0)
                             @foreach ($result_datas as $result_data)
                                 <tr>
-                                    <td class="px-6 py-4 whitespace-nowrap">
+                                    <td class="px-6 py-4 whitespace-nowrap ">
                                         <a href="{{ $result_data[2] }}" class="text-blue-500 hover:underline">
                                             {{ $result_data[0] }}
                                         </a>
@@ -37,9 +37,9 @@
                         @else
                             @foreach ($result_datas as $result_data)
                                 <tr>
-                                    <td class="px-6 py-4 whitespace-nowrap">
+                                    <td class="px-6 py-4 whitespace-nowrap all">
                                         <a href="{{ $result_data->url }}" class="text-blue-500 hover:underline">
-                                            {{ $result_data->job }}
+                                            職種
                                         </a>
                                     </td>
                                     <td class="px-6 py-4 whitespace-normal text-gray-700">

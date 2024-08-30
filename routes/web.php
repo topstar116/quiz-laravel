@@ -129,9 +129,16 @@ Route::middleware('auth')->group(function () {
 
 
     Route::get('admin', [UserController::class, 'recruimentUser'])->name('admin');
+    Route::get('resumeoutput', [UserController::class, 'manager_movie'])->name('resume.output');
+    Route::get('emailtemplate', [UserController::class, 'email'])->name('email.template');
+
     Route::get('admin/sales', [UserController::class, 'salesUser'])->name('admin.sales');
     Route::get('admin/management', [UserController::class, 'managementUser'])->name('admin.management');
     Route::get('admin/member', [UserController::class, 'memberUser'])->name('admin.member');
+    Route::get('admin/email', [UserController::class, 'email'])->name('admin.email');
+    Route::get('admin/movie', [UserController::class, 'manager_movie'])->name('admin.movie');
+    Route::get('admin/saveemail', [UserController::class, 'save_email'])->name('save.email');
+
 
     Route::get('admin/quiz', [UserController::class, 'recruimentQuiz'])->name('admin.quiz');
     Route::get('admin/quiz/work', [UserController::class, 'workQuiz'])->name('admin.quiz.work');
@@ -158,6 +165,7 @@ Route::middleware('auth')->group(function () {
     Route::post('admin/update', [UserController::class, 'Update'])->name('admin.update');
     Route::post('admin/pdf', [UserController::class, 'Pdf'])->name('admin.pdf');
     Route::post('admin/resumepdf', [UserController::class, 'resumepdf'])->name('admin.resumepdf');
+    Route::post('admin/work/pdf', [UserController::class, 'work_pdf'])->name('admin.work.pdf');
     Route::post('admin/csv', [UserController::class, 'Csv'])->name('admin.csv');
 
 
@@ -181,6 +189,9 @@ Route::middleware('auth')->group(function () {
 
     Route::post('saveMovie', [UserController::class, 'save_movie'])->name('save.movie');
     Route::get('work/workQuestion', [UserController::class, 'work_question'])->name('work.question');
+
+    Route::post('resume/resumeDoc', [UserController::class, 'add_resumedocs'])->name('add.resumedocs');
+
 
 });
 
