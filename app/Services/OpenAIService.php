@@ -60,19 +60,13 @@ protected function createResumePrompt(array $details)
     <div class="bg-gray-100 pt-15">
         <div class="bg-white w-full p-6 pb-10 pt-16 rounded-lg shadow-md m-auto">
             <h1 class="text-2xl font-bold text-center mb-4">職務経歴書</h1>
-            <div class="text-right mb-4">
-                <p class="text-sm">日付: ' . date('Y年m月d日') . '</p>
-                <p class="text-sm">氏名: ' . htmlspecialchars($details['username']) . '</p>
-            </div>
+            
 
-            <h2 class="text-xl font-semibold border-b-2 border-gray-300 mt-6 mb-2">経験分野・内容</h2>
+            <h2 class="text-xl font-semibold border-b-2 border-gray-300 mt-6 mb-2">職務要約</h2>
             <p class="mb-4">' . htmlspecialchars($details['job_summary']) . '</p>
 
-            <h2 class="text-xl font-semibold border-b-2 border-gray-300 mt-6 mb-2">活用可能な経験知識</h2>
+            <h2 class="text-xl font-semibold border-b-2 border-gray-300 mt-6 mb-2">活かせるスキル・経験</h2>
             <p class="mb-4">' . htmlspecialchars($details['experience_reason']) . '</p>
-
-            <h2 class="text-xl font-semibold border-b-2 border-gray-300 mt-6 mb-2">将来の展望</h2>
-            <p class="mb-4">' . htmlspecialchars($details['future_plans']) . '</p>
 
             <h2 class="text-xl font-semibold border-b-2 border-gray-300 mt-6 mb-2">保有スキル</h2>
             <ul class="list-disc list-inside mb-4">';
@@ -111,12 +105,12 @@ protected function createResumePrompt(array $details)
 
         foreach ($details['job_history'] as $job) {
             $prompt .= '
-                            <tr>
-                                <td class="border px-4 py-2">' . htmlspecialchars($job['start_date']) . ' - ' . htmlspecialchars($job['end_date']) . '</td>
-                                <td class="border px-4 py-2">' . htmlspecialchars($job['job_name']) . '</td>
-                                <td class="border px-4 py-2">' . htmlspecialchars($job['experience_details']) . '</td>
-                                <td class="border px-4 py-2">' . htmlspecialchars($job['role']) . '</td>
-                            </tr>';
+                <tr>
+                    <td class="border px-4 py-2">' . htmlspecialchars($job['start_date']) . ' - ' . htmlspecialchars($job['end_date']) . '</td>
+                    <td class="border px-4 py-2">' . htmlspecialchars($job['job_name']) . '</td>
+                    <td class="border px-4 py-2">' . htmlspecialchars($job['experience_details']) . '</td>
+                    <td class="border px-4 py-2">' . htmlspecialchars($job['role']) . '</td>
+                </tr>';
         }
 
         $prompt .= '

@@ -1,12 +1,7 @@
 <x-app-layout>
-
-
-
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-
-
                 <div id="app" class="md:flex antialiased">
                     @include('layouts.admin')
 
@@ -33,10 +28,6 @@
                                                     <th
                                                         class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-700 uppercase tracking-wider">
                                                         氏名
-                                                    </th>
-                                                    <th
-                                                        class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                                                        項目
                                                     </th>
                                                     <th
                                                         class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-700 uppercase tracking-wider">
@@ -68,11 +59,6 @@
                                                         </td>
                                                         <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                                             <p class="text-gray-600 whitespace-no-wrap">
-
-                                                                {{ $result->role }}</p>
-                                                        </td>
-                                                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                                            <p class="text-gray-600 whitespace-no-wrap">
                                                                 {{ $result->job }}</p>
                                                         </td>
                                                         <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
@@ -82,40 +68,48 @@
                                                                 @else
                                                                     {{ $result->created_at }}
                                                                 @endif
-                                                            </p>
+                                                            </p>        
                                                         </td>
                                                         <td
-                                                            class="py-5 border-b border-gray-200 bg-white text-sm flex justify-around">
-                                                            <form action="{{ route('admin.result.resumingmovie') }}"
-                                                                method="POST">
-                                                                @csrf
-                                                                <span
-                                                                    class="relative inline-block px-3 py-1 font-semibold text-white-900 leading-tight hover:scale-110">
-                                                                    <span aria-hidden
-                                                                        class="absolute inset-0 bg-blue-200 opacity-50 rounded-full"></span>
-                                                                    <input type="hidden" name="user_id"
-                                                                        value="{{ $result->user_id }}">
-                                                                    <button type="submit" class="relative w-5 h-5">
-                                                                        <img src="{{ asset('video.png') }}"
-                                                                            alt="">
-                                                                    </button>
-                                                                </span>
-                                                            </form>
+                                                            class="py-5 flex flex-col sm:flex-row gap-2 border-b border-gray-200 bg-white text-sm">
 
-                                                            <form method="POST"
-                                                                action="{{ route('admin.resumepdf') }}">
+
+                                                            <form method="POST" action="{{ route('admin.work.pdf') }}"
+                                                                style="float: left;">
                                                                 @csrf
                                                                 <span
                                                                     class="relative inline-block px-3 py-1 font-semibold text-white-900 leading-tight">
                                                                     <span aria-hidden
                                                                         class="absolute inset-0 bg-blue-200 opacity-50 rounded-full"></span>
+                                                                    <input type="hidden" name="id"
+                                                                        value="{{ $result->user_id }}">
+
+
+                                                                    <input type="hidden" name="name"
+                                                                        value="{{ $result->initName_f }} {{ $result->initName_l }}">
                                                                     <input type="hidden" name="resume_content"
-                                                                        value="{{ $result->building_code }}">
-                                                                    <button type="submit"
-                                                                        class="relative w-5 h-5 hover:scale-110">
-                                                                        <img src="{{ asset('pdf.png') }}"
-                                                                            alt="">
-                                                                    </button>
+                                                                        value="{{ $result->resume_content }}">
+
+
+                                                                    <input type="hidden" name="created_at"
+                                                                        value="{{ $result->created_at }}">
+
+                                                                    <button type="submit" class="relative">PDF</button>
+                                                                </span>
+                                                            </form>
+
+                                                            <form method="GET" action="{{ route('del.result') }}">
+                                                                @csrf
+                                                                <span
+                                                                    class="relative inline-block px-3 py-1 font-semibold text-red-900 leading-tight">
+                                                                    <span aria-hidden
+                                                                        class="absolute inset-0 bg-red-200 opacity-50 rounded-full"></span>
+                                                                    <input type="hidden" name="result_id"
+                                                                        value="{{ $result->id }}">
+                                                                    <input type="hidden" name="level"
+                                                                        value="management">
+                                                                    <button type="submit" class="relative"
+                                                                        onclick="return confirm('削除しますか？');">削除</button>
                                                                 </span>
                                                             </form>
 
@@ -125,21 +119,11 @@
                                             </tbody>
                                         </table>
                                     </div>
-
                                 </section>
-
                             </section>
                         </section>
                     </main>
-
                 </div>
-
-
-
-
-
-
-
 
                 <script>
                     /**
@@ -200,18 +184,8 @@
                             return;
                         }
                         $(".csv").submit();
-
-
-
                     }
                 </script>
-
-
-
-
-
-
-
             </div>
         </div>
     </div>

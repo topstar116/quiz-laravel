@@ -1,136 +1,116 @@
 <x-app-layout>
-
-
-    <form class="lg:w-1/2 m-auto p-10 sm:w-full bg-white mt-10 rounded-lg" action="{{ route('save.movie') }}"
-        enctype="multipart/form-data" method="POST">
-        @csrf
-
+    <div class="lg:w-1/2 m-auto p-10 sm:w-full bg-white mt-10 rounded-lg shadow-lg">
         <div class="space-y-12">
             <div class="border-b border-gray-900/10 pb-12 pt-0">
                 <div class="text-center mt-7">
-                    <h1 class="p-2 text-2xl">1分程度自己PR動画掲載</h1>
-                </div>
-                <p class="px-6 pt-10 pb-2 text-sm text-gray-500 leading-8">
-                    ● 自由に自己紹介をしてください。(1分以内)<br>
-                    ● 自分の強みと弱みを教えてください。(1分以内)<br>
-                    ● なぜこの会社を選んだのか理由を教えてください。(1分以内)<br>
-                </p>
-                <div class="w-full">
-                    <main class="container mx-auto max-w-screen-lg">
-                        <!-- File upload modal -->
-                        <article aria-label="File Upload Modal"
-                            class="relative flex flex-col bg-white shadow-xl rounded-md" ondrop="dropHandler(event);"
-                            ondragover="dragOverHandler(event);" ondragleave="dragLeaveHandler(event);"
-                            ondragenter="dragEnterHandler(event);">
-                            <section class="p-8 pt-0 w-full flex flex-col">
-                                <header
-                                    class="border-dashed border-2 border-gray-400 py-12 flex flex-col justify-center items-center">
-                                    <p class="mb-3 text-center text-gray-500">
-                                        ここにファイルをドラッグ＆ドロップ<br />
-                                        または
-                                    </p>
-                                    <input id="hidden-input" type="file" name="videos[]" multiple class="hidden" />
-                                    <a id="button"
-                                        class="mt-2 cursor-pointer bg-blue-500 text-white px-4 py-2 rounded-sm hover:bg-blue-600 focus:outline-none">
-                                        ファイルを選択
-                                    </a>
-                                </header>
-
-                                <ul id="gallery" class="flex flex-1 flex-wrap -m-1 mt-1">
-
-                                    <li id="empty"
-                                        class="h-full w-full text-center flex flex-col items-center justify-center">
-                                        <img class="mx-auto w-32"
-                                            src="https://user-images.githubusercontent.com/507615/54591670-ac0a0180-4a65-11e9-846c-e55ffce0fe7b.png"
-                                            alt="no data" />
-                                        <span class="text-sm text-gray-500">なし</span>
-                                    </li>
-
-                                </ul>
-                            </section>
-                        </article>
-                    </main>
+                    <h3 class="p-2 text-2xl font-bold text-gray-800">1分程度自己PR動画掲載</h3>
                 </div>
 
+                <div class="px-6 pt-10 pb-2">
+                    <p class="text-sm text-gray-500 leading-8">
+                        ● 応募書類<br>
+                        <span class="text-gray-600">作成した職務経歴書、履歴書もあれば併せてご提出ください</span>
+                    </p>
+                    <form action="{{ route('add.resumedocs') }}" method="POST" class="mt-4"
+                        enctype="multipart/form-data">
+                        @csrf
+                        <label class="block mb-4 flex gap-5 items-center">
+                            <span class="text-gray-700 mr-4">ファイルを選択</span>
+                            <input type="file" name="resume_file" accept=".doc,.pdf,.txt,.docx"
+                                class="block text-sm text-gray-500
+                                    file:mr-4 file:py-2 file:px-4
+                                    file:rounded-full file:border-0
+                                    file:text-sm file:font-semibold
+                                    file:bg-blue-50 file:text-blue-700
+                                    hover:file:bg-blue-100" />
+                        </label>
 
+                        <button type="submit"
+                            class="mt-2 w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition duration-200">
+                            提出
+                        </button>
+                    </form>
+                </div>
 
-                <template id="file-template">
-                    <li class="block p-1 w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/6 xl:w-1/8 h-24">
-                        <article tabindex="0"
-                            class="group w-full h-full rounded-md bg-gray-100 cursor-pointer shadow-sm relative">
-                            <section
-                                class="flex flex-col text-xs break-words w-full h-full z-20 absolute top-0 py-2 px-3">
-                                <h1 class="flex-1 overflow-hidden group-hover:text-blue-800"></h1>
-                                <div class="flex">
-                                    <p class="p-1 size text-xs text-gray-700"></p>
-                                    <button
-                                        class="delete ml-auto focus:outline-none hover:bg-gray-300 p-1 rounded-md text-gray-800">
-                                        <svg class="pointer-events-none fill-current w-4 h-4 ml-auto"
-                                            xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                            viewBox="0 0 24 24">
-                                            <path
-                                                d="M3 6l3 18h12l3-18h-18zm19-4v2h-20v-2h5.711c.9 0 1.631-1.099 1.631-2h5.316c0 .901.73 2 1.631 2h5.711z" />
-                                        </svg>
-                                    </button>
-                                </div>
-                            </section>
-                        </article>
-                    </li>
-                    <input type="hidden" name="file_sizes[]" class="file_size" />
-                </template>
+                <form action="{{ route('save.movie') }}" enctype="multipart/form-data" method="POST" class="px-6">
+                    @csrf
+                    <p class="pt-10 pb-2 text-sm text-gray-500 leading-8">
+                        ● 自己PR動画<br>
+                        <span>求人情報のどの内容で活躍出来そうか、今回の応募理由を1分以内に口頭でご説明ください</span>
+                    </p>
+                    <div class="w-full">
+                        <main class="container mx-auto max-w-screen-lg">
+                            <article aria-label="File Upload Modal"
+                                class="relative flex flex-col bg-white shadow-xl rounded-md"
+                                ondrop="dropHandler(event);" ondragover="dragOverHandler(event);"
+                                ondragleave="dragLeaveHandler(event);" ondragenter="dragEnterHandler(event);">
+                                <section class="p-8 flex flex-col">
+                                    <header
+                                        class="border-dashed border-2 border-gray-400 py-12 flex flex-col justify-center items-center">
+                                        <p class="mb-3 text-center text-gray-500">
+                                            ここにファイルをドラッグ＆ドロップ<br />
+                                            または
+                                        </p>
+                                        <input id="hidden-input" type="file" name="videos[]" multiple
+                                            class="hidden" />
+                                        <a id="button"
+                                            class="mt-2 cursor-pointer bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none transition duration-200">
+                                            ファイルを選択
+                                        </a>
+                                    </header>
 
-                <template id="image-template">
-                    <li class="block p-1 w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/6 xl:w-1/8 h-24">
-                        <article tabindex="0"
-                            class="group hasImage w-full h-full rounded-md bg-gray-100 cursor-pointer shadow-sm relative text-transparent hover:text-white">
-                            <img alt="upload preview"
-                                class="img-preview w-full h-full sticky object-cover rounded-md" />
+                                    <ul id="gallery" class="flex flex-wrap -m-1 mt-1">
+                                        <li id="empty"
+                                            class="h-full w-full text-center flex flex-col items-center justify-center">
+                                            <img class="mx-auto w-32"
+                                                src="https://user-images.githubusercontent.com/507615/54591670-ac0a0180-4a65-11e9-846c-e55ffce0fe7b.png"
+                                                alt="no data" />
+                                            <span class="text-sm text-gray-500">なし</span>
+                                        </li>
+                                    </ul>
+                                </section>
+                            </article>
+                        </main>
+                    </div>
 
-                            <section
-                                class="flex flex-col text-xs break-words w-full h-full z-20 absolute top-0 py-2 px-3">
-                                <h1 class="flex-1"></h1>
-                                <div class="flex">
-                                    <span class="p-1">
-                                        <i>
-                                            <svg class="fill-current w-4 h-4 ml-auto" xmlns="http://www.w3.org/2000/svg"
-                                                width="24" height="24" viewBox="0 0 24 24">
+                    <template id="file-template">
+                        <li class="block p-1 w-full sm:w-1/2 md:w-1/3 lg:w-1/4 h-24">
+                            <article tabindex="0"
+                                class="group w-full h-full rounded-md bg-gray-100 cursor-pointer shadow-sm relative transition duration-200 hover:shadow-lg">
+                                <section
+                                    class="flex flex-col text-xs break-words w-full h-full z-20 absolute top-0 py-2 px-3">
+                                    <h1 class="flex-1 overflow-hidden group-hover:text-blue-800 font-semibold"></h1>
+                                    <div class="flex items-center">
+                                        <p class="p-1 size text-xs text-gray-700"></p>
+                                        <button
+                                            class="delete ml-auto focus:outline-none hover:bg-gray-300 p-1 rounded-md text-gray-800 transition duration-200">
+                                            <svg class="pointer-events-none fill-current w-4 h-4"
+                                                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                                                 <path
-                                                    d="M5 8.5c0-.828.672-1.5 1.5-1.5s1.5.672 1.5 1.5c0 .829-.672 1.5-1.5 1.5s-1.5-.671-1.5-1.5zm9 .5l-2.519 4-2.481-1.96-4 5.96h14l-5-8zm8-4v14h-20v-14h20zm2-2h-24v18h24v-18z" />
+                                                    d="M3 6l3 18h12l3-18h-18zm19-4v2h-20v-2h5.711c.9 0 1.631-1.099 1.631-2h5.316c0 .901.73 2 1.631 2h5.711z" />
                                             </svg>
-                                        </i>
-                                    </span>
+                                        </button>
+                                    </div>
+                                </section>
+                            </article>
+                        </li>
+                        <input type="hidden" name="file_sizes[]" class="file_size" />
+                    </template>
 
-                                    <p class="p-1 size text-xs"></p>
-                                    <button class="delete ml-auto focus:outline-none hover:bg-gray-300 p-1 rounded-md">
-                                        <svg class="pointer-events-none fill-current w-4 h-4 ml-auto"
-                                            xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                            viewBox="0 0 24 24">
-                                            <path
-                                                d="M3 6l3 18h12l3-18h-18zm19-4v2h-20v-2h5.711c.9 0 1.631-1.099 1.631-2h5.316c0 .901.73 2 1.631 2h5.711z" />
-                                        </svg>
-                                    </button>
-                                </div>
-                            </section>
-                        </article>
-                    </li>
-                </template>
+                    <div class="mt-6 flex items-center justify-end gap-4">
+                        <a href="{{ route('view.movie') }}"
+                            class="inline-flex items-center rounded-md bg-yellow-500 px-5 py-2 text-sm font-medium text-white shadow-lg transition-transform transform hover:scale-105 hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-600">
+                            保存ファイル
+                        </a>
+                        <button type="submit" id="submit"
+                            class="inline-flex items-center rounded-md bg-green-500 px-5 py-2 text-sm font-medium text-white shadow-lg transition-transform transform hover:scale-105 hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-600">
+                            保存
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
-        <div class="mt-6 flex items-center justify-end gap-4">
-            <a href="{{ route('view.movie') }}"
-                class="inline-flex items-center rounded-md bg-yellow-500 px-5 py-2 text-sm font-medium text-white shadow-lg transition-transform transform hover:scale-105 hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-600">
-                保存ファイル
-            </a>
-            <button type="submit" id="submit"
-                class="inline-flex items-center rounded-md bg-green-500 px-5 py-2 text-sm font-medium text-white shadow-lg transition-transform transform hover:scale-105 hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-600">
-                保存
-            </button>
-        </div>
-    </form>
-
-
-
-
+    </div>
 
     <!-- Modal Structure -->
     <div id="videoModal" class="fixed inset-0 hidden z-50 overflow-y-auto">
@@ -144,7 +124,7 @@
                         <div class="mt-3 text-center sm:mt-0 sm:text-left">
                             <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">PR動画</h3>
                             <div class="mt-2">
-                                <video id="modalVideo" controls class="w-full">
+                                <video id="modalVideo" controls class="w-full rounded-lg shadow-md">
                                     <source id="modalVideoSource" src="" type="video/mp4">
                                     Your browser does not support the video tag.
                                 </video>
@@ -165,10 +145,9 @@
 
 </x-app-layout>
 
-
 <style>
     .video-sample {
-        min-height: 300px
+        min-height: 300px;
     }
 
     .hasImage:hover section {
@@ -196,11 +175,55 @@
     .group:hover .group-hover\:text-blue-800 {
         color: #2b6cb0;
     }
+
+    /* New styles for improved aesthetics */
+    #button {
+        border-radius: 0.375rem;
+        /* rounded-md */
+        transition: background-color 0.2s;
+    }
+
+    .border-dashed {
+        border-style: dashed;
+    }
+
+    .border-gray-400 {
+        border-color: #cbd5e1;
+        /* light gray */
+    }
+
+    .hover\:bg-blue-600:hover {
+        background-color: #2563eb;
+        /* darker blue */
+    }
+
+    .bg-gray-100 {
+        background-color: #f3f4f6;
+        /* light gray */
+    }
+
+    .text-gray-700 {
+        color: #374151;
+        /* dark gray */
+    }
+
+    .text-gray-500 {
+        color: #6b7280;
+        /* medium gray */
+    }
+
+    .rounded-md {
+        border-radius: 0.375rem;
+    }
+
+    .shadow-lg {
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    }
 </style>
+
 <script>
     $(document).ready(() => {
         const fileTempl = document.getElementById("file-template");
-        const imageTempl = document.getElementById("image-template");
         const empty = document.getElementById("empty");
         const hiddenInput = document.getElementById("hidden-input");
         const gallery = document.getElementById("gallery");
@@ -223,15 +246,14 @@
                 alert('動画ファイルのみアップロードできます。');
                 return;
             }
-            // Check file size (limit to 2MB)
-            const maxSize = 30 * 1024 * 1024; // 2MB in bytes
+
+            const maxSize = 30 * 1024 * 1024; // 30MB in bytes
             if (file.size > maxSize) {
                 alert(`ファイルサイズは30MBまでです。"${file.name}"のサイズが大きすぎます。`);
                 return;
             }
 
             const objectURL = URL.createObjectURL(file);
-
             const clone = fileTempl.content.cloneNode(true);
 
             clone.querySelector("h1").textContent = file.name;
@@ -248,18 +270,13 @@
 
             empty.classList.add("hidden");
             target.prepend(clone);
-
             FILES[objectURL] = file;
 
-            // Update the hidden file input with selected files
             updateHiddenInput();
         }
 
         function updateHiddenInput() {
-            // Clear previous files
             $(hiddenInput).val('');
-
-            // Create a DataTransfer object to hold the files
             const dataTransfer = new DataTransfer();
 
             Object.values(FILES).forEach(file => {

@@ -28,7 +28,7 @@
                             <h1 class="text-3xl font-semibold text-gray-800 mb-6">
                                 あなたの状況は「{{ $result['sub_type'] }}」です。</h1>
                             <h2 class="text-xl text-gray-600 mb-10">{{ $result['sub_title'] }}</h2>
-                            <a href="{{ route('quiz3_m') }}"
+                            <a href="/"
                                 class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 px-10 rounded-lg shadow-md transition duration-300">
                                 トップページへ移動
                             </a>
