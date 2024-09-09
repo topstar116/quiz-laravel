@@ -1,9 +1,0 @@
-Xserver url : https://secure.xserver.ne.jp/xapanel/login/xserver/
-	serverID : phk65255
-	password : q8ctozki
-
-client email : yusuke.nishi@zuttomo.jp
-       password : &C$Lp9E2KD)se!s
-
-server host :
-       port :
