@@ -80,7 +80,8 @@
                                                             <p class="text-gray-900 whitespace-nowrap">
                                                                 {{ $result->created_at }}</p>
                                                         </td>
-                                                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                                        <td
+                                                            class="px-5 py-5 flex flex-col sm:flex-row gap-2 border-b border-gray-200 bg-white text-sm">
 
 
                                                             <form method="POST" action="{{ route('admin.pdf') }}"

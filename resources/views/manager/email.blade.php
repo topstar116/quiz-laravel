@@ -8,7 +8,7 @@
                         <!-- Tab Content -->
                         <div id="AIConsulting" class="tabcontent">
                             <div class="flex justify-between items-center mb-4">
-                                <h1 class="text-2xl font-semibold text-gray-700">メールテンプレ</h1>
+                                <h1 class="text-2xl font-semibold text-gray-700">ポップアップ</h1>
                                 <button onclick="openModal('addModal')"
                                     class="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition duration-300">
                                     追加

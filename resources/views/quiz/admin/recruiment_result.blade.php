@@ -81,7 +81,7 @@
                                                             {{ $result->created_at }}</p>
                                                     </td>
                                                     <td
-                                                        class="px-5 py-5 border-b border-gray-200 text-center bg-white text-sm">
+                                                        class="px-5 py-5 flex flex-col sm:flex-row gap-2 border-b border-gray-200 bg-white text-sm">
 
 
                                                         <form method="POST" action="{{ route('admin.engineerpdf') }}"

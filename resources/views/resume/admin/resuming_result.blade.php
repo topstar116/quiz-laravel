@@ -17,7 +17,7 @@
                                     class=" flex flex-row flex-wrap items-center text-center border-b border-solid border-gray-300">
 
 
-                                    <div class="inline-block min-w-full shadow-md rounded-lg overflow-hidden">
+                                    <div class="inline-block min-w-full shadow-md rounded-lg overflow-x-auto">
                                         <table class="min-w-full leading-normal" id="table">
                                             <thead>
                                                 <tr>

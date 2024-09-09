@@ -65,7 +65,7 @@
                     </div>
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <x-nav-link :href="route('email.template')" :active="request()->routeIs('email.template')">
-                            {{ __('メールテンプレ') }}
+                            {{ __('ポップアップ') }}
                         </x-nav-link>
                     </div>
                 @elseif (Auth::user()->role != 'admin' && Auth::user()->role != 'company')
@@ -214,7 +214,7 @@
                             {{ __('応募書類提出') }}
                         </x-responsive-nav-link>
                         <x-responsive-nav-link :href="route('email.template')">
-                            {{ __('メールテンプレ') }}
+                            {{ __('ポップアップ') }}
                         </x-responsive-nav-link>
                     @endif
                     @if (Auth::user()->role != 'admin' && Auth::user()->role != 'company')
