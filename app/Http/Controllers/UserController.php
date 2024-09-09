@@ -499,11 +499,6 @@ class UserController extends Controller
         );
     }
 
-
-
-
-
-
     //result
     public function viewResult1(Request $request)
     {
@@ -512,12 +507,12 @@ class UserController extends Controller
         unset($quiz_result['_token']);
         $quiz_result = implode(",", $quiz_result);
         $rows = DB::table('quiz_result')->where('user_id', $id)->count();
+        
         if($rows > 0){
             DB::table('quiz_result')->where('user_id', $id)->update(['updated_at' => date('Y-m-d h:i:s'), 'user_id' => $id, 'quiz1' => $quiz_result, 'type' => 'recruiment']);
         }else{
             DB::table('quiz_result')->where('user_id', $id)->insert(['created_at' => date('Y-m-d h:i:s'), 'user_id' => $id, 'quiz1' => $quiz_result, 'type' => 'recruiment']);
         }
-
 
         // DB::table('users')->where('user_id', auth()->user()->id)->update(['status' => 1]);
 
@@ -1022,22 +1017,23 @@ class UserController extends Controller
         return $this->resumingQuiz();
     }
 
-
-
     //admin restul
     public function recruimentResult()
     {
-        if (Auth::user()->status == '0')
+        if (Auth::user()->status == '0') {
             return view('pending');
+        }
 
         $results = DB::table('quiz_result')
             ->join('users', 'quiz_result.user_id', '=', 'users.id')
+            ->where('users.engineer', true) // Add this line to filter by engineer
             ->select('quiz_result.*', 'users.name')
             ->get();
 
         $page = "recruimentResult";
 
         return view('quiz.admin.recruiment_result', compact('results', 'page'));
+
     }
 
     public function workResult()
