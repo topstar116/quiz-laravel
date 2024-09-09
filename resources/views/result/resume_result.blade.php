@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="container mx-auto p-6 w-1/2">
+    <div class="container mx-auto p-6 w-full md:w-1/2">
         {!! $resumeContent !!}
         <form method="POST" action="{{ route('admin.resumepdf') }}" class="flex justify-center items-center mt-8">
             @csrf

@@ -9,13 +9,12 @@
 
                 <div id="app" class="md:flex antialiased">
                     @include('layouts.admin')
-
                     <main class="bg-white h-screen w-full overflow-y-auto">
 
                         <section v-if="active === 'management'" id="management">
                             <section class="bg-white border border-gray-300 border-solid rounded shadow">
                                 <header class="border-b border-solid border-gray-300 p-4 text-lg font-medium">
-                                    回答管理•転職・外部人材用回答
+                                    回答管理•現状確認
                                     <x-button class="mx-10 float-right" onclick="csv()">
                                         {{ __(' csv') }}
                                     </x-button>
@@ -30,7 +29,7 @@
                                     class=" flex flex-row flex-wrap items-center text-center border-b border-solid border-gray-300">
 
 
-                                    <div class="inline-block min-w-full shadow-md rounded-lg overflow-hidden">
+                                    <div class="inline-block min-w-full shadow-md rounded-lg overflow-x-auto">
                                         <table class="min-w-full leading-normal" id="table">
                                             <thead>
                                                 <tr>
@@ -61,38 +60,42 @@
                                                 @foreach ($results as $result)
                                                     <tr>
                                                         <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                                            <p class="text-gray-600 whitespace-no-wrap">
+                                                            <p class="text-gray-600 whitespace-nowrap">
                                                                 <input type="checkbox" name="" id=""
-                                                                    class="quiz" quiz="{{ $result->id }}" />
+                                                                    class="quiz" quiz="{{ $result->user_id }}" />
                                                             </p>
                                                         </td>
                                                         <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                                            <p class="text-gray-600 whitespace-no-wrap">
+                                                            <p class="text-gray-600 whitespace-nowrap">
                                                                 {{ $result->name }}</p>
                                                         </td>
                                                         <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                                            <p class="text-gray-600 whitespace-no-wrap">管理</p>
+                                                            <p class="text-gray-600 whitespace-nowrap">
+                                                                仕事内容-{{ $result->no1 }},
+                                                                人間関係-{{ $result->no2 }},
+                                                                業務負担-{{ $result->no3 }}
+                                                            </p>
                                                         </td>
                                                         <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                                            <p class="text-gray-900 whitespace-no-wrap">
+                                                            <p class="text-gray-900 whitespace-nowrap">
                                                                 {{ $result->created_at }}</p>
                                                         </td>
-                                                        <td class="py-5 border-b border-gray-200 bg-white text-sm">
+                                                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
 
 
                                                             <form method="POST" action="{{ route('admin.pdf') }}"
                                                                 style="float: left;">
                                                                 @csrf
                                                                 <span
-                                                                    class="relative inline-block px-3 py-1 font-semibold text-white-900 leading-tight">
+                                                                    class="relative inline-block px-3 py-1 mt-1 font-semibold text-white-900 leading-tight">
                                                                     <span aria-hidden
                                                                         class="absolute inset-0 bg-blue-200 opacity-50 rounded-full"></span>
                                                                     <input type="hidden" name="name"
                                                                         value="{{ $result->name }}">
                                                                     <input type="hidden" name="id"
                                                                         value="{{ $result->user_id }}">
-                                                                    <input type="hidden" name="type"
-                                                                        value="{{ $result->type }}">
+                                                                    <input type="hidden" name="worktype"
+                                                                        value="two">
                                                                     <input type="hidden" name="quiz1"
                                                                         value="{{ $result->quiz1 }}">
                                                                     <input type="hidden" name="no1"
@@ -111,26 +114,26 @@
                                                                         value="{{ $result->no3 }}">
                                                                     <input type="hidden" name="res3"
                                                                         value="{{ $result->res3 }}">
-                                                                    <input type="hidden" name="express"
-                                                                        value="{{ $result->express }}">
                                                                     <input type="hidden" name="created_at"
                                                                         value="{{ $result->created_at }}">
 
-                                                                    <button type="submit" class="relative">PDF</button>
+                                                                    <button type="submit"
+                                                                        class="relative whitespace-nowrap">PDF</button>
                                                                 </span>
                                                             </form>
 
                                                             <form method="GET" action="{{ route('del.result') }}">
                                                                 @csrf
                                                                 <span
-                                                                    class="relative inline-block px-3 py-1 font-semibold text-red-900 leading-tight">
+                                                                    class="relative inline-block px-3 py-1 mt-1 font-semibold text-red-900 leading-tight">
                                                                     <span aria-hidden
                                                                         class="absolute inset-0 bg-red-200 opacity-50 rounded-full"></span>
                                                                     <input type="hidden" name="result_id"
                                                                         value="{{ $result->id }}">
                                                                     <input type="hidden" name="level"
                                                                         value="management">
-                                                                    <button type="submit" class="relative"
+                                                                    <button type="submit"
+                                                                        class="relative whitespace-nowrap"
                                                                         onclick="return confirm('削除しますか？');">削除</button>
                                                                 </span>
                                                             </form>

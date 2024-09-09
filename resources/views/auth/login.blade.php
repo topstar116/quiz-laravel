@@ -39,28 +39,26 @@
                         name="remember">
                     <span class="ml-2 text-sm text-gray-600">{{ __('ログインしたままにする') }}</span>
                 </label>
-                <!-- <label for="user" class="inline-flex items-center my-4">
-                    <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('register') }}">
-                        {{ __('企業登録') }}
-                    </a>
-                </label>
-                <label  for="company" class="inline-flex items-center">
-                    <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('register') }}">
-                        {{ __('ユーザー登録') }}
-                    </a>
-                </label> -->
+
+
             </div>
 
-            <div class="flex items-center justify-end mt-4 ">
+            <div class="flex items-center justify-end mt-4 gap-4 ">
                 @if (Route::has('password.request'))
                     <!-- <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('password.request') }}">
                         {{ __('パスワード設定はこちら') }}
                     </a> -->
                 @endif
+                {{-- <label for="user" class="inline-flex items-center my-4">
+                    <a class="underline text-sm text-gray-600 hover:text-gray-900"
+                        href="{{ route('registerCompany') }}">
+                        {{ __('企業登録') }}
+                    </a>
+                </label> --}}
                 <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('register') }}">
                     新規登録はこちら
                 </a>
-                <x-button class="ml-4">
+                <x-button class="">
                     {{ __('ログイン') }}
                 </x-button>
             </div>

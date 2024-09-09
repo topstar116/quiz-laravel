@@ -5,10 +5,9 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-
+                @include('layouts.admin')
 
                 <div id="app" class="md:flex antialiased">
-                    @include('layouts.admin')
 
                     <main class="bg-white h-screen w-full overflow-y-auto">
                         <section v-if="active === 'sales'" id="sales">
@@ -25,93 +24,125 @@
                                     <input type="hidden" name="type" value="sales">
                                 </form>
 
-                                <section class=" flex flex-row flex-wrap items-center text-center border-b border-solid border-gray-300">
+                                <section
+                                    class=" flex flex-row flex-wrap items-center text-center border-b border-solid border-gray-300">
 
 
                                     <div class="inline-block min-w-full shadow-md rounded-lg overflow-hidden">
                                         <table class="min-w-full leading-normal" id="table">
                                             <thead>
                                                 <tr>
-                                                    <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                                                    <th
+                                                        class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-700 uppercase tracking-wider">
                                                         <input type="checkbox" name="checkAll" class="checkAll" />
                                                     </th>
-                                                    <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                                                        イニシャル名字 
+                                                    <th
+                                                        class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                                                        イニシャル名字
                                                     </th>
-                                                    <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                                                    <th
+                                                        class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-700 uppercase tracking-wider">
                                                         イニシャル名前
                                                     </th>
-                                                    <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                                                    <th
+                                                        class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-700 uppercase tracking-wider">
                                                         項目
                                                     </th>
-                                                    <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                                                    <th
+                                                        class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-700 uppercase tracking-wider">
                                                         回答日
                                                     </th>
-                                                    <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                                                    <th
+                                                        class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-700 uppercase tracking-wider">
                                                         Action
                                                     </th>
                                                 </tr>
                                             </thead>
                                             <tbody>
 
-                                                @foreach($results as $result)
+                                                @foreach ($results as $result)
+                                                    <tr>
+                                                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                                            <p class="text-gray-600 whitespace-no-wrap">
+                                                                <input type="checkbox" name="" id=""
+                                                                    class="quiz" quiz="{{ $result->id }}" />
+                                                            </p>
+                                                        </td>
+                                                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                                            <p class="text-gray-600 whitespace-no-wrap">
+                                                                {{ $result->initName_f }}</p>
+                                                        </td>
+                                                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                                            <p class="text-gray-600 whitespace-no-wrap">
+                                                                {{ $result->initName_l }}</p>
+                                                        </td>
+                                                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                                            <p class="text-gray-600 whitespace-no-wrap">営業</p>
+                                                        </td>
+                                                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                                            <p class="text-gray-900 whitespace-no-wrap">
+                                                                {{ $result->created_at }}</p>
+                                                        </td>
+                                                        <td class="py-5 border-b border-gray-200 bg-white text-sm">
 
-                                                <tr>
-                                                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                                        <p class="text-gray-600 whitespace-no-wrap">
-                                                            <input type="checkbox" name="" id="" class="quiz" quiz="{{ $result->id }}" />
-                                                        </p>
-                                                    </td>
-                                                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                                        <p class="text-gray-600 whitespace-no-wrap">{{ $result->initName_f }}</p>
-                                                    </td>
-                                                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                                        <p class="text-gray-600 whitespace-no-wrap">{{ $result->initName_l }}</p>
-                                                    </td>
-                                                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                                        <p class="text-gray-600 whitespace-no-wrap">営業</p>
-                                                    </td>
-                                                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                                        <p class="text-gray-900 whitespace-no-wrap">{{ $result->created_at }}</p>
-                                                    </td>
-                                                    <td class="py-5 border-b border-gray-200 bg-white text-sm">
 
+                                                            <form method="POST" action="{{ route('admin.pdf') }}"
+                                                                style="float: left;">
+                                                                @csrf
+                                                                <span
+                                                                    class="relative inline-block px-3 py-1 font-semibold text-white-900 leading-tight">
+                                                                    <span aria-hidden
+                                                                        class="absolute inset-0 bg-blue-200 opacity-50 rounded-full"></span>
+                                                                    <input type="hidden" name="name"
+                                                                        value="{{ $result->initName_f . '.' . $result->initName_l }}">
+                                                                    <input type="hidden" name="id"
+                                                                        value="{{ $result->id }}">
+                                                                    <input type="hidden" name="type"
+                                                                        value="{{ $result->type }}">
+                                                                    <input type="hidden" name="quiz1"
+                                                                        value="{{ $result->quiz1 }}">
+                                                                    <input type="hidden" name="no1"
+                                                                        value="{{ $result->no1 }}">
+                                                                    <input type="hidden" name="res1"
+                                                                        value="{{ $result->res1 }}">
+                                                                    <input type="hidden" name="quiz2"
+                                                                        value="{{ $result->quiz2 }}">
+                                                                    <input type="hidden" name="no2"
+                                                                        value="{{ $result->no2 }}">
+                                                                    <input type="hidden" name="res2"
+                                                                        value="{{ $result->res2 }}">
+                                                                    <input type="hidden" name="quiz3"
+                                                                        value="{{ $result->quiz3 }}">
+                                                                    <input type="hidden" name="no3"
+                                                                        value="{{ $result->no3 }}">
+                                                                    <input type="hidden" name="res3"
+                                                                        value="{{ $result->res3 }}">
+                                                                    <input type="hidden" name="express"
+                                                                        value="{{ $result->express }}">
+                                                                    <input type="hidden" name="created_at"
+                                                                        value="{{ $result->created_at }}">
 
-                                                        <form method="POST" action="{{ route('admin.pdf') }}" style="float: left;">
-                                                            @csrf
-                                                            <span class="relative inline-block px-3 py-1 font-semibold text-white-900 leading-tight">
-                                                                <span aria-hidden class="absolute inset-0 bg-blue-200 opacity-50 rounded-full"></span>
-                                                                <input type="hidden" name="name" value="{{ $result->initName_f.'.'.$result->initName_l }}">
-                                                                <input type="hidden" name="id" value="{{ $result->id }}">
-                                                                <input type="hidden" name="type" value="{{ $result->type }}">
-                                                                <input type="hidden" name="quiz1" value="{{ $result->quiz1 }}">
-                                                                <input type="hidden" name="no1" value="{{ $result->no1 }}">
-                                                                <input type="hidden" name="res1" value="{{ $result->res1 }}">
-                                                                <input type="hidden" name="quiz2" value="{{ $result->quiz2 }}">
-                                                                <input type="hidden" name="no2" value="{{ $result->no2 }}">
-                                                                <input type="hidden" name="res2" value="{{ $result->res2 }}">
-                                                                <input type="hidden" name="quiz3" value="{{ $result->quiz3 }}">
-                                                                <input type="hidden" name="no3" value="{{ $result->no3 }}">
-                                                                <input type="hidden" name="res3" value="{{ $result->res3 }}">
-                                                                <input type="hidden" name="express" value="{{ $result->express }}">
-                                                                <input type="hidden" name="created_at" value="{{ $result->created_at }}">
+                                                                    <button type="submit" class="relative">PDF</button>
+                                                                </span>
+                                                            </form>
 
-                                                                <button type="submit" class="relative">PDF</button>
-                                                            </span>
-                                                        </form>
+                                                            <form method="GET" action="{{ route('del.result') }}">
+                                                                @csrf
+                                                                <span
+                                                                    class="relative inline-block px-3 py-1 font-semibold text-red-900 leading-tight">
+                                                                    <span aria-hidden
+                                                                        class="absolute inset-0 bg-red-200 opacity-50 rounded-full"></span>
+                                                                    <input type="hidden" name="result_id"
+                                                                        value="{{ $result->id }}">
+                                                                    <input type="hidden" name="level"
+                                                                        value="sales">
+                                                                    <button type="submit" class="relative"
+                                                                        onclick="return confirm('削除しますか？');">削除</button>
+                                                                </span>
+                                                            </form>
 
-                                                        <form method="GET" action="{{ route('del.result') }}">
-                                                            @csrf
-                                                            <span class="relative inline-block px-3 py-1 font-semibold text-red-900 leading-tight">
-                                                                <span aria-hidden class="absolute inset-0 bg-red-200 opacity-50 rounded-full"></span>
-                                                                <input type="hidden" name="result_id" value="{{ $result->id }}">
-                                                                <input type="hidden" name="level" value="sales">
-                                                                <button type="submit" class="relative" onclick="return confirm('削除しますか？');">削除</button>
-                                                            </span>
-                                                        </form>
-
-                                                    </td>
-                                                </tr>
+                                                        </td>
+                                                    </tr>
                                                 @endforeach
                                             </tbody>
                                         </table>

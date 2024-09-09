@@ -1,32 +1,44 @@
 <x-app-layout>
-    <div class="lg:w-1/2 m-auto p-10 sm:w-full bg-white mt-10 rounded-lg shadow-lg">
+    <div class="lg:w-3/5 w-full m-auto  rounded-lg shadow-lg p-2 mt-0 bg-white md:p-10 md:mt-10">
         <div class="space-y-12">
             <div class="border-b border-gray-900/10 pb-12 pt-0">
                 <div class="text-center mt-7">
-                    <h3 class="p-2 text-2xl font-bold text-gray-800">1分程度自己PR動画掲載</h3>
+                    <h3 class="p-2 text-2xl font-bold text-gray-800">応募書類提出</h3>
                 </div>
 
                 <div class="px-6 pt-10 pb-2">
                     <p class="text-sm text-gray-500 leading-8">
-                        ● 応募書類<br>
+                        <span class="font-semibold text-gray-700 text-lg">● 応募書類</span><br>
                         <span class="text-gray-600">作成した職務経歴書、履歴書もあれば併せてご提出ください</span>
                     </p>
-                    <form action="{{ route('add.resumedocs') }}" method="POST" class="mt-4"
+                    <form action="{{ route('add.resumedocs') }}" method="POST" class="mt-4 space-y-6"
                         enctype="multipart/form-data">
                         @csrf
-                        <label class="block mb-4 flex gap-5 items-center">
-                            <span class="text-gray-700 mr-4">ファイルを選択</span>
+
+                        <div class="flex flex-col sm:flex-row">
+                            <label class="text-gray-700  mb-2 sm:mr-2">履歴書提出:</label>
                             <input type="file" name="resume_file" accept=".doc,.pdf,.txt,.docx"
-                                class="block text-sm text-gray-500
-                                    file:mr-4 file:py-2 file:px-4
-                                    file:rounded-full file:border-0
-                                    file:text-sm file:font-semibold
-                                    file:bg-blue-50 file:text-blue-700
-                                    hover:file:bg-blue-100" />
-                        </label>
+                                class="block text-sm text-gray-500 file:mr-4 file:py-2 file:px-4
+                                   file:rounded-full file:border-0
+                                   file:text-sm file:font-semibold
+                                   file:bg-blue-50 file:text-blue-700
+                                   hover:file:bg-blue-100 transition duration-200"
+                                required />
+                        </div>
+
+                        <div class="flex flex-col sm:flex-row">
+                            <label class="text-gray-700  mb-2 sm:mr-2">経歴書提出:</label>
+                            <input type="file" name="cv" accept=".doc,.pdf,.txt,.docx"
+                                class="block text-sm text-gray-500 file:mr-4 file:py-2 file:px-4
+                                file:rounded-full file:border-0
+                                file:text-sm file:font-semibold
+                                file:bg-blue-50 file:text-blue-700
+                                hover:file:bg-blue-100 transition duration-200"
+                                required />
+                        </div>
 
                         <button type="submit"
-                            class="mt-2 w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition duration-200">
+                            class="mt-2 w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
                             提出
                         </button>
                     </form>
@@ -35,7 +47,7 @@
                 <form action="{{ route('save.movie') }}" enctype="multipart/form-data" method="POST" class="px-6">
                     @csrf
                     <p class="pt-10 pb-2 text-sm text-gray-500 leading-8">
-                        ● 自己PR動画<br>
+                        <span class="font-semibold text-gray-700 text-lg">● 自己PR動画</span><br>
                         <span>求人情報のどの内容で活躍出来そうか、今回の応募理由を1分以内に口頭でご説明ください</span>
                     </p>
                     <div class="w-full">
@@ -112,6 +124,7 @@
         </div>
     </div>
 
+
     <!-- Modal Structure -->
     <div id="videoModal" class="fixed inset-0 hidden z-50 overflow-y-auto">
         <div class="flex items-center justify-center min-h-screen px-4 text-center">
@@ -142,7 +155,22 @@
         </div>
     </div>
     <!-- Modal end -->
-
+    <!-- loader -->
+    <div id="loader" class="hidden fixed inset-0 bg-gray-600 bg-opacity-75 flex justify-center items-center z-50">
+        <div class="bg-white p-8 rounded-lg shadow-lg">
+            <p class="text-lg font-semibold text-gray-700">データベースに保管中です。</p>
+            <div class="mt-4">
+                <svg class="animate-spin h-8 w-8 text-blue-500 mx-auto" xmlns="http://www.w3.org/2000/svg"
+                    fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
+                        stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor"
+                        d="M4 12a8 8 0 01.268-1.875L4.268 10a7.96 7.96 0 00-1.604 3.75A8 8 0 014 12z">
+                    </path>
+                </svg>
+            </div>
+        </div>
+    </div>
 </x-app-layout>
 
 <style>
@@ -228,6 +256,8 @@
         const hiddenInput = document.getElementById("hidden-input");
         const gallery = document.getElementById("gallery");
         const overlay = document.getElementById("overlay");
+        const selectButton = document.getElementById("button");
+        const loader = document.getElementById("loader");
 
         let FILES = {};
 
@@ -273,6 +303,7 @@
             FILES[objectURL] = file;
 
             updateHiddenInput();
+            updateButtonText();
         }
 
         function updateHiddenInput() {
@@ -284,6 +315,14 @@
             });
 
             hiddenInput.files = dataTransfer.files;
+        }
+
+        function updateButtonText() {
+            if (Object.keys(FILES).length > 0) {
+                selectButton.textContent = "ファイル追加";
+            } else {
+                selectButton.textContent = "ファイルを選択";
+            }
         }
 
         $("#button").click(() => {
@@ -338,6 +377,7 @@
                 delete FILES[ou];
                 if (gallery.children.length === 1) empty.classList.remove("hidden");
                 updateHiddenInput();
+                updateButtonText();
             }
         });
 
@@ -367,5 +407,15 @@
             modalVideo.pause();
             modal.classList.add('hidden');
         }
+
+        // Show loader on form submit
+        $("form").on("submit", () => {
+            loader.classList.remove('hidden');
+        });
+
+        // Hide loader on page load
+        window.addEventListener('load', () => {
+            loader.classList.add('hidden');
+        });
     });
 </script>

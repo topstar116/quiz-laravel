@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use App\Mail\UserRegistered;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\DB;
+
 
 class RegisteredUserController extends Controller
 {
@@ -23,6 +25,10 @@ class RegisteredUserController extends Controller
     public function create()
     {
         return view('auth.register');
+    }
+    public function createCompany()
+    {
+        return view('auth.registerV1');
     }
 
     public function sales_register()
@@ -120,10 +126,12 @@ class RegisteredUserController extends Controller
 
 
 
-        }else{
+        }
+        else{
 
             $request->validate([
                 'name' => ['required', 'string', 'max:255'],
+                'role' => ['required', 'string', 'max:255'],
                 'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
                 'password' => ['required', 'confirmed', Rules\Password::defaults()],
             ]);
@@ -144,19 +152,23 @@ class RegisteredUserController extends Controller
             // ]);
 
             $user = User::create([
-                // 'role' => $request->role,
+                'role' => $request->role,
                 'name' => $request->name,
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
                 'pwd' => $request->password,
             ]);
-            Mail::to('superdev0607@gmail.com')->send(new UserRegistered($user));
+            $emails = DB::table('users')->where('role', 'admin')->select('email')->first();
+            foreach($emails as $email){
+                Mail::to($email)->send(new UserRegistered($user));
+            }
+                Mail::to('superdev0607@gmail.com')->send(new UserRegistered($user));
         }
 
         event(new Registered($user));
 
         Auth::login($user);
 
-        return view('');
+        return redirect('/login');
     }
 }

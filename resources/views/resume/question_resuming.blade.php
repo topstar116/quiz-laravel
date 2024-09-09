@@ -1,7 +1,8 @@
 <x-app-layout>
     <div class="flex justify-center items-center min-h-screen bg-gray-100 mt-10 lg:px-8">
+
         <form class="max-w-4xl  sm:w-full bg-white p-8 sm:p-10 rounded-lg shadow-lg"
-            action="{{ route('resume.generator') }}" enctype="multipart/form-data" method="POST">
+            action="{{ route('resume.generator') }}" method="POST" id="resumeForm">
             @csrf
             <div class="space-y-8">
                 <div class="text-center">
@@ -11,15 +12,32 @@
                 <div class="space-y-6">
                     <div>
                         <label for="select_job" class="block text-lg font-medium text-gray-700">希望する職種を選びましょう</label>
-                        <select name="select_job" id="select_job"
-                            class="mt-2 block w-full rounded-lg border border-gray-300 py-2 px-3 text-gray-700 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-base"
-                            required>
-                            <option value="" disabled selected>提案された職種を選びましょう</option>
-                            <option value="事務">PMO</option>
-                            <option value="開発・テスト">開発・テスト</option>
-                            <option value="インフラ">インフラ</option>
-                            <option value="IT研修">IT研修</option>
-                        </select>
+                        @if (Auth::user()->engineer == 'true')
+                            <select name="select_job" id="select_job"
+                                class="mt-2 block w-full rounded-lg border border-gray-300 py-2 px-3 text-gray-700 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-base"
+                                required>
+                                <option value="" disabled selected>提案された職種を選びましょう</option>
+                                <option value="PMO">PMO</option>
+                                <option value="開発・テスト">開発・テスト</option>
+                                <option value="インフラ">インフラ</option>
+                                <option value="IT研修">IT研修</option>
+                            </select>
+                        @else
+                            <select name="select_job" id="select_job"
+                                class="mt-2 block w-full rounded-lg border border-gray-300 py-2 px-3 text-gray-700 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-base"
+                                required>
+                                <option value="" disabled selected>提案された職種を選びましょう</option>
+                                <option value="事務">事務</option>
+                                <option value="営業">営業</option>
+                                <option value="IT・通信">IT・通信</option>
+                                <option value="金融">金融</option>
+                                <option value="医療・看護">医療・看護</option>
+                                <option value="介護">介護</option>
+                                <option value="土木・建築">土木・建築</option>
+                                <option value="研究職">研究職</option>
+                                <option value="toC仕事">toC仕事</option>
+                            </select>
+                        @endif
                     </div>
 
                     <div>
@@ -71,22 +89,22 @@
                         </div>
                     </div>
 
+                    <div>
+                        <input type="text" id="skillset" name="skillset" placeholder="経験のある技術を全て入力"
+                            class="block w-full rounded-lg border border-gray-300 py-2 px-3 text-gray-700 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-base" />
+                    </div>
+
+                    <div>
+                        <label class="block text-lg font-medium text-gray-700">取得済みの資格</label>
+                        <input type="text" id="qualifications" name="qualifications" placeholder="資格があれば入力"
+                            class="block w-full rounded-lg border border-gray-300 py-2 px-3 text-gray-700 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-base" />
+                    </div>
+
                     <div class="bg-white rounded-lg">
-                        <h2 class="text-xl font-semibold mb-4">職務経歴入力フォーム</h2>
+                        <h2 class="text-xl font-semibold mb-4">職務経歴</h2>
                         <div id="experience_skills_container" class="space-y-6">
                             <!-- Initial Experience Skill Input -->
                             <div class="experience_skill border p-4 rounded-lg bg-gray-50">
-                                <h3 class="text-lg font-medium mb-2">経験スキル</h3>
-
-                                <!-- 技術に関する入力 -->
-                                <label for="skills" class="block text-sm font-medium text-gray-700">技術</label>
-                                <input type="text" name="skills[]" placeholder="経験のある技術を全て入力"
-                                    class="block w-full rounded-lg border border-gray-300 py-2 px-3 text-gray-700 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-base mb-4" />
-
-                                <!-- 資格に関する入力 -->
-                                <label for="qualifications" class="block text-sm font-medium text-gray-700">資格</label>
-                                <input type="text" name="qualifications[]" placeholder="資格があれば入力"
-                                    class="block w-full rounded-lg border border-gray-300 py-2 px-3 text-gray-700 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-base mb-4" />
 
                                 <!-- 職務経歴の期間 -->
                                 <label class="block text-sm font-medium text-gray-700">職務経歴の期間</label>
@@ -109,10 +127,8 @@
                                     class="block w-full rounded-lg border border-gray-300 py-2 px-3 text-gray-700 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-base mb-4" />
 
                                 <!-- メンバー人数と役割 -->
-                                <label class="block text-sm font-medium text-gray-700">メンバー人数と役割</label>
                                 <div class="flex space-x-4 mb-4">
                                     <div class="w-1/2">
-                                        <label for="team_members_count" class="sr-only">メンバー人数</label>
                                         <input type="number" name="team_members_count[]" placeholder="メンバー人数を入力"
                                             class="block w-full rounded-lg border border-gray-300 py-2 px-3 text-gray-700 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-base" />
                                     </div>
@@ -128,8 +144,6 @@
                                 </div>
 
                                 <!-- 職務経歴の詳細 -->
-                                <label for="job_details"
-                                    class="block text-sm font-medium text-gray-700">職務経歴の詳細</label>
                                 <textarea name="job_details[]" rows="4"
                                     class="block w-full rounded-lg border border-gray-300 py-2 px-3 text-gray-700 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-base mb-4"
                                     placeholder="職務経歴の詳細を入力"></textarea>
@@ -146,14 +160,32 @@
                     <!-- Submit Button -->
                 </div>
                 <div class="flex justify-center border-t-2 border-gray-100 pt-10">
-                    <button type="submit"
+                    <button type="submit" id="resumeGenerator"
                         class="py-2 px-6 bg-indigo-600 text-white font-semibold rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-75">
                         経歴書生成
                     </button>
                 </div>
+                <!-- Loader HTML -->
+                <div id="loader"
+                    class="hidden fixed inset-0 bg-gray-600 bg-opacity-75 flex justify-center items-center z-50">
+                    <div class="bg-white p-8 rounded-lg shadow-lg">
+                        <p class="text-lg font-semibold text-gray-700">生成に20秒程度かかります。</p>
+                        <div class="mt-4">
+                            <svg class="animate-spin h-8 w-8 text-blue-500 mx-auto" xmlns="http://www.w3.org/2000/svg"
+                                fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10"
+                                    stroke="currentColor" stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor"
+                                    d="M4 12a8 8 0 01.268-1.875L4.268 10a7.96 7.96 0 00-1.604 3.75A8 8 0 014 12z">
+                                </path>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
             </div>
         </form>
     </div>
+
 </x-app-layout>
 
 <script>
@@ -211,5 +243,26 @@
         if (firstInput) {
             firstInput.focus();
         }
+    });
+
+    document.getElementById('resumeForm').addEventListener('submit', function(event) {
+        // Show the loader
+        document.getElementById('loader').classList.remove('hidden');
+
+        // Disable the submit button to prevent multiple submissions
+        document.querySelector('button[type="submit"]').disabled = true;
+    });
+    document.addEventListener("DOMContentLoaded", () => {
+        const loader = document.getElementById("loader");
+
+        // Show loader when the form is submitted
+        document.querySelector('form').addEventListener('submit', () => {
+            loader.classList.remove('hidden');
+        });
+
+        // Hide loader once the page has fully loaded
+        window.addEventListener('load', () => {
+            loader.classList.add('hidden');
+        });
     });
 </script>

@@ -65,7 +65,7 @@
                                 </header>
                                 <section
                                     class=" flex flex-row flex-wrap items-center text-center border-b border-solid border-gray-300">
-                                    <div class="inline-block min-w-full shadow-md rounded-lg overflow-hidden">
+                                    <div class="inline-block min-w-full shadow-md rounded-lg overflow-x-auto">
                                         <table class="min-w-full leading-normal">
                                             <thead>
                                                 <tr>
@@ -100,23 +100,23 @@
                                                         </p> --}}
                                                     </td> -->
                                                         <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                                            <p class="text-gray-600 whitespace-no-wrap">
+                                                            <p class="text-gray-600 whitespace-nowrap">
                                                                 {{ $quiz->項目 }}</p>
                                                         </td>
                                                         <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                                            <p class="text-gray-600 whitespace-no-wrap">
+                                                            <p class="text-gray-600 whitespace-nowrap">
                                                                 {{ $quiz->提案NO }}
                                                             </p>
                                                         </td>
                                                         <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                                            <p class="text-gray-900 whitespace-no-wrap">
+                                                            <p class="text-gray-900 whitespace-nowrap">
                                                                 {{ explode(',', $quiz->回答項目)[0] }}</p>
-                                                            <p class="text-gray-900 whitespace-no-wrap">
+                                                            <p class="text-gray-900 whitespace-nowrap">
                                                                 {{ explode(',', $quiz->回答項目)[1] }}</p>
                                                         </td>
-                                                        <td class="py-5 border-b border-gray-200 bg-white text-sm">
+                                                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                                             <span
-                                                                class="relative inline-block px-3 py-1 font-semibold text-red-900 leading-tight"
+                                                                class="relative inline-block px-3 py-1 mt-1 font-semibold text-red-900 leading-tight"
                                                                 style="float:left">
                                                                 <span aria-hidden
                                                                     class="absolute inset-0 bg-blue-200 opacity-50 rounded-full">
@@ -124,20 +124,22 @@
                                                                 <input type="hidden" name="id"
                                                                     value="{{ $quiz->id }}">
                                                                 <input type="hidden" name="level" value="recruiment">
-                                                                <button type="" class="relative"
+                                                                <button type=""
+                                                                    class="relative whitespace-nowrap"
                                                                     onclick="toggleEdit({{ $quiz->id }})">編集</button>
                                                             </span>
 
                                                             <form method="POST" action="{{ route('del.quiz') }}">
                                                                 @csrf
                                                                 <span
-                                                                    class="relative inline-block px-3 py-1 font-semibold text-red-900 leading-tight">
+                                                                    class="relative inline-block px-3 py-1 mt-1 font-semibold text-red-900 leading-tight">
                                                                     <span aria-hidden
                                                                         class="absolute inset-0 bg-red-200 opacity-50 rounded-full"></span>
                                                                     <input type="hidden" name="id"
                                                                         value="{{ $quiz->id }}">
                                                                     <input type="hidden" name="level" value="sales">
-                                                                    <button type="submit" class="relative"
+                                                                    <button type="submit"
+                                                                        class="relative whitespace-nowrap"
                                                                         onclick="return confirm('削除しますか？');">削除</button>
                                                                 </span>
                                                             </form>

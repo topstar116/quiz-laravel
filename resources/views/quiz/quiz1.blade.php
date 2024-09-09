@@ -1,8 +1,9 @@
 <link rel="stylesheet" href="{{ asset('css/mikiwa.css') }}">
 <style>
-    html{
+    html {
         scroll-behavior: smooth;
     }
+
     .question-group__description:before {
         content: "{{ $項目 }}";
     }
@@ -13,54 +14,57 @@
 </style>
 
 <x-app-layout>
-
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-
-                <div class="small-12 column examination-contents p-10">
+    <div class="py-12 bg-gray-100">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+                <div class="p-6">
 
                     <form method="post" class="js-api-form js-loading-form" action="{{ route('result1') }}">
                         @csrf
                         <div class="question-group"></div>
-                        <div class="question-group__description">
-                            <p></p>
+
+                        <div class="question-group__description mb-8">
+
                         </div>
-                        <div class="question-group__questions">
 
-                            <div class="question">
+                        <div class="question-group__questions space-y-8">
+                            @foreach ($quizs as $quiz)
+                                <div class="question bg-gray-50 p-6 rounded-md shadow-md">
+                                    <div class="question__description text-lg font-semibold text-gray-800 mb-4">
 
-                                @foreach($quizs as $quiz)
-                                <div class="question__description mt-20"></div>
-                                <div class="question__choices">
-                                    <ol>
-                                        <li class="my-10">
-                                            <input type="radio" value="{{ $quiz->項目 }}-{{ $quiz->提案NO }}-1" name="{{ $quiz->id }}" id="{{ $quiz->id }}-1" data-gtm-form-interact-field-id="0" onclick="return window.scrollBy(0,300);">
-                                            <label class="question__choices--label" for="{{ $quiz->id }}-1">{{ explode(",",$quiz->回答項目)[0] }}</label>
-                                        </li>
-                                        <li class="my-10">
-                                            <input type="radio" value="{{ $quiz->項目 }}-{{ $quiz->提案NO }}-2" name="{{ $quiz->id }}" id="{{ $quiz->id }}-2" data-gtm-form-interact-field-id="1" onclick="return window.scrollBy(0,300);">
-                                            <label class="question__choices--label" for="{{ $quiz->id }}-2">{{ explode(",",$quiz->回答項目)[1] }}</label>
-                                        </li>
-                                    </ol>
+                                    </div>
+
+                                    <div class="question__choices mt-4">
+                                        <ol class="space-y-4">
+                                            <li class="flex items-center space-x-3">
+                                                <input type="radio" value="{{ $quiz->項目 }}-{{ $quiz->提案NO }}-1"
+                                                    name="{{ $quiz->id }}" id="{{ $quiz->id }}-1"
+                                                    class="h-5 w-5 text-blue-600 focus:ring-blue-500"
+                                                    onclick="window.scrollBy(0, 300);">
+                                                <label class="ml-3 text-gray-700 cursor-pointer"
+                                                    for="{{ $quiz->id }}-1">{{ explode(',', $quiz->回答項目)[0] }}</label>
+                                            </li>
+                                            <li class="flex items-center space-x-3">
+                                                <input type="radio" value="{{ $quiz->項目 }}-{{ $quiz->提案NO }}-2"
+                                                    name="{{ $quiz->id }}" id="{{ $quiz->id }}-2"
+                                                    class="h-5 w-5 text-blue-600 focus:ring-blue-500"
+                                                    onclick="window.scrollBy(0, 300);">
+                                                <label class="ml-3 text-gray-700 cursor-pointer"
+                                                    for="{{ $quiz->id }}-2">{{ explode(',', $quiz->回答項目)[1] }}</label>
+                                            </li>
+                                        </ol>
+                                    </div>
                                 </div>
-                                @endforeach
-                            </div>
+                            @endforeach
+                        </div>
 
-                        </div><br><br><br>
-
-                        <div class="text-center">
-                            <div id="answer_finish_base"></div>
-                            <input type="submit" value="回答を送信する" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-5 px-20 rounded-full cursor-pointer">
+                        <div class="mt-12 text-center">
+                            <input type="submit" value="回答を送信する"
+                                class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-4 px-16 rounded-full transition duration-200 ease-in-out transform hover:scale-105 cursor-pointer shadow-lg">
                         </div>
                     </form>
                 </div>
-
-
-
-
             </div>
         </div>
     </div>
-
 </x-app-layout>

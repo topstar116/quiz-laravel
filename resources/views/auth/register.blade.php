@@ -37,6 +37,7 @@
             </div><br> --}}
 
             <!-- Name -->
+            <x-input type="hidden" name="role" value="user"></x-input>
             <div class="mt-4">
                 <x-label for="name" :value="__('名前')" />
 

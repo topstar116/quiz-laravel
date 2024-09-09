@@ -27,17 +27,22 @@ class AuthenticatedSessionController extends Controller
      * @param  \App\Http\Requests\Auth\LoginRequest  $request
      * @return \Illuminate\Http\RedirectResponse
      */
-public function store(LoginRequest $request)
-{
-    $request->authenticate();
-    $request->session()->regenerate();
+    public function store(LoginRequest $request)
+    {
+        $request->authenticate();
+        $request->session()->regenerate();
 
-    // Retrieve the first record from the email table
-    $mail_content = DB::table('email')->select('contentOne')->first();
+        // Retrieve the first record from the email table
+        $email = $request->input('email');
+        $role = DB::table('users')->where('email', $email)->select('role')->first();
+        if($role != "admin" && $role != "company"){
+            $mail_content = DB::table('email')->where('select', "display")->select('content', 'title')->first();
+        }
+        
 
-    // Check if mail_content is not null and pass the content to the view
-    return redirect()->intended(RouteServiceProvider::HOME)->with('mail_content', $mail_content ? $mail_content->contentOne : null);
-}
+        // Check if mail_content is not null and pass the content to the view
+        return redirect()->intended(RouteServiceProvider::HOME)->with('mail_content', $mail_content ? $mail_content : null);
+    }
 
     /**
      * Destroy an authenticated session.

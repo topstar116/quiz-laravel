@@ -1,10 +1,8 @@
 <x-app-layout>
 
-    <form class="lg:w-1/2 m-auto p-10 sm:w-full bg-white mt-10 rounded-lg" action="{{ route('resume.generator') }}"
-        enctype="multipart/form-data" method="POST">
-        @csrf
+    <div class="lg:w-1/2 m-auto p-10 sm:w-full bg-white mt-10 rounded-lg">
         <div class="p-1 text-center">
-            <p class="p-10 text-2xl">{{ auth()->user()->initName_f }} {{ auth()->user()->initName_l }}さんに合いそうな職種はこちらです
+            <p class="p-10 text-2xl">あなたに合いそうな職種はこちらです
             </p>
         </div>
         <div class="space-y-12">
@@ -13,8 +11,8 @@
                     <thead class="bg-gray-50">
                         <tr>
                             <th scope="col"
-                                class="px-1 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                タイトル
+                                class="px-7 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                種類
                             </th>
                             <th scope="col"
                                 class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -59,10 +57,14 @@
                 </table>
             </div>
         </div>
-        {{-- <div class="mt-6 flex items-center justify-end gap-x-6">
-            <button type="submit"
-                class="rounded-md bg-indigo-600 px-6 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">確認</button>
-        </div> --}}
-    </form>
+        <div class="mt-10 text-center">
+            <h2 class="text-xl  text-gray-800 mb-2">
+                業界に特化した職種提案も受けてみよう！
+            </h2>
+            <a href="{{ route('quiz1') }}" class="text-blue-600 hover:underline">
+                <span> &#9758; IT・通信のエンジニアはこちら</span>
+            </a>
+        </div>
+    </div>
 
 </x-app-layout>

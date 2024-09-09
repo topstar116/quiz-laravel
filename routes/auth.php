@@ -13,31 +13,24 @@ use Illuminate\Support\Facades\Route;
 Route::get('/register', [RegisteredUserController::class, 'create'])
                 ->middleware('guest')
                 ->name('register');
+Route::get('/companyRegister', [RegisteredUserController::class, 'createCompany'])
+                ->middleware('guest')
+                ->name('registerCompany');
 
 Route::post('/register', [RegisteredUserController::class, 'store'])
                 ->middleware('guest');
-
-
-                Route::get('/sales_register', [RegisteredUserController::class, 'sales_register'])
-                ->middleware('guest')
-                ->name('sales_register');
-
-                Route::get('/management_register', [RegisteredUserController::class, 'management_register'])
-                ->middleware('guest')
-                ->name('management_register');
-
-                Route::get('/member_register', [RegisteredUserController::class, 'member_register'])
-                ->middleware('guest')
-                ->name('member_register');
                 
+      Route::get('/sales_register', [RegisteredUserController::class, 'sales_register'])
+      ->middleware('guest')
+      ->name('sales_register');
 
+      Route::get('/management_register', [RegisteredUserController::class, 'management_register'])
+      ->middleware('guest')
+      ->name('management_register');
 
-
-
-
-
-
-
+      Route::get('/member_register', [RegisteredUserController::class, 'member_register'])
+      ->middleware('guest')
+      ->name('member_register');
 
 Route::get('/login', [AuthenticatedSessionController::class, 'create'])
                 ->middleware('guest')

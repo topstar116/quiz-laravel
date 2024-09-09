@@ -121,11 +121,8 @@ Route::middleware('auth')->group(function () {
     Route::post('result1_m', [UserController::class, 'viewResult1_m'])->name('result1_m');
     Route::post('result2_m', [UserController::class, 'viewResult2_m'])->name('result2_m');
     Route::post('result3_m', [UserController::class, 'viewResult3_m'])->name('result3_m');
-
     
     Route::get('data', function () { return view('quiz/data'); })->name('data');
-    
-
 
 
     Route::get('admin', [UserController::class, 'recruimentUser'])->name('admin');
@@ -137,8 +134,13 @@ Route::middleware('auth')->group(function () {
     Route::get('admin/member', [UserController::class, 'memberUser'])->name('admin.member');
     Route::get('admin/email', [UserController::class, 'email'])->name('admin.email');
     Route::get('admin/movie', [UserController::class, 'manager_movie'])->name('admin.movie');
-    Route::get('admin/saveemail', [UserController::class, 'save_email'])->name('save.email');
-
+    Route::post('admin/insertmanager', [UserController::class, 'insert_manager'])->name('admin.insertmanger');
+    Route::post('admin/editmanager', [UserController::class, 'edit_manager'])->name('admin.editmanager');
+    Route::post('admin/deletemanager', [UserController::class, 'delete_manager'])->name('del.manager');
+    Route::post('admin/insertemail', [UserController::class, 'insert_email'])->name('insert.email');
+    Route::post('admin/updateemail', [UserController::class, 'update_email'])->name('update.email');
+    Route::post('admin/deleteemail', [UserController::class, 'email_delete'])->name('email.delete');
+    Route::post('admin/displayemail', [UserController::class, 'email_display'])->name('email.display');
 
     Route::get('admin/quiz', [UserController::class, 'recruimentQuiz'])->name('admin.quiz');
     Route::get('admin/quiz/work', [UserController::class, 'workQuiz'])->name('admin.quiz.work');
@@ -159,11 +161,13 @@ Route::middleware('auth')->group(function () {
     Route::get('admin/result/sales', [UserController::class, 'workResult'])->name('admin.result.sales');
     Route::get('admin/result/management', [UserController::class, 'managementResult'])->name('admin.result.management');
     Route::get('admin/result/resultResume', [UserController::class, 'resumingResult'])->name('admin.result.resuming');
+    Route::post('admin/result/confirmResume', [UserController::class, 'update_resume'])->name('update_resume');
     Route::post('admin/result/resumingmovie', [UserController::class, 'resumingMovie'])->name('admin.result.resumingmovie');
 
 
     Route::post('admin/update', [UserController::class, 'Update'])->name('admin.update');
     Route::post('admin/pdf', [UserController::class, 'Pdf'])->name('admin.pdf');
+    Route::post('admin/engineerpdf', [UserController::class, 'engineerpdf'])->name('admin.engineerpdf');
     Route::post('admin/resumepdf', [UserController::class, 'resumepdf'])->name('admin.resumepdf');
     Route::post('admin/work/pdf', [UserController::class, 'work_pdf'])->name('admin.work.pdf');
     Route::post('admin/csv', [UserController::class, 'Csv'])->name('admin.csv');
@@ -172,6 +176,8 @@ Route::middleware('auth')->group(function () {
     Route::get('users', [UserController::class, 'index'])->name('users');
     Route::get('add/user', [UserController::class, 'addUser'])->name('add.user');
     Route::get('del/user', [UserController::class, 'delUser'])->name('del.user');
+    Route::post('edit/user', [UserController::class, 'edituser'])->name('edit.user');
+
     Route::get('del/result', [UserController::class, 'delResult'])->name('del.result');
 
     Route::get('profile', [\App\Http\Controllers\ProfileController::class, 'show'])->name('profile.show');
@@ -180,18 +186,25 @@ Route::middleware('auth')->group(function () {
     //custom
     Route::get('resume', [UserController::class, 'resume'])->name('resume');
     Route::post('questionConfirm', [UserController::class, 'question_confirm'])->name('question.confirm');
+    
+    
     Route::post('resume/generator', [UserController::class, 'resume_generator'])->name('resume.generator');
     
     Route::get('careerQuestion', [UserController::class, 'career_question'])->name('resume.career.question');
     Route::get('questionResuming', [UserController::class, 'question_resuming'])->name('question_resuming');
     Route::get('addMovie', [UserController::class, 'add_movie'])->name('add.movie');
     Route::get('viewMovie', [UserController::class, 'view_movie'])->name('view.movie');
+    Route::post('/videos/delete', [UserController::class, 'deleteMultiple'])->name('admin.deleteMultiple');
 
     Route::post('saveMovie', [UserController::class, 'save_movie'])->name('save.movie');
     Route::get('work/workQuestion', [UserController::class, 'work_question'])->name('work.question');
 
     Route::post('resume/resumeDoc', [UserController::class, 'add_resumedocs'])->name('add.resumedocs');
-
+    Route::get('recruiment', [UserController::class, 'recruiment'])->name('recruiment');
+    Route::post('recruiment', [UserController::class, 'recruiment'])->name('recruiment');
+    Route::post('recruimenting', [UserController::class, 'recruimenting'])->name('recruimenting');
+    Route::post('send_message', [UserController::class, 'sendEmail'])->name('sendEmail');
+    Route::post('del/resumeAndCv', [UserController::class, 'del_resumeAndCv'])->name('del.resumeAndCv');
 
 });
 

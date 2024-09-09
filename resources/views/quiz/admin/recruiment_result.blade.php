@@ -3,19 +3,19 @@
 
 
     <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto  lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
 
 
                 <div id="app" class="md:flex antialiased">
                     @include('layouts.admin')
-
                     <main class="bg-white h-screen w-full overflow-y-auto">
-                        
+
                         <section v-if="active === 'recruiment'" id="recruiment">
                             <section class="bg-white border border-gray-300 border-solid rounded shadow">
-                                <header class="border-b border-solid border-gray-300 p-4 text-lg font-medium">
-                                    回答管理•採用
+                                <header
+                                    class="border-b border-solid border-gray-300 p-4 text-lg font-medium flex items-center justify-between">
+                                    回答管理•職種適性
                                     <x-button class="mx-10 float-right" onclick="csv()">
                                         {{ __(' csv') }}
                                     </x-button>
@@ -25,98 +25,133 @@
                                     @csrf
                                     <input type="hidden" name="type" value="recruiment">
                                 </form>
+                                <div class="overflow-x-auto">
+                                    <table class="min-w-full leading-normal" id="table">
+                                        <thead>
+                                            <tr>
+                                                <th
+                                                    class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                                                    <input type="checkbox" name="checkAll" class="checkAll" />
+                                                </th>
+                                                <th
+                                                    class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                                                    氏名
+                                                </th>
+                                                <th
+                                                    class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                                                    適性業務
+                                                </th>
+                                                <th
+                                                    class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                                                    回答日
+                                                </th>
+                                                <th
+                                                    class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                                                    Action
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
 
-                                <section class=" flex flex-row flex-wrap items-center text-center border-b border-solid border-gray-300">
-
-
-                                    <div class="inline-block min-w-full shadow-md rounded-lg overflow-hidden">
-                                        <table class="min-w-full leading-normal" id="table">
-                                            <thead>
+                                            @foreach ($results as $result)
                                                 <tr>
-                                                    <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                                                        <input type="checkbox" name="checkAll" class="checkAll" />
-                                                    </th>
-                                                    <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                                                        氏名
-                                                    </th>
-                                                    <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                                                        項目
-                                                    </th>
-                                                    <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                                                        回答日
-                                                    </th>
-                                                    <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                                                        Action
-                                                    </th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-
-                                                @foreach($results as $result)
-
-                                                <tr>
-                                                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                                        <p class="text-gray-600 whitespace-no-wrap">
-                                                            <input type="checkbox" name="" id="" class="quiz" quiz="{{ $result->id }}" />
+                                                    <td
+                                                        class="px-5 py-5 border-b border-gray-200 text-center bg-white text-sm">
+                                                        <p class="text-gray-600 whitespace-nowrap">
+                                                            <input type="checkbox" name="" id=""
+                                                                class="quiz" quiz="{{ $result->user_id }}" />
                                                         </p>
                                                     </td>
-                                                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                                        <p class="text-gray-600 whitespace-no-wrap">{{ $result->name }}</p>
+                                                    <td
+                                                        class="px-5 py-5 border-b border-gray-200 text-center bg-white text-sm">
+                                                        <p class="text-gray-600 whitespace-nowrap">
+                                                            {{ $result->name }}</p>
                                                     </td>
-                                                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                                        <p class="text-gray-600 whitespace-no-wrap">採用</p>
+                                                    <td
+                                                        class="px-5 py-5 border-b border-gray-200 text-center bg-white text-sm">
+                                                        <p class="text-gray-600 whitespace-nowrap">
+                                                            職種適正-{{ $result->res1 }},
+                                                            企業適正-{{ $result->res2 }},
+                                                            現状確認-{{ $result->res3 }}
+                                                        </p>
                                                     </td>
-                                                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                                        <p class="text-gray-900 whitespace-no-wrap">{{ $result->created_at }}</p>
+                                                    <td
+                                                        class="px-5 py-5 border-b border-gray-200 text-center bg-white text-sm">
+                                                        <p class="text-gray-900 whitespace-nowrap">
+                                                            {{ $result->created_at }}</p>
                                                     </td>
-                                                    <td class="py-5 border-b border-gray-200 bg-white text-sm">
+                                                    <td
+                                                        class="px-5 py-5 border-b border-gray-200 text-center bg-white text-sm">
 
 
-                                                        <form method="POST" action="{{ route('admin.pdf') }}" style="float: left;">
+                                                        <form method="POST" action="{{ route('admin.engineerpdf') }}"
+                                                            style="float: left;">
                                                             @csrf
-                                                            <span class="relative inline-block px-3 py-1 font-semibold text-white-900 leading-tight">
-                                                                <span aria-hidden class="absolute inset-0 bg-blue-200 opacity-50 rounded-full"></span>
-                                                                <input type="hidden" name="name" value="{{ $result->name }}">
-                                                                <input type="hidden" name="id" value="{{ $result->id }}">
-                                                                <input type="hidden" name="type" value="{{ $result->type }}">
-                                                                <input type="hidden" name="quiz1" value="{{ $result->quiz1 }}">
-                                                                <input type="hidden" name="no1" value="{{ $result->no1 }}">
-                                                                <input type="hidden" name="res1" value="{{ $result->res1 }}">
-                                                                <input type="hidden" name="quiz2" value="{{ $result->quiz2 }}">
-                                                                <input type="hidden" name="no2" value="{{ $result->no2 }}">
-                                                                <input type="hidden" name="res2" value="{{ $result->res2 }}">
-                                                                <input type="hidden" name="quiz3" value="{{ $result->quiz3 }}">
-                                                                <input type="hidden" name="no3" value="{{ $result->no3 }}">
-                                                                <input type="hidden" name="res3" value="{{ $result->res3 }}">
-                                                                <input type="hidden" name="express" value="{{ $result->express }}">
-                                                                <input type="hidden" name="created_at" value="{{ $result->created_at }}">
+                                                            <span
+                                                                class="relative inline-block px-3 py-1 mt-1 font-semibold text-white-900 leading-tight">
+                                                                <span aria-hidden
+                                                                    class="absolute inset-0 bg-blue-200 opacity-50 rounded-full"></span>
+                                                                <input type="hidden" name="name"
+                                                                    value="{{ $result->name }}">
+                                                                <input type="hidden" name="id"
+                                                                    value="{{ $result->id }}">
+                                                                <input type="hidden" name="type"
+                                                                    value="{{ $result->type }}">
+                                                                <input type="hidden" name="quiz1"
+                                                                    value="{{ $result->quiz1 }}">
+                                                                <input type="hidden" name="no1"
+                                                                    value="{{ $result->no1 }}">
+                                                                <input type="hidden" name="res1"
+                                                                    value="{{ $result->res1 }}">
+                                                                <input type="hidden" name="quiz2"
+                                                                    value="{{ $result->quiz2 }}">
+                                                                <input type="hidden" name="no2"
+                                                                    value="{{ $result->no2 }}">
+                                                                <input type="hidden" name="res2"
+                                                                    value="{{ $result->res2 }}">
+                                                                <input type="hidden" name="quiz3"
+                                                                    value="{{ $result->quiz3 }}">
+                                                                <input type="hidden" name="no3"
+                                                                    value="{{ $result->no3 }}">
+                                                                <input type="hidden" name="res3"
+                                                                    value="{{ $result->res3 }}">
+                                                                <input type="hidden" name="express"
+                                                                    value="{{ $result->express }}">
+                                                                <input type="hidden" name="created_at"
+                                                                    value="{{ $result->created_at }}">
 
-                                                                <button type="submit" class="relative">PDF</button>
+                                                                <button type="submit"
+                                                                    class="relative whitespace-nowrap">PDF</button>
                                                             </span>
                                                         </form>
 
                                                         <form method="GET" action="{{ route('del.result') }}">
                                                             @csrf
-                                                            <span class="relative inline-block px-3 py-1 font-semibold text-red-900 leading-tight">
-                                                                <span aria-hidden class="absolute inset-0 bg-red-200 opacity-50 rounded-full"></span>
-                                                                <input type="hidden" name="result_id" value="{{ $result->id }}">
-                                                                <input type="hidden" name="level" value="recruiment">
-                                                                <button type="submit" class="relative" onclick="return confirm('削除しますか？');">削除</button>
+                                                            <span
+                                                                class="relative inline-block px-3 py-1 mt-1 font-semibold text-red-900 leading-tight">
+                                                                <span aria-hidden
+                                                                    class="absolute inset-0 bg-red-200 opacity-50 rounded-full"></span>
+                                                                <input type="hidden" name="result_id"
+                                                                    value="{{ $result->id }}">
+                                                                <input type="hidden" name="level"
+                                                                    value="recruiment">
+                                                                <button type="submit"
+                                                                    class="relative whitespace-nowrap"
+                                                                    onclick="return confirm('削除しますか？');">削除</button>
                                                             </span>
                                                         </form>
 
                                                     </td>
                                                 </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
-                                    </div>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
 
-                                </section>
+                                </div>
 
                             </section>
                         </section>
-                        
+
 
                     </main>
 
@@ -175,8 +210,8 @@
                         checkItems = checkItems.toString();
                         $(".csv").find("[name='items']").remove();
                         if (checkItems != '') {
-                            $(".csv").append('<input type="hidden" name="items" value="'+checkItems+'" >');
-                        }else{
+                            $(".csv").append('<input type="hidden" name="items" value="' + checkItems + '" >');
+                        } else {
                             alert("ダウンロードリストを選択する必要があります。");
                             return;
                         }
