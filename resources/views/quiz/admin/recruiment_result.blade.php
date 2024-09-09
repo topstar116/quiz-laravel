@@ -83,7 +83,6 @@
                                                     <td
                                                         class="px-5 py-5 flex flex-col sm:flex-row gap-2 border-b border-gray-200 bg-white text-sm">
 
-
                                                         <form method="POST" action="{{ route('admin.engineerpdf') }}"
                                                             style="float: left;">
                                                             @csrf
@@ -140,23 +139,16 @@
                                                                     onclick="return confirm('削除しますか？');">削除</button>
                                                             </span>
                                                         </form>
-
                                                     </td>
                                                 </tr>
                                             @endforeach
                                         </tbody>
                                     </table>
-
                                 </div>
-
                             </section>
                         </section>
-
-
                     </main>
-
                 </div>
-
                 <script>
                     /**
                      * Check if passed value is a string
