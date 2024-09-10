@@ -111,12 +111,12 @@
                                 <div class="flex space-x-4 mb-4">
                                     <div class="w-1/2">
                                         <label for="job_start_date" class="sr-only">開始日</label>
-                                        <input type="date" name="job_start_date[]"
+                                        <input type="month" name="job_start_date[]"
                                             class="block w-full rounded-lg border border-gray-300 py-2 px-3 text-gray-700 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-base" />
                                     </div>
                                     <div class="w-1/2">
                                         <label for="job_end_date" class="sr-only">終了日</label>
-                                        <input type="date" name="job_end_date[]"
+                                        <input type="month" name="job_end_date[]"
                                             class="block w-full rounded-lg border border-gray-300 py-2 px-3 text-gray-700 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-base" />
                                     </div>
                                 </div>

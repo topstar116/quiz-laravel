@@ -34,7 +34,7 @@
                 <a href="{{ route('admin.quiz.management') }}"><button href="#management"
                         v-on:click="select('management')"
                         class="rounded text-sm block py-3 px-6 {{ $page == 'managementQuiz' ? '' : 'hover:' }}bg-blue-600 w-full text-left">
-                        現状確認</button></a>
+                        スキルチェック</button></a>
             </li>
         </ul>
 
@@ -53,7 +53,7 @@
                 <a href="{{ route('admin.result.management') }}"><button href="#management"
                         v-on:click="select('management')"
                         class="rounded text-sm block py-3 px-6 {{ $page == 'managementResult' ? '' : 'hover:' }}bg-blue-600 w-full text-left">
-                        現状確認</button></a>
+                        スキルチェック</button></a>
             </li>
         </ul>
     </nav>
