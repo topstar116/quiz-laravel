@@ -73,6 +73,32 @@
                                                         <td
                                                             class="px-5 py-5 flex flex-col sm:flex-row gap-2 border-b border-gray-200 bg-white text-sm">
 
+                                                            <form method="POST" action="{{ route('admin.workPage') }}"
+                                                                style="float: left;">
+                                                                @csrf
+                                                                <span
+                                                                    class="relative inline-block px-3 py-1 mt-1 font-semibold text-white-900 leading-tight">
+                                                                    <span aria-hidden
+                                                                        class="absolute inset-0 bg-blue-200 opacity-50 rounded-full"></span>
+                                                                    <input type="hidden" name="id"
+                                                                        value="{{ $result->user_id }}">
+
+                                                                    <input type="hidden" name="name"
+                                                                        value="{{ $result->name }}">
+
+                                                                    <input type="hidden" name="resume_content"
+                                                                        value="{{ $result->resume_content }}">
+
+                                                                    <input type="hidden" name="job"
+                                                                        value="{{ $result->job }}">
+
+                                                                    <input type="hidden" name="created_at"
+                                                                        value="{{ $result->created_at }}">
+
+                                                                    <button type="submit"
+                                                                        class="relative whitespace-nowrap">見る</button>
+                                                                </span>
+                                                            </form>
                                                             <form method="POST" action="{{ route('admin.work.pdf') }}"
                                                                 style="float: left;">
                                                                 @csrf

@@ -165,6 +165,7 @@
                         経歴書生成
                     </button>
                 </div>
+                <h1 class="text-center mt-0">※ 生成に20秒程度かかります。</h1>
                 <!-- Loader HTML -->
                 <div id="loader"
                     class="hidden fixed inset-0 bg-gray-600 bg-opacity-75 flex justify-center items-center z-50">

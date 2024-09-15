@@ -165,6 +165,12 @@ Route::middleware('auth')->group(function () {
     Route::post('admin/result/resumingmovie', [UserController::class, 'resumingMovie'])->name('admin.result.resumingmovie');
 
 
+    Route::post('admin/showEngineerpage', [UserController::class, 'showEngineerPage'])->name('admin.showEngineerpage');
+    Route::post('admin/workPage', [UserController::class, 'admin_workPage'])->name('admin.workPage');
+    Route::post('admin/workresultpage', [UserController::class, 'admin_workresultpage'])->name('admin.workresultpage');
+    Route::post('admin/managementpage', [UserController::class, 'admin_managementpage'])->name('admin.managementpage');
+
+
     Route::post('admin/update', [UserController::class, 'Update'])->name('admin.update');
     Route::post('admin/pdf', [UserController::class, 'Pdf'])->name('admin.pdf');
     Route::post('admin/engineerpdf', [UserController::class, 'engineerpdf'])->name('admin.engineerpdf');
@@ -195,17 +201,18 @@ Route::middleware('auth')->group(function () {
     Route::get('addMovie', [UserController::class, 'add_movie'])->name('add.movie');
     Route::get('viewMovie', [UserController::class, 'view_movie'])->name('view.movie');
     Route::post('/videos/delete', [UserController::class, 'deleteMultiple'])->name('admin.deleteMultiple');
-
+    
     Route::post('saveMovie', [UserController::class, 'save_movie'])->name('save.movie');
     Route::get('work/workQuestion', [UserController::class, 'work_question'])->name('work.question');
-
+    
     Route::post('resume/resumeDoc', [UserController::class, 'add_resumedocs'])->name('add.resumedocs');
     Route::get('recruiment', [UserController::class, 'recruiment'])->name('recruiment');
     Route::post('recruiment', [UserController::class, 'recruiment'])->name('recruiment');
     Route::post('recruimenting', [UserController::class, 'recruimenting'])->name('recruimenting');
     Route::post('send_message', [UserController::class, 'sendEmail'])->name('sendEmail');
     Route::post('del/resumeAndCv', [UserController::class, 'del_resumeAndCv'])->name('del.resumeAndCv');
-
+    
+    Route::post('admin.checkdelete', [UserController::class, 'user_checkdelete'])->name('admin.checkdelete');
 });
 
 require __DIR__ . '/auth.php';

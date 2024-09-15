@@ -13,21 +13,28 @@
                                     {{-- <x-button class="bg-blue-500 hover:bg-blue-700" onclick="csv()">
                                         {{ __('CSV') }}
                                     </x-button> --}}
+                                    <x-button class="bg-red-500 hover:bg-red-600" onclick="checkalldelete()">
+                                        {{ __('選択削除') }}
+                                    </x-button>
                                 </header>
 
                                 {{-- <form class="csv" method="post" action="{{ route('admin.csv') }}">
                                     @csrf
                                     <input type="hidden" name="type" value="user">
                                 </form> --}}
+                                <form class="checkdelete" method="post" action="{{ route('admin.checkdelete') }}">
+                                    @csrf
+                                    <input type="hidden" name="type" value="user">
+                                </form>
 
                                 <div class="overflow-x-auto">
                                     <table class="min-w-full leading-normal" id="table">
                                         <thead>
                                             <tr>
-                                                {{-- <th
+                                                <th
                                                     class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-700 uppercase tracking-wider">
                                                     <input type="checkbox" name="checkAll" class="checkAll" />
-                                                </th> --}}
+                                                </th>
                                                 <th
                                                     class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-700 uppercase tracking-wider">
                                                     番号</th>
@@ -50,11 +57,11 @@
                                             @foreach ($users as $user)
                                                 @if ($user->role != 'admin')
                                                     <tr>
-                                                        {{-- <td
+                                                        <td
                                                             class="px-5 py-5 border-b  text-center border-gray-200 bg-white text-sm">
                                                             <input type="checkbox" name="" class="quiz"
                                                                 quiz="{{ $user->id }}" />
-                                                        </td> --}}
+                                                        </td>
                                                         <td
                                                             class="px-5 py-5 border-b border-gray-200 text-center bg-white text-sm">
                                                             {{ $cnt++ }}</td>
@@ -209,13 +216,13 @@
         enableCheckAll('#table');
 
         // Handle CSV functionality
-        window.csv = () => {
+        window.checkalldelete = () => {
             const checkedItems = Array.from(document.querySelectorAll('.quiz:checked'))
                 .map(cb => cb.getAttribute('quiz'))
                 .join(',');
 
             if (checkedItems) {
-                const form = document.querySelector('.csv');
+                const form = document.querySelector('.checkdelete');
                 form.insertAdjacentHTML('beforeend',
                     `<input type="hidden" name="items" value="${checkedItems}">`);
                 form.submit();
@@ -272,7 +279,7 @@
         enableCheckAll('#table'); // passing in a string
         enableCheckAll(table2); // passing in an object
 
-        function csv() {
+        function checkalldelete() {
 
             var checkItems = [];
 
@@ -284,14 +291,14 @@
 
 
             checkItems = checkItems.toString();
-            $(".csv").find("[name='items']").remove();
+            $(".checkdelete").find("[name='items']").remove();
             if (checkItems != '') {
-                $(".csv").append('<input type="hidden" name="items" value="' + checkItems + '" >');
+                $(".checkdelete").append('<input type="hidden" name="items" value="' + checkItems + '" >');
             } else {
                 alert("ダウンロードリストを選択する必要があります。");
                 return;
             }
-            $(".csv").submit();
+            $(".checkdelete").submit();
         }
     });
 </script>

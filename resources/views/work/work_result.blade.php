@@ -79,6 +79,45 @@
                                                         </td>
                                                         <td
                                                             class="px-5 py-5 flex flex-col sm:flex-row gap-2 border-b border-gray-200 bg-white text-sm">
+                                                            <form method="POST"
+                                                                action="{{ route('admin.workresultpage') }}"
+                                                                style="float: left;">
+                                                                @csrf
+                                                                <span
+                                                                    class="relative inline-block px-3 py-1 mt-1 font-semibold text-white-900 leading-tight">
+                                                                    <span aria-hidden
+                                                                        class="absolute inset-0 bg-blue-200 opacity-50 rounded-full"></span>
+                                                                    <input type="hidden" name="name"
+                                                                        value="{{ $result->name }}">
+                                                                    <input type="hidden" name="id"
+                                                                        value="{{ $result->id }}">
+                                                                    <input type="hidden" name="worktype"
+                                                                        value="one">
+                                                                    <input type="hidden" name="quiz1"
+                                                                        value="{{ $result->quiz1 }}">
+                                                                    <input type="hidden" name="no1"
+                                                                        value="{{ $result->no1 }}">
+                                                                    <input type="hidden" name="res1"
+                                                                        value="{{ $result->res1 }}">
+                                                                    <input type="hidden" name="quiz2"
+                                                                        value="{{ $result->quiz2 }}">
+                                                                    <input type="hidden" name="no2"
+                                                                        value="{{ $result->no2 }}">
+                                                                    <input type="hidden" name="res2"
+                                                                        value="{{ $result->res2 }}">
+                                                                    <input type="hidden" name="quiz3"
+                                                                        value="{{ $result->quiz3 }}">
+                                                                    <input type="hidden" name="no3"
+                                                                        value="{{ $result->no3 }}">
+                                                                    <input type="hidden" name="res3"
+                                                                        value="{{ $result->res3 }}">
+                                                                    <input type="hidden" name="created_at"
+                                                                        value="{{ $result->created_at }}">
+
+                                                                    <button type="submit"
+                                                                        class="relative  whitespace-nowrap">見る</button>
+                                                                </span>
+                                                            </form>
                                                             <form method="POST" action="{{ route('admin.pdf') }}"
                                                                 style="float: left;">
                                                                 @csrf
@@ -126,7 +165,8 @@
                                                                         class="absolute inset-0 bg-red-200 opacity-50 rounded-full"></span>
                                                                     <input type="hidden" name="result_id"
                                                                         value="{{ $result->id }}">
-                                                                    <input type="hidden" name="level" value="sales">
+                                                                    <input type="hidden" name="level"
+                                                                        value="sales">
                                                                     <button type="submit"
                                                                         class="relative whitespace-nowrap"
                                                                         onclick="return confirm('削除しますか？');">削除</button>

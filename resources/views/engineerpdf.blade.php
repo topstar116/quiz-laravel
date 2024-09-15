@@ -17,8 +17,6 @@
         <h3 style="text-align:left">氏名: {{ $name }} &nbsp;&nbsp;&nbsp;<span
                 style="text-align:right; font-size:12px;">回答日: {{ $created_at }}</span></h3>
 
-
-
         @if ($quiz1 != '')
             <h4 style="margin-top:30px; margin-bottom:0px;">項目: {{ explode('-', $quiz1)[0] }}</h4>
             <table style="font-size: 14px; margin:auto; width:80%;">
@@ -43,11 +41,9 @@
             <h4 style="padding-left:10px; margin-top:10px;">
                 {{ $type == 'recruiment' ? '提案№' : ($type == 'sales' ? 'ランク' : '状況') }}: {{ $no1 }}
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $type == 'recruiment' ? 'お勧め進路' : '説明概要' }}:
-                {{ $res1 }}</h4>
-
+                {{ $res1 }}
+            </h4>
         @endif
-
-
 
         @if ($quiz2 != '')
             <h4 style="margin-top:30px;  margin-bottom:0px;">項目: {{ explode('-', $quiz2)[0] }}</h4>
@@ -77,8 +73,6 @@
 
         @endif
 
-
-
         @if ($quiz3 != '')
             <h4 style="margin-top:30px; margin-bottom:0px;">項目: {{ explode('-', $quiz3)[0] }}</h4>
             <table style="font-size: 14px; margin:auto; width:80%;">
@@ -107,8 +101,6 @@
 
         @endif
 
-
-
         @if ($type == 'management')
             <h4 style="margin-top: 30px;">
                 【感想】
@@ -117,7 +109,6 @@
                 {{ $express }}
             </h5>
         @endif
-
 
     </div>
 

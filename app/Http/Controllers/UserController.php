@@ -70,7 +70,7 @@ class UserController extends Controller
     public function viewQuiz1(Request $request)
     {
         $user_id = Auth::user()->id;
-        DB::table('users')->where('id', $user_id)->update(['engineer' => 'true']);
+        // DB::table('users')->where('id', $user_id)->update(['engineer' => 'true']);
         $quizs = DB::table('recruiment_quiz_table')->where('項目', '職種適正')->get();
         $項目 = '職種適正';
         return view('quiz.quiz1', compact('quizs', '項目'));
@@ -101,10 +101,10 @@ class UserController extends Controller
         $quiz_result = $request->all();
         unset($quiz_result['_token']);
         $quiz_result = implode(",", $quiz_result);
-        $rows = DB::table('quiz_result')->where(['user_id' => $id, 'quiz3' => null])->count();
+        $rows = DB::table('quiz_result')->where(['user_id' => $id])->count();
 
         if ($rows > 0) {
-            DB::table('quiz_result')->where(['user_id' => $id, 'quiz3' => null])->orderBy('id', 'desc')->take(1)->update(['quiz3' => $quiz_result]);
+            DB::table('quiz_result')->where(['user_id' => $id])->orderBy('id', 'desc')->take(1)->update(['quiz3' => $quiz_result]);
         } else {
             DB::table('quiz_result')->insert(['created_at' => date('Y-m-d h:i:s'), 'user_id' => $id, 'quiz3' => $quiz_result, 'type' => 'recruiment']);
         }
@@ -514,7 +514,7 @@ class UserController extends Controller
             DB::table('quiz_result')->where('user_id', $id)->insert(['created_at' => date('Y-m-d h:i:s'), 'user_id' => $id, 'quiz1' => $quiz_result, 'type' => 'recruiment']);
         }
 
-        // DB::table('users')->where('user_id', auth()->user()->id)->update(['status' => 1]);
+        DB::table('users')->where('id', $id)->update(['engineer' => 'true']);
 
         $result = $this->checkResult($quiz_result, 'recruiment');
 
@@ -1026,14 +1026,51 @@ class UserController extends Controller
 
         $results = DB::table('quiz_result')
             ->join('users', 'quiz_result.user_id', '=', 'users.id')
-            ->where('users.engineer', true) // Add this line to filter by engineer
+            ->where('users.engineer', "true") // Add this line to filter by engineer
             ->select('quiz_result.*', 'users.name')
             ->get();
 
         $page = "recruimentResult";
-
         return view('quiz.admin.recruiment_result', compact('results', 'page'));
+    }
 
+    public function showEngineerPage(Request $request) {
+
+        $data = $request->all();
+        $type = $data['type'];
+
+        // dd($data);
+        $quizs = DB::table($type . '_quiz_table')->get();
+        $quiz_array = [];
+        foreach ($quizs as $quiz) {
+            $temp = [];
+            $quiz_key = $quiz->項目 . '-' . $quiz->提案NO;
+            $temp[$quiz_key . '-1'] = explode(',', $quiz->回答項目)[0];
+            $temp[$quiz_key . '-2'] = explode(',', $quiz->回答項目)[1];
+            $quiz_array = array_merge($quiz_array, $temp);
+        }
+
+        // dd($quiz_array);
+
+        $content = [
+            'name' => $data['name'],
+            'type' => $data['type'],
+            'quiz_array' => $quiz_array,
+            'quiz1' => $data['quiz1'],
+            'no1' => $data['no1'],
+            'res1' => $data['res1'],
+            'quiz2' => $data['quiz2'],
+            'no2' => $data['no2'],
+            'res2' => $data['res2'],
+            'quiz3' => $data['quiz3'],
+            'no3' => $data['no3'],
+            'res3' => $data['res3'],
+            'express' => $data['express'],
+            'created_at' => $data['created_at'],
+        ];
+
+        // Pass data to modal view
+        return view('pdfpage.engineerpage', $content);
     }
 
     public function workResult()
@@ -1077,7 +1114,7 @@ class UserController extends Controller
     public function resumingMovie(Request $request) {
         $user_id = $request->input('user_id');
         $movieList = DB::table('resume_result')->where('user_id', $user_id)->select('video_urls')->get();
-        
+
         if($movieList[0]->video_urls){
             $movieList = explode(',', $movieList[0]->video_urls);
             $page = "resumingMovie";
@@ -1087,7 +1124,6 @@ class UserController extends Controller
             return back()->with('error', 'Video file is not exited!');
         }
     }
-
 
     public function Pdf(Request $request)
     {
@@ -1141,6 +1177,85 @@ class UserController extends Controller
         return $pdf->download($data['name'] . $pdf_str);
         // return $pdf->stream($data['name'] . $pdf_str);
     }
+
+    public function admin_workresultpage(Request $request) {
+        $data = $request->all();
+    $worktype = $request->input('worktype');
+
+    // Fetch quizzes based on worktype
+    $quizs = ($worktype == "one")
+        ? DB::table('work_question')->get()
+        : DB::table('management_quiz_table')->get();
+
+    // Prepare quiz array
+    $quiz_array = [];
+    foreach ($quizs as $quiz) {
+        $quiz_key = $quiz->項目 . '-' . $quiz->提案NO;
+        $answers = explode(',', $quiz->回答項目);
+        
+        foreach ($answers as $index => $answer) {
+            $quiz_array[$quiz_key . '-' . ($index + 1)] = trim($answer);
+        }
+    }
+
+    // Prepare content for the view
+    $content = [
+        'name' => $data['name'],
+        'quiz_array' => $quiz_array,
+        'quiz1' => $data['quiz1'] ?? '',
+        'no1' => $data['no1'] ?? '',
+        'res1' => $data['res1'] ?? '', // Ensure this is set
+        'quiz2' => $data['quiz2'] ?? '',
+        'no2' => $data['no2'] ?? '',
+        'res2' => $data['res2'] ?? '', // Ensure this is set
+        'quiz3' => $data['quiz3'] ?? '',
+        'no3' => $data['no3'] ?? '',
+        'res3' => $data['res3'] ?? '', // Ensure this is set
+        'created_at' => $data['created_at'] ?? '',
+    ];
+
+    return view('pdfpage.workresultpage', compact('content'));
+    }
+
+    public function admin_managementpage(Request $request) {
+                $data = $request->all();
+    $worktype = $request->input('worktype');
+
+    // Fetch quizzes based on worktype
+    $quizs = ($worktype == "one")
+        ? DB::table('work_question')->get()
+        : DB::table('management_quiz_table')->get();
+
+    // Prepare quiz array
+    $quiz_array = [];
+    foreach ($quizs as $quiz) {
+        $quiz_key = $quiz->項目 . '-' . $quiz->提案NO;
+        $answers = explode(',', $quiz->回答項目);
+        
+        foreach ($answers as $index => $answer) {
+            $quiz_array[$quiz_key . '-' . ($index + 1)] = trim($answer);
+        }
+    }
+
+    // Prepare content for the view
+    $content = [
+        'name' => $data['name'],
+        'quiz_array' => $quiz_array,
+        'quiz1' => $data['quiz1'] ?? '',
+        'no1' => $data['no1'] ?? '',
+        'res1' => $data['res1'] ?? '', // Ensure this is set
+        'quiz2' => $data['quiz2'] ?? '',
+        'no2' => $data['no2'] ?? '',
+        'res2' => $data['res2'] ?? '', // Ensure this is set
+        'quiz3' => $data['quiz3'] ?? '',
+        'no3' => $data['no3'] ?? '',
+        'res3' => $data['res3'] ?? '', // Ensure this is set
+        'created_at' => $data['created_at'] ?? '',
+    ];
+
+    return view('pdfpage.managementpage', compact('content'));
+    }
+
     public function engineerpdf(Request $request)
     {
 
@@ -1148,8 +1263,6 @@ class UserController extends Controller
         $type = $data['type'];
 
         // dd($data);
-
-
         $quizs = DB::table($type . '_quiz_table')->get();
         $quiz_array = [];
         foreach ($quizs as $quiz) {
@@ -1188,11 +1301,9 @@ class UserController extends Controller
     }
 
     public function work_pdf(Request $request) {
-
-       $answer = $request->input('resume_content');
+        $answer = $request->input('resume_content');
         $answers = explode(',', $answer);
         $answerArray = collect($answers)->map(function ($item) {
-            // Remove everything after and including the last hyphen
             return preg_replace('/-\d+(-\d+)?$/', '', $item);
         })->toArray();
 
@@ -1208,9 +1319,27 @@ class UserController extends Controller
         $pdf_str = $request->input('name') . '_職種適性回答データ.pdf';
 
         return $pdf->download($pdf_str);
+       
     }
 
-        public function resumepdf(Request $request)
+    public function admin_workPage(Request $request) {
+        $answer = $request->input('resume_content');
+        $answers = explode(',', $answer);
+        $answerArray = collect($answers)->map(function ($item) {
+            return preg_replace('/-\d+(-\d+)?$/', '', $item);
+        })->toArray();
+
+        $content = [
+            'name' => $request->input('name'),
+            'quiz_array' => $answerArray,
+            'result' => $request->input('job'),
+            'created_at' => $request->input('created_at'),
+        ];
+
+        return view('pdfpage.workpage', compact('content'));
+    }
+
+    public function resumepdf(Request $request)
     {
         $user_id = Auth::user()->id;
         $name = Auth::user()->initName_f;
@@ -1234,7 +1363,6 @@ class UserController extends Controller
 
         return $pdf->download($name . $pdf_str);
     }
-
 
     public function Csv(Request $request)
     {
@@ -2376,6 +2504,22 @@ public function sendEmail(Request $request)
         }
 
         return back()->with('resume_error', $no_resume);
+    }
+
+    public function user_checkdelete(Request $request) 
+
+    {
+         // Retrieve the list of IDs
+        $items = explode(',', $request->items);
+
+        // Use whereIn to delete all users with the provided IDs
+        foreach($items as $item){
+
+            DB::table('users')->where('id', $item)->delete();
+        }
+
+        // Return with a success message
+        return back()->with('checkeduserdelete', '選択されたユーザーは正常に削除されました。');
     }
 
 }

@@ -18,40 +18,7 @@
                     </x-nav-link>
                 </div>
 
-                {{-- @if (Auth::user()->role != 'admin' && Auth::user()->role != 'member' && Auth::user()->role != 'pending') --}}
-                {{-- @if (Auth::user()->role == 'recruiment')
-                        <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                            <x-nav-link :href="route('request1')" :active="request()->routeIs('request1')">
-                                {{ __('職種提案を受ける') }}
-                            </x-nav-link>
-                        </div>
 
-
-                        <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                            <a href="https://engineer-match-recommend-result.com/total/" target="_blank"
-                                class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
-                                {{ __('おすすめ結果を見る') }}
-                            </a>
-                        </div>
-                    @elseif(Auth::user()->role == 'sales')
-                        <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                            <x-nav-link :href="route('request1_s')" :active="request()->routeIs('request1_s')">
-                                {{ __('職種提案を受ける') }}
-                            </x-nav-link>
-                        </div>
-                    @elseif(Auth::user()->role == 'management')
-                        <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                            <x-nav-link :href="route('request1_m')" :active="request()->routeIs('request1_m')">
-                                {{ __('職種提案を受ける') }}
-                            </x-nav-link>
-                        </div>
-
-                        <!-- <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                        <x-nav-link :href="route('express')" :active="request()->routeIs('express')">
-                            {{ __('感想') }}
-                        </x-nav-link>
-                    </div> -->
-                    @endif --}}
                 @if (Auth::user()->role == 'admin')
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <x-nav-link :href="route('admin')" :active="request()->routeIs('admin')">
@@ -74,19 +41,24 @@
                             {{ __('職種提案を受ける') }}
                         </x-nav-link>
                     </div>
-                    @if (Auth::user()->engineer == 'true')
+                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                        <x-nav-link :href="route('quiz1')" :active="request()->routeIs('quiz1')">
+                            {{ __('エンジニア版') }}
+                        </x-nav-link>
+                    </div>
+                    {{-- @if (Auth::user()->engineer == 'true')
                         <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                             <x-nav-link href="https://engineer-match-recommend-result.com/total/">
                                 {{ __('職種一覧を見る') }}
                             </x-nav-link>
                         </div>
-                    @else
-                        <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                            <x-nav-link href="https://shigoto.mhlw.go.jp/User/">
-                                {{ __('職種一覧を見る') }}
-                            </x-nav-link>
-                        </div>
-                    @endif
+                    @else --}}
+                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                        <x-nav-link href="https://shigoto.mhlw.go.jp/User/">
+                            {{ __('職種一覧を見る') }}
+                        </x-nav-link>
+                    </div>
+                    {{-- @endif --}}
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <x-nav-link :href="route('question_resuming')" :active="request()->routeIs('question.resuming')">
                             {{ __('職務経歴書') }}
@@ -102,7 +74,7 @@
                             {{ __('応募書類提出') }}
                         </x-nav-link>
                     </div>
-                @elseif (Auth::user()->role == 'company')
+                    {{-- @elseif (Auth::user()->role == 'company')
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <x-nav-link :href="route('resume.output')" :active="request()->routeIs('resume.output')">
                             {{ __('応募書類提出') }}
@@ -112,7 +84,7 @@
                         <x-nav-link :href="route('recruiment')" :active="request()->routeIs('recruiment')">
                             {{ __('採用ページ') }}
                         </x-nav-link>
-                    </div>
+                    </div> --}}
                 @endif
             </div>
 
@@ -181,32 +153,13 @@
         <div class="pt-4 pb-1 border-t border-gray-200">
             @auth
                 <div class="my-3 space-y-1">
+                    <!-- TOP Link -->
                     <x-responsive-nav-link :href="route('home')">
                         {{ __('TOP') }}
                     </x-responsive-nav-link>
-                    @if (Auth::user()->role == 'admin')
-                        {{-- <x-responsive-nav-link :href="route('request1')" :active="request()->routeIs('request1')">
-                            {{ __('職種提案を受ける') }}
-                        </x-responsive-nav-link>
 
-                        <x-responsive-nav-link :href="route('home')">
-                            <a href="https://engineer-match-recommend-result.com/total/" target="_blank"
-                                class="block pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium text-gray-600 hover:text-gray-800 hover:bg-gray-50 hover:border-gray-300 focus:outline-none focus:text-gray-800 focus:bg-gray-50 focus:border-gray-300 transition duration-150 ease-in-out">
-                                {{ __('おすすめ結果を見る') }}
-                            </a>
-                        </x-responsive-nav-link>
-                    @elseif(Auth::user()->role == 'sales')
-                        <x-responsive-nav-link :href="route('request1_s')" :active="request()->routeIs('request1_s')">
-                            {{ __('職種提案を受ける') }}
-                        </x-responsive-nav-link>
-                    @elseif(Auth::user()->role == 'management')
-                        <x-responsive-nav-link :href="route('request1_m')" :active="request()->routeIs('request1_m')">
-                            {{ __('職種提案を受ける') }}
-                        </x-responsive-nav-link> --}}
-
-                        {{-- <!-- <x-dropdown-link :href="route('express')" :active="request()->routeIs('express')">
-                    {{ __('感想') }}
-                </x-dropdown-link> --> --}}
+                    @if (Auth::check() && Auth::user()->role === 'admin')
+                        <!-- Admin Links -->
                         <x-responsive-nav-link :href="route('admin')">
                             {{ __('管理ページ') }}
                         </x-responsive-nav-link>
@@ -216,10 +169,13 @@
                         <x-responsive-nav-link :href="route('email.template')">
                             {{ __('ポップアップ') }}
                         </x-responsive-nav-link>
-                    @endif
-                    @if (Auth::user()->role != 'admin' && Auth::user()->role != 'company')
+                    @elseif (Auth::check() && Auth::user()->role !== 'admin' && Auth::user()->role !== 'company')
+                        <!-- Non-Admin, Non-Company Links -->
                         <x-responsive-nav-link :href="route('resume.career.question')" :active="request()->routeIs('resume.career.question')">
                             {{ __('職種提案を受ける') }}
+                        </x-responsive-nav-link>
+                        <x-responsive-nav-link :href="route('quiz1')" :active="request()->routeIs('quiz1')">
+                            {{ __('エンジニア版') }}
                         </x-responsive-nav-link>
                         <x-responsive-nav-link href="https://shigoto.mhlw.go.jp/User/">
                             {{ __('職種一覧を見る') }}
@@ -233,38 +189,34 @@
                         <x-responsive-nav-link :href="route('add.movie')" :active="request()->routeIs('add.movie')">
                             {{ __('応募書類提出') }}
                         </x-responsive-nav-link>
-                        {{-- @else
-                        <x-responsive-nav-link :href="route('resume.output')">
-                            {{ __('応募書類提出') }}
-                        </x-responsive-nav-link>
-                        <x-responsive-nav-link :href="route('recruiment')" :active="request()->routeIs('recruiment')">
-                            {{ __('採用ページ') }}
-                        </x-responsive-nav-link> --}}
                     @endif
-
                 </div>
+
                 <hr />
+
+                <!-- User Info -->
                 <div class="px-4 mt-3">
                     <div class="text-base font-medium text-gray-800">{{ Auth::user()->name }}</div>
                     <div class="text-sm font-medium text-gray-500">{{ Auth::user()->email }}</div>
                 </div>
 
                 <div class="mt-3 space-y-1">
+                    <!-- Profile Edit -->
                     <x-responsive-nav-link :href="route('profile.show')">
                         {{ __('プロフィール編集') }}
                     </x-responsive-nav-link>
-                    <!-- Authentication -->
+
+                    <!-- Logout -->
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
-
                         <x-responsive-nav-link :href="route('logout')"
-                            onclick="event.preventDefault();
-                                this.closest('form').submit();">
+                            onclick="event.preventDefault(); this.closest('form').submit();">
                             {{ __('ログアウト') }}
                         </x-responsive-nav-link>
                     </form>
                 </div>
             @endauth
+
         </div>
     </div>
 </nav>

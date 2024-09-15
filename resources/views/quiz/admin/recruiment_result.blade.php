@@ -83,8 +83,9 @@
                                                     <td
                                                         class="px-5 py-5 flex flex-col sm:flex-row gap-2 border-b border-gray-200 bg-white text-sm">
 
-                                                        <form method="POST" action="{{ route('admin.engineerpdf') }}"
-                                                            style="float: left;">
+                                                        <form method="POST"
+                                                            action="{{ route('admin.showEngineerpage') }}"
+                                                            style="float: left;" id="pdffeature">
                                                             @csrf
                                                             <span
                                                                 class="relative inline-block px-3 py-1 mt-1 font-semibold text-white-900 leading-tight">
@@ -94,6 +95,8 @@
                                                                     value="{{ $result->name }}">
                                                                 <input type="hidden" name="id"
                                                                     value="{{ $result->id }}">
+                                                                <input type="hidden" name="user_id"
+                                                                    value="{{ $result->user_id }}">
                                                                 <input type="hidden" name="type"
                                                                     value="{{ $result->type }}">
                                                                 <input type="hidden" name="quiz1"
@@ -118,12 +121,58 @@
                                                                     value="{{ $result->express }}">
                                                                 <input type="hidden" name="created_at"
                                                                     value="{{ $result->created_at }}">
-
+                                                                <button type="submit"
+                                                                    class="relative whitespace-nowrap">見る</button>
+                                                            </span>
+                                                        </form>
+                                                        <form method="POST" action="{{ route('admin.engineerpdf') }}"
+                                                            style="float: left;">
+                                                            @csrf
+                                                            <span
+                                                                class="relative inline-block px-3 py-1 mt-1 font-semibold text-white-900 leading-tight">
+                                                                <span aria-hidden
+                                                                    class="absolute inset-0 bg-blue-200 opacity-50 rounded-full"></span>
+                                                                <input type="hidden" name="name"
+                                                                    value="{{ $result->name }}">
+                                                                <input type="hidden" name="id"
+                                                                    value="{{ $result->id }}">
+                                                                <input type="hidden" name="user_id"
+                                                                    value="{{ $result->user_id }}">
+                                                                <input type="hidden" name="type"
+                                                                    value="{{ $result->type }}">
+                                                                <input type="hidden" name="quiz1"
+                                                                    value="{{ $result->quiz1 }}">
+                                                                <input type="hidden" name="no1"
+                                                                    value="{{ $result->no1 }}">
+                                                                <input type="hidden" name="res1"
+                                                                    value="{{ $result->res1 }}">
+                                                                <input type="hidden" name="quiz2"
+                                                                    value="{{ $result->quiz2 }}">
+                                                                <input type="hidden" name="no2"
+                                                                    value="{{ $result->no2 }}">
+                                                                <input type="hidden" name="res2"
+                                                                    value="{{ $result->res2 }}">
+                                                                <input type="hidden" name="quiz3"
+                                                                    value="{{ $result->quiz3 }}">
+                                                                <input type="hidden" name="no3"
+                                                                    value="{{ $result->no3 }}">
+                                                                <input type="hidden" name="res3"
+                                                                    value="{{ $result->res3 }}">
+                                                                <input type="hidden" name="express"
+                                                                    value="{{ $result->express }}">
+                                                                <input type="hidden" name="created_at"
+                                                                    value="{{ $result->created_at }}">
                                                                 <button type="submit"
                                                                     class="relative whitespace-nowrap">PDF</button>
                                                             </span>
                                                         </form>
-
+                                                        {{-- <span
+                                                            class="relative inline-block px-3 py-1 mt-1 font-semibold text-white-900 leading-tight">
+                                                            <span aria-hidden
+                                                                class="absolute inset-0 bg-blue-200 opacity-50 rounded-full"></span>
+                                                            <button type="button" onclick="showModal()"
+                                                                class="relative whitespace-nowrap">見る</button>
+                                                        </span> --}}
                                                         <form method="GET" action="{{ route('del.result') }}">
                                                             @csrf
                                                             <span
@@ -149,6 +198,45 @@
                         </section>
                     </main>
                 </div>
+
+                <!-- Modal HTML -->
+                <!-- Modal HTML -->
+
+
+                <!-- Tailwind styles for transitions and animations -->
+                <style>
+                    #pdfModal {
+                        display: none;
+                    }
+                </style>
+
+                <!-- Modal JavaScript Functions -->
+                <script>
+                    function showModal() {
+                        document.getElementById('pdfModal').style.display = 'block';
+                    }
+
+                    function closeModal() {
+                        document.getElementById('pdfModal').style.display = 'none';
+                    }
+                </script>
+
+                <style>
+                    #pdfModal {
+                        display: none;
+                    }
+                </style>
+
+                <script>
+                    function showModal() {
+                        document.getElementById('pdfModal').style.display = 'block';
+                    }
+
+                    function closeModal() {
+                        document.getElementById('pdfModal').style.display = 'none';
+                    }
+                </script>
+
                 <script>
                     /**
                      * Check if passed value is a string
@@ -198,7 +286,6 @@
 
                         });
 
-
                         checkItems = checkItems.toString();
                         $(".csv").find("[name='items']").remove();
                         if (checkItems != '') {
@@ -208,18 +295,23 @@
                             return;
                         }
                         $(".csv").submit();
+                    }
 
+                    function openInNewTab(event) {
+                        event.preventDefault(); // Prevent the default form submission
+                        const form = event.target;
+                        const actionUrl = form.action;
 
+                        // Create a new FormData object from the form
+                        const formData = new FormData(form);
 
+                        // Create a query string from the FormData
+                        const queryString = new URLSearchParams(formData).toString();
+
+                        // Open a new tab with the action URL and query string
+                        window.open(actionUrl + '?' + queryString, '_blank');
                     }
                 </script>
-
-
-
-
-
-
-
             </div>
         </div>
     </div>
