@@ -38,7 +38,7 @@
                                                             <option selected></option>
                                                             <option value="職種適正">職種適正</option>
                                                             <option value="企業適正">企業適正</option>
-                                                            <option value="現状確認">スキルチェック</option>
+                                                            <option value="スキルチェック">スキルチェック</option>
                                                         </select>
                                                         <label>No</label>
                                                         <input type="text" name="no"
@@ -189,8 +189,8 @@
                                                                                         {{ $quiz->項目 == '企業適正' ? 'selected' : '' }}>
                                                                                         企業適正</option>
                                                                                     <option value="現状確認"
-                                                                                        {{ $quiz->項目 == '現状確認' ? 'selected' : '' }}>
-                                                                                        現状確認</option>
+                                                                                        {{ $quiz->項目 == 'スキルチェック' ? 'selected' : '' }}>
+                                                                                        スキルチェック</option>
                                                                                 </select>
                                                                                 <label>No</label>
                                                                                 <input type="text" name="no"
@@ -249,24 +249,6 @@
                     </main>
 
                 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
             </div>
         </div>
