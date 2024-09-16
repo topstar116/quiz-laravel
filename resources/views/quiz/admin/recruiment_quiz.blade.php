@@ -188,7 +188,7 @@
                                                                                     <option value="企業適正"
                                                                                         {{ $quiz->項目 == '企業適正' ? 'selected' : '' }}>
                                                                                         企業適正</option>
-                                                                                    <option value="現状確認"
+                                                                                    <option value="スキルチェック"
                                                                                         {{ $quiz->項目 == 'スキルチェック' ? 'selected' : '' }}>
                                                                                         スキルチェック</option>
                                                                                 </select>

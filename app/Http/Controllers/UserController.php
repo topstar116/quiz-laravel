@@ -896,8 +896,8 @@ class UserController extends Controller
                 '回答項目' => $request->input('回答項目1') . "," . $request->input('回答項目2')
             );
 
-            $res = DB::table('work_question')->insert($data);
-            return $this->workQuiz();
+            $res = DB::table('recruiment_quiz_table')->insert($data);
+            return $this->recruimentQuiz();
         } else if ($request->input('level') == "sales") {
             $data = array(
                 '項目' => $request->input('項目'),
@@ -914,8 +914,8 @@ class UserController extends Controller
                 '回答項目' => $request->input('回答項目1') . "," . $request->input('回答項目2')
             );
 
-            $res = DB::table('work_question')->insert($data);
-            return $this->workQuiz();
+            $res = DB::table('management_quiz_table')->insert($data);
+            return $this->managementQuiz();
         }
     }
 
@@ -929,8 +929,8 @@ class UserController extends Controller
                 '回答項目' => $request->input('回答項目1') . "," . $request->input('回答項目2')
             );
 
-            $res = DB::table('work_question')->where('id', $request->input('id'))->update($data);
-            return $this->workQuiz();
+            $res = DB::table('recruiment_quiz_table')->where('id', $request->input('id'))->update($data);
+            return $this->recruimentQuiz();
         } else if ($request->input('level') == "sales") {
             $data = array(
                 '項目' => $request->input('項目'),
@@ -947,8 +947,8 @@ class UserController extends Controller
                 '回答項目' => $request->input('回答項目1') . "," . $request->input('回答項目2')
             );
 
-            $res = DB::table('work_question')->where('id', $request->input('id'))->update($data);
-            return $this->workQuiz();
+            $res = DB::table('management_quiz_table')->where('id', $request->input('id'))->update($data);
+            return $this->managementQuiz();
         }
     }
 
@@ -958,8 +958,8 @@ class UserController extends Controller
         if ($request->input('level') == "recruiment") {
 
             $id = $request->id;
-            $res = DB::table('work_question')->where('id', $id)->delete();
-            return $this->workQuiz();
+            $res = DB::table('recruiment_quiz_table')->where('id', $id)->delete();
+            return $this->recruimentQuiz();
         } else if ($request->input('level') == "sales") {
 
             $id = $request->id;
@@ -967,8 +967,8 @@ class UserController extends Controller
             return $this->workQuiz();
         } else {
             $id = $request->id;
-            $res = DB::table('work_question')->where('id', $id)->delete();
-            return $this->workQuiz();
+            $res = DB::table('management_quiz_table')->where('id', $id)->delete();
+            return $this->managementQuiz();
         }
     }
 
