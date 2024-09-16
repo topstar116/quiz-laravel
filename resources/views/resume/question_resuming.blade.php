@@ -12,8 +12,7 @@
                 <div class="space-y-6">
                     <div>
                         <label for="select_job" class="block text-lg font-medium text-gray-700">希望する職種を選びましょう</label>
-                        @if (Auth::user()->engineer == 'true')
-                            <select name="select_job" id="select_job"
+                        {{-- <select name="select_job" id="select_job"
                                 class="mt-2 block w-full rounded-lg border border-gray-300 py-2 px-3 text-gray-700 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-base"
                                 required>
                                 <option value="" disabled selected>提案された職種を選びましょう</option>
@@ -21,23 +20,21 @@
                                 <option value="開発・テスト">開発・テスト</option>
                                 <option value="インフラ">インフラ</option>
                                 <option value="IT研修">IT研修</option>
-                            </select>
-                        @else
-                            <select name="select_job" id="select_job"
-                                class="mt-2 block w-full rounded-lg border border-gray-300 py-2 px-3 text-gray-700 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-base"
-                                required>
-                                <option value="" disabled selected>提案された職種を選びましょう</option>
-                                <option value="事務">事務</option>
-                                <option value="営業">営業</option>
-                                <option value="IT・通信">IT・通信</option>
-                                <option value="金融">金融</option>
-                                <option value="医療・看護">医療・看護</option>
-                                <option value="介護">介護</option>
-                                <option value="土木・建築">土木・建築</option>
-                                <option value="研究職">研究職</option>
-                                <option value="toC仕事">toC仕事</option>
-                            </select>
-                        @endif
+                            </select> --}}
+                        <select name="select_job" id="select_job"
+                            class="mt-2 block w-full rounded-lg border border-gray-300 py-2 px-3 text-gray-700 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-base"
+                            required>
+                            <option value="" disabled selected>提案された職種を選びましょう</option>
+                            <option value="事務">事務</option>
+                            <option value="営業">営業</option>
+                            <option value="IT・通信">IT・通信</option>
+                            <option value="金融">金融</option>
+                            <option value="医療・看護">医療・看護</option>
+                            <option value="介護">介護</option>
+                            <option value="土木・建築">土木・建築</option>
+                            <option value="研究職">研究職</option>
+                            <option value="toC仕事">toC仕事</option>
+                        </select>
                     </div>
 
                     <div>
@@ -107,7 +104,7 @@
                             <div class="experience_skill border p-4 rounded-lg bg-gray-50">
 
                                 <!-- 職務経歴の期間 -->
-                                <label class="block text-sm font-medium text-gray-700">職務経歴の期間</label>
+                                {{-- <label class="block text-sm font-medium text-gray-700">職務経歴の期間</label>
                                 <div class="flex space-x-4 mb-4">
                                     <div class="w-1/2">
                                         <label for="job_start_date" class="sr-only">開始日</label>
@@ -119,23 +116,39 @@
                                         <input type="month" name="job_end_date[]"
                                             class="block w-full rounded-lg border border-gray-300 py-2 px-3 text-gray-700 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-base" />
                                     </div>
-                                </div>
+                                </div> --}}
 
                                 <!-- 業務名に関する入力 -->
-                                <label for="job_name" class="block text-sm font-medium text-gray-700">業務名</label>
-                                <input type="text" name="job_name[]" placeholder="業務名を入力"
-                                    class="block w-full rounded-lg border border-gray-300 py-2 px-3 text-gray-700 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-base mb-4" />
+                                <div class="flex space-x-4 mb-4">
+                                    <div class="w-1/2">
+                                        <label for="job_name"
+                                            class="block text-sm font-medium text-gray-700">業務名</label>
+                                        <input type="text" name="job_name[]" placeholder="業務名を入力"
+                                            class="block w-full rounded-lg border border-gray-300 py-2 px-3 text-gray-700 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-base mb-4" />
+                                    </div>
+                                    <div class="w-1/2">
+                                        <label for="job_name"
+                                            class="block text-sm font-medium text-gray-700">プロジェクト規模</label>
+                                        <select name="job_budget[]"
+                                            class="block w-full rounded-lg border border-gray-300 py-2 px-3 text-gray-700 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-base">
+                                            <option value="不明">不明</option>
+                                            <option value="数百万">数百万</option>
+                                            <option value="数千万">数千万</option>
+                                            <option value="億単位">億単位</option>
+                                        </select>
+                                    </div>
+                                </div>
 
                                 <!-- メンバー人数と役割 -->
                                 <div class="flex space-x-4 mb-4">
                                     <div class="w-1/2">
-                                        <input type="number" name="team_members_count[]" placeholder="メンバー人数を入力"
+                                        <input type="number" name="team_members_count[]" placeholder="メンバー人数"
                                             class="block w-full rounded-lg border border-gray-300 py-2 px-3 text-gray-700 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-base" />
                                     </div>
                                     <div class="w-1/2">
                                         <select name="job_role[]"
                                             class="block w-full rounded-lg border border-gray-300 py-2 px-3 text-gray-700 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-base">
-                                            <option value="">役割を選択しましょう</option>
+                                            <option value="">役割を選択</option>
                                             <option value="リーダー">リーダー</option>
                                             <option value="リーダー補佐">リーダー補佐</option>
                                             <option value="メンバー">メンバー</option>

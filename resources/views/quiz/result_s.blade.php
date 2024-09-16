@@ -27,7 +27,8 @@
                         @else
                             <h1 class="text-3xl font-semibold text-gray-800 mb-6">あなたには{{ $result }}が合っています！</h1>
                             <p class="text-base text-blue-500 underline mb-6">
-                                <a href="https://engineer-match-recommend-result.com/tekisei/">詳細ページを確認しましょう！</a>
+                                <a href="https://engineer-match-recommend-result.com/tekisei/"
+                                    target="blank">詳細ページを確認しましょう！</a>
                             </p>
                             <p class="text-base text-gray-700 mb-8">現場就業中、転職活動中の方はこちらも回答しましょう！</p>
                             <a href="{{ route('quiz1_m') }}"

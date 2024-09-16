@@ -236,7 +236,6 @@
                     enableCheckAll(table2); // passing in an object
 
                     function csv() {
-
                         var checkItems = [];
 
                         $.each($(".quiz:checked"), function() {
@@ -245,8 +244,8 @@
 
                         });
 
-
                         checkItems = checkItems.toString();
+
                         $(".csv").find("[name='items']").remove();
                         if (checkItems != '') {
                             $(".csv").append('<input type="hidden" name="items" value="' + checkItems + '" >');

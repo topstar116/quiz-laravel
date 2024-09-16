@@ -61,8 +61,7 @@
                                             ここにファイルをドラッグ＆ドロップ<br />
                                             または
                                         </p>
-                                        <input id="hidden-input" type="file" name="videos[]" multiple
-                                            class="hidden" />
+                                        <input id="hidden-input" type="file" name="video" class="hidden" />
                                         <a id="button"
                                             class="mt-2 cursor-pointer bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none transition duration-200">
                                             ファイルを選択
@@ -104,7 +103,7 @@
                                 </section>
                             </article>
                         </li>
-                        <input type="hidden" name="file_sizes[]" class="file_size" />
+                        <input type="hidden" name="file_sizes" class="file_size" />
                     </template>
 
                     <div class="mt-6 flex items-center justify-end gap-4">
@@ -127,7 +126,6 @@
     <div id="videoModal" class="fixed inset-0 hidden z-50 overflow-y-auto">
         <div class="flex items-center justify-center min-h-screen px-4 text-center">
             <div class="fixed inset-0 bg-gray-500 opacity-75"></div>
-
             <div
                 class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:align-middle sm:max-w-lg sm:w-full">
                 <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
@@ -260,8 +258,8 @@
         let FILES = {};
 
         function addFile(target, file) {
-            if (Object.keys(FILES).length >= 5) {
-                alert('アップロードできる動画ファイルは最大5つまでです。');
+            if (Object.keys(FILES).length >= 1) {
+                alert('1つの動画のみアップロードできます。');
                 return;
             }
 

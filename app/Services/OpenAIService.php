@@ -50,14 +50,15 @@ class OpenAIService
 protected function createResumePrompt(array $details)
 {
 
+    //  "start_date": "{$job['start_date']}",
+    //  "end_date": "{$job['end_date']}",
     // Create job history entries
     $job_history_entries = '';
     foreach ($details['job_history'] as $job) {
         $job_history_entries .= <<<EOT
         {
-            "start_date": "{$job['start_date']}",
-            "end_date": "{$job['end_date']}",
             "job_name": "{$job['job_name']}",
+            "job_budget" : "{$job['job_budget']}"
             "team_size": "{$job['team_size']}",
             "role": "{$job['role']}",
             "experience_details": "{$job['experience_details']}"
@@ -86,9 +87,8 @@ $job_history_entries = rtrim($job_history_entries, ',');
         "qualifications": ["List of qualifications"],
         "job_history": [
             {
-            "start_date": "[Start date]",
-            "end_date": "[End date]",
             "job_name": "[Job title]",
+            "job_budget": "[Job budget]",
             "team_size": "[Number of team members]",
             "role": "[Role]",
             "experience_details": "[Bullet points describing job experience. It should be written simply and clearly, yet professionally, based on the inputted material.]"
@@ -118,6 +118,7 @@ $job_history_entries = rtrim($job_history_entries, ',');
         The data you receive from OpenAI also reflects what you didn not enter.
         You only need to change the wording to make it look good based on what you entered.
         Do not return anything like ```json or ``` before or after the data, only json data should be returned.
+        Please return it in Japanese.
  EOT;
 
     return $prompt;

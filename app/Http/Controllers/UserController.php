@@ -88,8 +88,8 @@ class UserController extends Controller
     public function viewQuiz3_1(Request $request)
     {
 
-        $quizs = DB::table('recruiment_quiz_table')->where('項目', '現状確認')->get();
-        $項目 = '現状確認';
+        $quizs = DB::table('recruiment_quiz_table')->where('項目', 'スキルチェック')->get();
+        $項目 = 'スキルチェック';
 
         return view('quiz.quiz3_1', compact('quizs', '項目'));
     }
@@ -109,8 +109,8 @@ class UserController extends Controller
             DB::table('quiz_result')->insert(['created_at' => date('Y-m-d h:i:s'), 'user_id' => $id, 'quiz3' => $quiz_result, 'type' => 'recruiment']);
         }
 
-        $quizs = DB::table('recruiment_quiz_table')->where('項目', '現状確認')->get();
-        $項目 = '現状確認';
+        $quizs = DB::table('recruiment_quiz_table')->where('項目', 'スキルチェック')->get();
+        $項目 = 'スキルチェック';
 
         return view('quiz.quiz3_2', compact('quizs', '項目'));
     }
@@ -134,8 +134,8 @@ class UserController extends Controller
             $quiz_result = $old_quiz_result;
         }
 
-        $quizs = DB::table('recruiment_quiz_table')->where('項目', '現状確認')->get();
-        $項目 = '現状確認';
+        $quizs = DB::table('recruiment_quiz_table')->where('項目', 'スキルチェック')->get();
+        $項目 = 'スキルチェック';
 
         return view('quiz.quiz3_3', compact('quizs', '項目'));
     }
@@ -1374,7 +1374,6 @@ class UserController extends Controller
 
         $type = $request->type;
 
-        // dd($type);
 
         $items = explode(',', $request->items);
         foreach ($items as $item) {
@@ -2046,16 +2045,13 @@ class UserController extends Controller
 
     public function save_movie(Request $request) {
 
-    // declare variables
-    $id = Auth::user()->id;
-    $rows = DB::table('resume_result')->where('user_id', $id)->count();
-    $paths = [];
-    $file_names = [];
+        $id = Auth::user()->id;
+        $rows = DB::table('resume_result')->where('user_id', $id)->count();
+        $path = '';
+        $file_name = '';
 
-    if ($request->hasFile('videos')) {
-        $files = $request->file('videos');
-
-        foreach ($files as $file) {
+        if ($request->hasFile('video')) {  // Check for a single 'video' file
+            $file = $request->file('video');  // Get the single file
             // Check if the file is valid
             if ($file->isValid()) {
                 // Define the path to store the file
@@ -2067,31 +2063,36 @@ class UserController extends Controller
 
                 // Collect file details
                 $file_name = $file->getClientOriginalName();
-                // Store file details in arrays
-                array_push($paths, $filePath);
-                array_push($file_names, $file_name);
+                $path = $filePath;
+
             } else {
                 // Handle invalid file error
                 return response()->json(['error' => 'Invalid file uploaded.'], 400);
             }
+        } else {
+            // Handle no file uploaded error
+            return response()->json(['error' => 'No file was uploaded.'], 400);
         }
-    } else {
-        // Handle no file uploaded error
-        return response()->json(['error' => 'No files were uploaded.'], 400);
-    }
 
+        // Save to the database
+        if ($rows > 0) {
+            DB::table('resume_result')->where('user_id', $id)->update([
+                'updated_at' => now(), 
+                'video_urls' => $path,  // Store single file path
+                'file_names' => $file_name,  // Store single file name
+            ]);
+        } else {
+            DB::table('resume_result')->insert([
+                'user_id' => $id, 
+                'created_at' => now(), 
+                'video_urls' => $path,  // Store single file path
+                'file_names' => $file_name,  // Store single file name
+            ]);
+        }
 
-    $paths = implode(',', $paths);
-    $file_names = implode(',', $file_names);
-    // Save to the database
-    if($rows > 0) {
-        DB::table('resume_result')->where('user_id', $id)->update(['updated_at' => now(), 'video_urls' => $paths, 'file_names' => $file_names,]);
-    } else {
-        DB::table('resume_result')->insert(['user_id' => $id, 'created_at' => now(), 'video_urls' => $paths, 'file_names' => $file_names,]);
+        return redirect()->back()->with('success', 'Movie uploaded successfully.');
+
     }
-    
-    return redirect()->back()->with('success', 'Movies uploaded successfully.');
-}
 
 
  public function resume_generator(Request $request)
@@ -2109,12 +2110,14 @@ class UserController extends Controller
         'leadership_experience' => 'required|string|max:255',
         'skillset' => 'required|string|max:255',
         'qualifications' => 'required|string|max:255',
-        'job_start_date' => 'required|array',
-        'job_start_date.*' => 'date',
-        'job_end_date' => 'required|array',
-        'job_end_date.*' => 'date|after_or_equal:job_start_date.*',
+        // 'job_start_date' => 'required|array',
+        // 'job_start_date.*' => 'date',
+        // 'job_end_date' => 'required|array',
+        // 'job_end_date.*' => 'date|after_or_equal:job_start_date.*',
         'job_name' => 'required|array',
+        'job_budget' => 'required|array',
         'job_name.*' => 'string|max:255',
+        'job_budget.*' => 'string|max:255',
         'team_members_count' => 'required|array',
         'team_members_count.*' => 'integer|min:1',
         'job_role' => 'required|array',
@@ -2144,9 +2147,10 @@ class UserController extends Controller
     // Loop through job history entries
     foreach ($data['job_start_date'] as $index => $start_date) {
         $details['job_history'][] = [
-            'start_date' => $start_date,
-            'end_date' => $data['job_end_date'][$index],
+            // 'start_date' => $start_date,
+            // 'end_date' => $data['job_end_date'][$index],
             'job_name' => $data['job_name'][$index],
+            'job_budget' => $data['job_budget'][$index],
             'team_size' => $data['team_members_count'][$index],
             'role' => $data['job_role'][$index],
             'experience_details' => $data['job_details'][$index],

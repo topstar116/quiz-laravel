@@ -178,7 +178,7 @@
             </div>
 
             <button type="submit"
-                class="w-full bg-indigo-600 text-white p-3 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">送信
+                class="w-full bg-indigo-600 text-white p-3 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">職務経歴書
             </button>
         </div>
     </form>

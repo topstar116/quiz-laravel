@@ -11,7 +11,15 @@
                             <section class="bg-white border border-gray-300 border-solid rounded shadow">
                                 <header class="border-b border-solid border-gray-300 p-4 text-lg font-medium">
                                     回答管理•職種適性
+                                    <x-button class="mx-10 float-right" onclick="csv()">
+                                        {{ __(' csv') }}
+                                    </x-button>
                                 </header>
+
+                                <form class="csv" method="post" action="{{ route('admin.csv') }}">
+                                    @csrf
+                                    <input type="hidden" name="type" value="management">
+                                </form>
 
                                 <section
                                     class=" flex flex-row flex-wrap items-center text-center border-b border-solid border-gray-300">
@@ -50,7 +58,7 @@
                                                         <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                                             <p class="text-gray-600 whitespace-nowrap">
                                                                 <input type="checkbox" name="" id=""
-                                                                    class="quiz" quiz="{{ $result->id }}" />
+                                                                    class="quiz" quiz="{{ $result->user_id }}" />
                                                             </p>
                                                         </td>
                                                         <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
@@ -205,6 +213,7 @@
 
 
                         checkItems = checkItems.toString();
+                        alert(checkItems);
                         $(".csv").find("[name='items']").remove();
                         if (checkItems != '') {
                             $(".csv").append('<input type="hidden" name="items" value="' + checkItems + '" >');
