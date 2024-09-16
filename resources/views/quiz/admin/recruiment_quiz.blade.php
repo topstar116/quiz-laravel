@@ -38,7 +38,7 @@
                                                             <option selected></option>
                                                             <option value="職種適正">職種適正</option>
                                                             <option value="企業適正">企業適正</option>
-                                                            <option value="現状確認">現状確認</option>
+                                                            <option value="現状確認">スキルチェック</option>
                                                         </select>
                                                         <label>No</label>
                                                         <input type="text" name="no"
