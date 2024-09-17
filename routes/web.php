@@ -129,6 +129,9 @@ Route::middleware('auth')->group(function () {
     Route::get('resumeoutput', [UserController::class, 'manager_movie'])->name('resume.output');
     Route::get('emailtemplate', [UserController::class, 'email'])->name('email.template');
 
+    Route::post('admin/manageMultiple', [UserController::class, 'manageMultiple'])->name('admin.manageMultiple');
+
+
     Route::get('admin/sales', [UserController::class, 'salesUser'])->name('admin.sales');
     Route::get('admin/management', [UserController::class, 'managementUser'])->name('admin.management');
     Route::get('admin/member', [UserController::class, 'memberUser'])->name('admin.member');

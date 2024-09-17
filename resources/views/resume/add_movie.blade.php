@@ -1,3 +1,9 @@
+@if (session('failure'))
+    <script>
+        alert('{{ session('failure') }}');
+    </script>
+@endif
+
 <x-app-layout>
     <div class="lg:w-3/5 w-full m-auto  rounded-lg shadow-lg p-2 mt-0 bg-white md:p-10 md:mt-10">
         <div class="space-y-12">

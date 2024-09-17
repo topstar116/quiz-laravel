@@ -34,6 +34,7 @@ use Illuminate\Support\Facades\Log;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\UserEmail;
+use ZipArchive;
 
 
 
@@ -2205,13 +2206,21 @@ public function update_resume(Request $request) {
 
     public function add_resumedocs(Request $request) {
     // Validate the request
-    $request->validate([
-        'resume_file' => 'nullable|file|mimes:doc,pdf,txt,docx|max:2048',
-        'cv' => 'nullable|file|mimes:doc,pdf,txt,docx|max:2048',
-    ]);
+    try {
+        $request->validate([
+            'resume_file' => 'nullable|file|mimes:doc,pdf,txt,docx,odt|max:2048',
+            'cv' => 'nullable|file|mimes:doc,pdf,txt,docx,odt|max:2048',
+        ]);
+    } catch (\Exception $e) {
+        // Log the error for debugging purposes, if needed
+        \Log::error($e->getMessage());
+
+        // Handle validation or other errors
+        return redirect()->back()->with('failure', '対応していないファイル形式です。');
+    }
+
 
     $userId = Auth::id(); // Get the authenticated user's ID
-
     // Handle resume file upload
     if ($request->hasFile('resume_file')) {
         $resumeFile = $request->file('resume_file');
@@ -2222,6 +2231,10 @@ public function update_resume(Request $request) {
         // Ensure the directory exists
         if (!file_exists(public_path($resumeDirectory))) {
             mkdir(public_path($resumeDirectory), 0755, true);
+        }else {
+            // Remove directory and its contents
+            $this->deleteDirectory(public_path($resumeDirectory));
+            mkdir(public_path($resumeDirectory), 0755, true);
         }
 
         // Move the file to the designated directory
@@ -2231,19 +2244,23 @@ public function update_resume(Request $request) {
         // Save or update the resume URL in the database
         DB::table('resume_result')->updateOrInsert(
             ['user_id' => $userId],
-            ['updated_at' => now(), 'resume_url' => $resumeFileUrl]
+            ['updated_at' => now(), 'resume_url' => $resumeFilePath]
         );
     }
 
     // Handle CV file upload
     if ($request->hasFile('cv')) {
         $cvFile = $request->file('cv');
-        $cvFileName = time() . '_cv_' . $cvFile->getClientOriginalName();
-        $cvDirectory = 'resumes/' . $userId;
+        $cvFileName = $cvFile->getClientOriginalName();
+        $cvDirectory = 'cv/' . $userId;
         $cvFilePath = $cvDirectory . '/' . $cvFileName;
 
         // Ensure the directory exists
         if (!file_exists(public_path($cvDirectory))) {
+            mkdir(public_path($cvDirectory), 0755, true);
+        }else {
+            // Remove directory and its contents
+            $this->deleteDirectory(public_path($cvDirectory));
             mkdir(public_path($cvDirectory), 0755, true);
         }
 
@@ -2254,11 +2271,30 @@ public function update_resume(Request $request) {
         // Save or update the CV URL in the database
         DB::table('resume_result')->updateOrInsert(
             ['user_id' => $userId],
-            ['updated_at' => now(), 'cv_url' => $cvFileUrl]
+            ['updated_at' => now(), 'cv_url' => $cvFilePath]
         );
     }
 
     return redirect()->back()->with('success', 'Files uploaded successfully!');
+}
+private function deleteDirectory($dir)
+{
+    if (!is_dir($dir)) {
+        return;
+    }
+
+    $files = array_diff(scandir($dir), ['.', '..']);
+
+    foreach ($files as $file) {
+        $filePath = "$dir/$file";
+        if (is_dir($filePath)) {
+            $this->deleteDirectory($filePath); // Recursively delete subdirectories
+        } else {
+            unlink($filePath); // Delete files
+        }
+    }
+
+    rmdir($dir); // Delete the original directory
 }
 
 public function deleteMultiple(Request $request)
@@ -2525,5 +2561,87 @@ public function sendEmail(Request $request)
         // Return with a success message
         return back()->with('checkeduserdelete', '選択されたユーザーは正常に削除されました。');
     }
+
+
+    public function manageMultiple(Request $request)
+    {
+        $selectedItems = json_decode($request->input('selected_items'), true);
+        $action = json_decode($request->input('action'));
+
+        if (empty($selectedItems)) {
+            return redirect()->back()->with('resume_error', '選択したアイテムがありません。');
+        }
+
+        if($action == "delete"){
+            return $this->deleteSelectedItems($selectedItems);
+        }else if($action == "download"){
+            return $this->downloadSelectedItems($selectedItems);
+        }
+        else{
+            return redirect()->back()->with('resume_error', '無効なアクションです。');
+        }
+    }
+
+    private function deleteSelectedItems(array $selectedItems)
+    {
+        foreach ($selectedItems as $item) {
+            [$type, $userId, $path] = explode(':', $item);
+            if($type == "video"){
+                DB::table('resume_result')->where('user_id', $userId)->update(['updated_at' => now(), 'video_urls' => null]);
+            }else if($type == "resume") {
+                DB::table('resume_result')->where('user_id', $userId)->update(['updated_at' => now(), 'resume_url' => null]);
+            }else if($type == "cv"){
+                DB::table('resume_result')->where('user_id', $userId)->update(['updated_at' => now(), 'cv_url' => null]);
+            }
+            if (in_array($type, ['video', 'resume', 'cv'])) {
+                $fullPath = public_path($path);
+
+                if (file_exists($fullPath)) {
+                    unlink($fullPath);
+                } else {
+                    continue;
+                }
+            }
+        }
+        return redirect()->back()->with('resume_success', '選択したファイルを削除しました。');
+    }
+
+    private function downloadSelectedItems(array $selectedItems)
+    {
+        $files = [];
+        foreach ($selectedItems as $item) {
+            [$type, $userId, $path] = explode(':', $item);
+
+            if (in_array($type, ['video', 'resume', 'cv'])) {
+                $fullPath = public_path($path);
+
+                if (file_exists($fullPath)) {
+                    $files[] = $fullPath;
+                } else {
+                    continue;
+                }
+            }
+        }
+
+        if (!empty($files)) {
+            $zipFileName = 'selected_items.zip';
+            $zipFilePath = public_path($zipFileName);
+            $zip = new ZipArchive;
+
+            if ($zip->open($zipFilePath, ZipArchive::CREATE) === TRUE) {
+                foreach ($files as $file) {
+                    $zip->addFile($file, basename($file));
+                }
+                $zip->close();
+
+                return response()->download($zipFilePath)->deleteFileAfterSend(true);
+            } else {
+                return redirect()->back()->with('resume_error', 'ZIPファイルの作成に失敗しました。');
+            }
+        }
+
+        return redirect()->back()->with('resume_error', 'ダウンロードするファイルがありません。');
+    }
+
 
 }

@@ -227,6 +227,4 @@
             @endauth
         </div>
     </div>
-
-
 </nav>
