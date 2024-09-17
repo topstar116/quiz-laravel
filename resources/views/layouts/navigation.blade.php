@@ -47,7 +47,7 @@
                             </x-slot>
                             <x-slot name="content">
                                 <x-dropdown-link :href="route('resume.career.question')">{{ __('全職種') }}</x-dropdown-link>
-                                <x-dropdown-link :href="route('quiz1')">{{ __('エンジニア') }}</x-dropdown-link>
+                                <x-dropdown-link :href="route('quiz1')">{{ __('ITエンジニア') }}</x-dropdown-link>
                             </x-slot>
                         </x-dropdown>
                     </div>
@@ -72,7 +72,7 @@
                                 <x-dropdown-link href="https://shigoto.mhlw.go.jp/User/"
                                     target="blank">{{ __('全職種') }}</x-dropdown-link>
                                 <x-dropdown-link href="https://engineer-match-recommend-result.com/total/"
-                                    target="blank">{{ __('エンジニア') }}</x-dropdown-link>
+                                    target="blank">{{ __('ITエンジニア') }}</x-dropdown-link>
                             </x-slot>
                         </x-dropdown>
                     </div>
@@ -171,7 +171,7 @@
                             </x-slot>
                             <x-slot name="content" class="w-full">
                                 <x-dropdown-link :href="route('resume.career.question')" class="w-full">{{ __('全職種') }}</x-dropdown-link>
-                                <x-dropdown-link :href="route('quiz1')" class="w-full">{{ __('エンジニア') }}</x-dropdown-link>
+                                <x-dropdown-link :href="route('quiz1')" class="w-full">{{ __('ITエンジニア') }}</x-dropdown-link>
                             </x-slot>
                         </x-dropdown>
 
@@ -193,7 +193,7 @@
                                 <x-dropdown-link href="https://shigoto.mhlw.go.jp/User/"
                                     target="blank">{{ __('全職種') }}</x-dropdown-link>
                                 <x-dropdown-link href="https://engineer-match-recommend-result.com/total/"
-                                    target="blank">{{ __('エンジニア') }}</x-dropdown-link>
+                                    target="blank">{{ __('ITエンジニア') }}</x-dropdown-link>
                             </x-slot>
                         </x-dropdown>
 

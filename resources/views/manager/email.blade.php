@@ -19,7 +19,7 @@
                                     <tr>
                                         <th class="p-4 border-b border-gray-300 text-center whitespace-nowrap">番号</th>
                                         <th class="p-4 border-b border-gray-300 text-center whitespace-nowrap">タイトル</th>
-                                        <th class="p-4 border-b border-gray-300 text-center whitespace-nowrap">メール内容
+                                        <th class="p-4 border-b border-gray-300 text-center whitespace-nowrap">表示内容
                                         </th>
                                         <th class="p-4 border-b border-gray-300 text-center whitespace-nowrap">アクション
                                         </th>
