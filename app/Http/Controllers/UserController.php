@@ -2146,11 +2146,11 @@ class UserController extends Controller
 
 
     // Loop through job history entries
-    foreach ($data['job_start_date'] as $index => $start_date) {
+    foreach ($data['job_name'] as $index => $name) {
         $details['job_history'][] = [
             // 'start_date' => $start_date,
             // 'end_date' => $data['job_end_date'][$index],
-            'job_name' => $data['job_name'][$index],
+            'job_name' => $name,
             'job_budget' => $data['job_budget'][$index],
             'team_size' => $data['team_members_count'][$index],
             'role' => $data['job_role'][$index],
