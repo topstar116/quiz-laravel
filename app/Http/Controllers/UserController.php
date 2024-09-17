@@ -2208,8 +2208,8 @@ public function update_resume(Request $request) {
     // Validate the request
     try {
         $request->validate([
-            'resume_file' => 'nullable|file|mimes:doc,pdf,txt,docx,odt|max:2048',
-            'cv' => 'nullable|file|mimes:doc,pdf,txt,docx,odt|max:2048',
+            'resume_file' => 'nullable|file|max:2048',
+            'cv' => 'nullable|file|max:2048',
         ]);
     } catch (\Exception $e) {
         // Log the error for debugging purposes, if needed
