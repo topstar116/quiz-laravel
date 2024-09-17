@@ -63,8 +63,6 @@
                     <table class="min-w-full border border-gray-300 rounded-md mb-4">
                         <thead>
                             <tr class="bg-gray-100">
-                                <th class="border border-gray-300 p-2 text-left">開始日</th>
-                                <th class="border border-gray-300 p-2 text-left">終了日</th>
                                 <th class="border border-gray-300 p-2 text-left">職務名</th>
                                 <th class="border border-gray-300 p-2 text-left">チームのサイズ</th>
                                 <th class="border border-gray-300 p-2 text-left">役割</th>
@@ -74,12 +72,6 @@
                         <tbody>
                             @foreach ($resumeContent['job_history'] ?? [] as $index => $job)
                                 <tr>
-                                    <td class="border border-gray-300 p-2">
-                                        <p>{{ $job['start_date'] ?? '' }}</p>
-                                    </td>
-                                    <td class="border border-gray-300 p-2">
-                                        <p>{{ $job['end_date'] ?? '' }}</p>
-                                    </td>
                                     <td class="border border-gray-300 p-2">
                                         <p>{{ $job['job_name'] ?? '' }}</p>
                                     </td>
@@ -183,8 +175,8 @@
         </div>
     </form>
 </x-app-layout>
-{{-- <!-- Loader HTML -->
-<div id="loader" class="hidden fixed inset-0 bg-gray-600 bg-opacity-75 flex justify-center items-center z-50">
+<!-- Loader HTML -->
+{{-- <div id="loader" class="hidden fixed inset-0 bg-gray-600 bg-opacity-75 flex justify-center items-center z-50">
     <div class="bg-white p-8 rounded-lg shadow-lg">
         <p class="text-lg font-semibold text-gray-700">データベースに保管中...</p>
         <div class="mt-4">

@@ -2174,6 +2174,7 @@ public function update_resume(Request $request) {
     $user_id =Auth::user()->id;
     $name = Auth::user()->name;
     $job_history = json_encode($request->job_history);
+    dd($request);
     DB::table('resume_result')->updateOrInsert(
         ['user_id' => $user_id], // Assuming one record for simplicity; adjust as needed
         [
